@@ -35,12 +35,11 @@ body {
 
 .input1, .input2 {
     flex-grow: 1;
-    margin: 5px; /* Aggiunge un margine uniforme */
-    padding: 10px;
+    margin: 0.5rem; /* Usa rem invece di px */
+    padding: 1rem; /* Usa rem invece di px */
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
 /* Stili per schermi più piccoli */
 @media (max-width: 600px) {
     .input1, .input2 {
@@ -136,11 +135,12 @@ body {
 }
 
 #btnMostraCarrello {
-    position: fixed; /* Fissa il pulsante in una posizione sullo schermo */
-    top: 10px; /* Distanza dal bordo superiore della pagina */
-    right: 10px; /* Distanza dal bordo destro della pagina */
-    z-index: 1000; /* Assicura che il pulsante sia sopra altri elementi */
-    /* Aggiungi qui altri stili per il pulsante (dimensioni, colori, ecc.) */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 1rem; /* Aumenta il padding per dispositivi touch */
+    font-size: 1.2rem; /* Aumenta la dimensione del testo */
 }
 
 .badge {
@@ -190,27 +190,13 @@ body {
 }
 
 
-#spessore {
-    padding: 10px; /* Più spazio per facilitare il tocco */
-    font-size: 16px; /* Testo più grande per una migliore leggibilità */
-    border: 1px solid #ccc; /* Un bordo leggero */
-    border-radius: 5px; /* Bordi arrotondati */
+/* Ottimizzazione degli input per dispositivi touch */
+#spessore, #materiale, #colore {
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-
-#materiale {
-    padding: 10px; /* Più spazio per facilitare il tocco */
-    font-size: 16px; /* Testo più grande per una migliore leggibilità */
-    border: 1px solid #ccc; /* Un bordo leggero */
-    border-radius: 5px; /* Bordi arrotondati */
-}
-
-#colore {
-    padding: 10px; /* Più spazio per facilitare il tocco */
-    font-size: 16px; /* Testo più grande per una migliore leggibilità */
-    border: 1px solid #ccc; /* Un bordo leggero */
-    border-radius: 5px; /* Bordi arrotondati */
-}
-
 
 .dropdown-container {
     display: none;
