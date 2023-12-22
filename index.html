@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+
+<body>
+<button id="btnMostraCarrello">
+    <i class="fa fa-shopping-cart"></i>
+    <span id="conteggioCarrello" class="badge">0</span>
+</button>
+<div class="header">
+    <h1>Monaco's Inventory</h1>
+</div>
+<div class="input-container">
+    <input type="text" class="input1" placeholder="Nome Cliente">
+    <input type="text" class="input2" placeholder="Data">
+</div>
+
+<div class="profile-section" id="profile-section">
+    <h2>Scegli Profilo</h2>
+    <div class="profile-grid">
+        <!-- Ripeti questo blocco per 30 volte, cambia l'URL dell'immagine di sfondo per ciascun quadrato -->
+        <div class="profile" style="background-image: url('img\\zeta2.png');" data-target="zeta"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"data-target="omega"></div>
+        <div class="profile" style="background-image: url('img\\Ami.png');"data-target="Ami"></div>
+        <div class="profile" style="background-image: url('img\\Amo.png');"data-target="Amo"></div>
+        <div class="profile" style="background-image: url('img\\gancio.png');"data-target="gancio"></div>
+        <div class="profile" style="background-image: url('img\\L.png');"data-target="L"></div>
+        <div class="profile" style="background-image: url('img\\OmegaAsi.png');" data-target="OmegaAsi"></div>
+        <div class="profile" style="background-image: url('img\\OmegaInterno.png');"data-target="OmegaInterno"></div>
+        <div class="profile" style="background-image: url('img\\u.png');"data-target="u"></div>
+        <div class="profile" style="background-image: url('img\\u.png');"></div>
+        <div class="profile" style="background-image: url('img\\u.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\omega.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\boh.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <div class="profile" style="background-image: url('img\\angolare.png');"></div>
+        <!-- ... altri 29 quadrati ... -->
+    </div>
+</div>
+
+
+<div class="measure-section2" id="measureSection">
+
+    <div class="flex-container">
+        <div class="measure-section zeta" id="drawSection">
+            <div class="image-container">
+                <img src="img\zeta2.png" alt="zeta">
+                <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 2%; left: 10%; width: 40px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-zeta" id="lato2-zeta" style="top: 82%; left: 55%; width: 40px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 60%; width: 40px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section u" id="drawSection">
+            <div class="image-container">
+                <img src="img\u.png" alt="u">
+                <input type="number" class="input-lato lato-u" id="lato1-u" style="top: 20%; left: 40%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-u" id="lato2-u" style="top: 70%; left: 40%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-u" id="lato3-u" style="top: 47%; right: 10%; width: 50px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section L" id="drawSection">
+            <div class="image-container">
+                <img src="img\L.png" alt="L">
+
+                <input type="number" class="input-lato lato-L" id="lato2-L" style="top: 10%; left: 20%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-L" id="lato3-L" style="top: 55%; right: 20%; width: 50px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section omega" id="drawSection">
+            <div class="image-container">
+                <img src="img\omega.png" alt="omega">
+                <input type="number" class="input-lato lato-omega" id="lato1-omega" style="top: 20%; left: 40%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-omega" id="lato2-omega" style="top: 70%; left: 40%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-omega" id="lato3-omega" style="top: 47%; right: 10%; width: 50px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section OmegaAsi" id="drawSection">
+            <div class="image-container">
+                <img src="img\OmegaAsi.png" alt="u">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 5%; left: 20%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 80%; left: 30%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 48%; right: 1%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 47%; left: 1%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 60%; left: 52%; width: 20px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 30%; right: 22%; width: 30px;" placeholder="Quota">
+               
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section OmegaInterno" id="drawSection">
+            <div class="image-container">
+                <img src="img\OmegaInterno.png" alt="OmegaInterno">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato1-u" style="top: 20%; left: 20%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato2-u" style="top: 70%; left: 35%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato3-u" style="top: 20%; right: 15%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato4-u" style="top: 47%; right: 2%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato5-u" style="top: 47%; left: 2%; width: 30px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section Amo" id="drawSection">
+            <div class="image-container">
+                <img src="img\Amo.png" alt="Amo">
+                <input type="number" class="input-lato lato-Amo" id="lato1-Amo" style="top: 30%; left: 20%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-Amo" id="lato2-Amo" style="top: 65%; left: 40%; width: 50px;" placeholder="Quota">
+          
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section Ami" id="drawSection">
+            <div class="image-container">
+                <img src="img\Ami.png" alt="Ami">
+                <input type="number" class="input-lato lato-Ami" id="lato1-Ami" style="top: 25%; left: 20%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-Ami" id="lato2-Ami" style="top: 60%; left: 35%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-Ami" id="lato3-Ami" style="top: 25%; right: 20%; width: 30px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="measure-section gancio" id="drawSection">
+            <div class="image-container">
+                <img src="img\gancio.png" alt="gancio">
+                <input type="number" class="input-lato lato-gancio" id="lato1-gancio" style="top: 20%; left: 30%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-gancio" id="lato2-gancio" style="top: 70%; left: 40%; width: 50px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-gancio" id="lato3-gancio" style="top: 50%; left: 1%; width: 30px;" placeholder="Quota">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+            </div>
+        </div>
+
+        <div class="dropdown-container" id="dropdownMenus" style="display: none;">
+            <div class="dropdown-menus">
+                <select id="spessore" class="dropdown">
+                    <option value="" disabled selected hidden>Spessore</option>
+                </select>
+            </div>
+
+            <div class="dropdown-menus">
+                <select id="colore" class="dropdown">
+                    <option value="" disabled selected>Colore</option>
+                </select>
+            </div>
+
+            <div class="dropdown-menus">
+                <select id="materiale" class="dropdown">
+                    <option value="" disabled selected>Materiale</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div class="input-section" id="input-section">
+        <div>
+            <input type="number" id="numPezzi" style="width: 50px;" placeholder="N. Pezzi">
+            <input type="number" id="altezza" style="width: 50px;" placeholder="Altezza">
+            <button id="btnAggiungiCarrello">Aggiungi al Carrello</button>
+            <button id="btnSviluppo">Sviluppo</button>
+        </div>
+    </div>
+</div>
+<div class="risultatiSviluppo" id="risultatiSviluppo" style="display: none;">
+    <h2>Risultati Sviluppo</h2>
+    <div id="dati"></div>
+    <button id="btnTornaIndietro">Torna Indietro</button>
+    <button id="btnProsegui">Prosegui</button>
+</div>
+
+<div id="dettagliCarrello" style="display: none;">
+    <h2>Contenuto del Carrello</h2>
+    <div id="elementiCarrello">
+        <!-- Dettagli degli elementi del carrello qui -->
+    </div>
+    <button id="btnAggiungiElementi">Aggiungi Altro</button>
+    <button id="btnSviluppoCarrello">Sviluppo</button>
+</div>
+
+
+
+<script>
+    var dropdown = document.getElementById('spessore');
+    var dropdown2 = document.getElementById('colore');
+    var dropdown3 = document.getElementById('materiale');
+    var opzioni3 = ['SPO', 'ZIN', 'ACCS']; // Le tue opzioni
+    var opzioni = ['10/10', '12/10', '15/10']; // Le tue opzioni
+    var opzioni2 = ['Alluminio Bianco', 'Alluminio Nero', 'Alluminio Verde']; // Le tue opzioni
+    
+    opzioni3.forEach(function(opzione) {
+        var elemento3 = document.createElement('option');
+        elemento3.textContent = opzione;
+        elemento3.value = opzione;
+        dropdown3.appendChild(elemento3);
+    });
+
+    opzioni.forEach(function(opzione) {
+        var elemento = document.createElement('option');
+        elemento.textContent = opzione;
+        elemento.value = opzione;
+        dropdown.appendChild(elemento);
+    });
+
+    opzioni2.forEach(function(opzione) {
+        var elemento2 = document.createElement('option');
+        elemento2.textContent = opzione;
+        elemento2.value = opzione;
+        dropdown2.appendChild(elemento2);
+    });
+
+    var profiloSelezionato = null;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.profile').forEach(function(profile) {
+            profile.addEventListener('click', function() {
+                var targetClass = this.getAttribute('data-target');
+                profiloSelezionato = targetClass;
+
+                // Nascondi tutte le sezioni
+                document.querySelectorAll('.measure-section').forEach(function(section) {
+                    section.style.display = 'none';
+                });
+
+                // Mostra la sezione corrispondente
+                var targetSection = document.querySelector('.' + targetClass);
+                if (targetSection) {
+                    targetSection.style.display = 'flex';
+                    document.getElementById('dropdownMenus').style.display = 'flex'; // Mostra le dropdown
+            }
+                });
+        });
+    
+        // Gestione click su pulsante Torna Indietro
+        document.getElementById('btnTornaIndietro').addEventListener('click', function() {
+            // Nasconde la sezione dei risultati
+            document.getElementById('risultatiSviluppo').style.display = 'none';
+
+            // Mostra la sezione dei profili e la sezione di misura
+            document.getElementById('profile-section').style.display = 'block';
+            document.getElementById('measureSection').style.display = 'block';
+
+            // Opzionale: rimuovere la classe active-section
+            var activeSections = document.querySelectorAll('.measure-section.active-section');
+            activeSections.forEach(function(section) {
+                section.classList.remove('active-section');
+            });
+        });
+        document.getElementById('btnProsegui').addEventListener('click', function() {
+            // Azioni da eseguire quando si clicca su Prosegui
+            console.log("Prosegui premuto");
+            // Qui puoi inserire il codice per navigare a una nuova pagina o altro
+        });
+    });
+        // Gestione navigazione con tasto Enter
+        var inputBoxes = document.querySelectorAll('.input-lato');
+        inputBoxes.forEach(function(input, index) {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Previene il comportamento di default del tasto Invio
+                    // Passa al prossimo input box, se esiste
+                    if (index < inputBoxes.length - 1) {
+                        inputBoxes[index + 1].focus();
+                    }
+                }
+            });
+        });
+
+        //gestion pulsante "carrello"
+        var carrello = [];
+        document.getElementById('btnAggiungiCarrello').addEventListener('click', function() {
+            // Cattura l'immagine del profilo selezionato
+
+            var dropdown1 = document.getElementById('spessore');
+            var dropdown2 = document.getElementById('materiale');
+
+            if (!dropdown1.value || !dropdown2.value) {
+                alert("Inserici tutti i dati obbligatori.");
+                return;
+            }
+            html2canvas(document.querySelector('.measure-section.' + profiloSelezionato)).then(canvas => {
+                var immagineDataUrl = canvas.toDataURL("image/png");
+        
+                var datiMisurazioni = {};
+                // Assicurati di raccogliere le misure dalla sezione attiva
+                document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
+                    if (input.value !== '') {
+                        datiMisurazioni["Lato" + (index + 1)] = input.value;
+                    }
+                });
+        
+                var numPezzi = document.getElementById('numPezzi').value;
+                var altezza = document.getElementById('altezza').value;
+        
+                var datiCarrello = {
+                    profilo: profiloSelezionato,
+                    immagineDataUrl: immagineDataUrl,
+                   // misurazioni: datiMisurazioni,
+                    pezzi: numPezzi,
+                    altezza: altezza
+                };
+        
+                carrello.push(datiCarrello);
+                console.log("dati aggiunti: ", carrello);
+        
+                // Aggiorna il conteggio del carrello e resetta il pulsante e le input box
+                document.getElementById('conteggioCarrello').textContent = carrello.length;
+                var btn = document.getElementById('btnAggiungiCarrello');
+                btn.textContent = 'Aggiunto!';
+                setTimeout(function() {
+                    btn.textContent = 'Aggiungi al Carrello';
+                }, 2000);
+        
+                // Reset delle input box dopo aver salvato i dati
+                document.querySelectorAll('.input-lato, #numPezzi, #altezza').forEach(function(input) {
+                    input.value = '';
+                });
+            });
+        });
+        
+        //mostra carrello
+        document.getElementById('btnMostraCarrello').addEventListener('click', function() {
+            // Nascondi le altre sezioni
+            document.getElementById('profile-section').style.display = 'none';
+            document.getElementById('input-section').style.display = 'none';
+            document.getElementById('measureSection').style.display = 'none';
+        
+            // Prepara e mostra i dettagli del carrello
+            var containerElementi = document.getElementById('elementiCarrello');
+            containerElementi.innerHTML = ''; // Pulisce vecchi contenuti
+        
+            carrello.forEach(function(elemento) {
+                img = 'img\\' + elemento.immagineDataUrl
+                console.log("img: ", img);
+                var htmlProfilo = '<div class="elementoCarrello">' +
+                    '<img src="'+ elemento.immagineDataUrl + '" alt="Profilo Quotato" class="imgCarrello">';  
+            
+        
+                var dettagliHtml = '<div class="dettagliProfilo">';
+        
+                // Aggiungi le misure
+                for (var misura in elemento.misurazioni) {
+                    dettagliHtml += '<p>' + misura + ': ' + elemento.misurazioni[misura] + '</p>';
+                }
+        
+                // Aggiungi N. Pezzi e Altezza
+                dettagliHtml += '<p>N. Pezzi: ' + elemento.pezzi + '</p>';
+                dettagliHtml += '<p>Altezza: ' + elemento.altezza + '</p>';
+                dettagliHtml += '</div>'; // Chiusura del contenitore dettagliProfilo
+        
+                htmlProfilo += dettagliHtml + '</div>'; // Chiusura del contenitore elementoCarrello
+        
+                containerElementi.innerHTML += htmlProfilo;
+            });
+        
+            // Mostra la sezione del carrello
+            document.getElementById('dettagliCarrello').style.display = 'block';
+        });
+        
+        
+        function getUrlImmagine(profilo) {
+            // Restituisci l'URL dell'immagine in base al nome del profilo
+            // Ad esempio:
+            return  profilo + '.png'; // Modifica in base alla tua struttura di file
+        }
+        
+        document.getElementById('btnAggiungiElementi').addEventListener('click', function() {
+            // Nascondi la sezione del carrello
+            document.getElementById('dettagliCarrello').style.display = 'none';
+        
+            // Mostra le sezioni per aggiungere nuovi elementi
+            document.getElementById('profile-section').style.display = 'block';
+            document.getElementById('input-section').style.display = 'block';
+            document.getElementById('measureSection').style.display = 'block';
+            // ... altre sezioni da mostrare se necessario ...
+        });
+        
+        document.getElementById('btnSviluppoCarrello').addEventListener('click', function() {
+            // Qui puoi implementare la logica per lo sviluppo o la visualizzazione di ulteriori dettagli
+            console.log("Sviluppo cliccato");
+        });
+            
+
+
+        // Gestione click su pulsante Sviluppo
+    document.getElementById('btnSviluppo').addEventListener('click', function() {
+        console.log("Pulsante Sviluppo cliccato"); // Messaggio di debug
+        var dati = {};
+        // Raccoglie tutti gli input per i lati
+        document.querySelectorAll('.input-lato').forEach(function(input, index) {
+            dati["Lato" + (index + 1)] = input.value;
+        });
+
+        // Aggiungi gli altri input che non sono lati
+        dati["N. Pezzi"] = document.getElementById('numPezzi').value;
+        dati["Altezza"] = document.getElementById('altezza').value;
+        console.log("Dati raccolti:", dati);
+        var containerDati = document.getElementById('dati');
+        containerDati.innerHTML = ''; // Pulisce vecchi risultati
+
+        for (var key in dati) {
+            containerDati.innerHTML += '<p>' + key + ': ' + dati[key] + '</p>';
+        }
+        console.log("Dati aggiunti al container");
+        // Nasconde le sezioni correnti e mostra i risultati
+        document.getElementById('profile-section').style.display = 'none'; // Aggiunto per nascondere la sezione dei profili
+        document.getElementById('measureSection').style.display = 'none';
+        document.getElementById('risultatiSviluppo').style.display = 'block';
+        console.log("Dovrebbe essere visibile la sezione risultatiSviluppo");
+    });
+
+</script>
+
+</body>
+
+</html>

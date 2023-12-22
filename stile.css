@@ -1,0 +1,231 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* Colore di sfondo leggero */
+}
+
+.header {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.profile-section {
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+}
+
+.input-container {
+    display: flex;
+    width: 100%;
+    max-width: 100vw;
+    padding: 5px;
+    box-sizing: border-box;
+    justify-content: space-between; /* Assicura che ci sia spazio tra gli input box */
+}
+
+
+.input1, .input2 {
+    flex-grow: 1;
+    margin: 5px; /* Aggiunge un margine uniforme */
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Stili per schermi più piccoli */
+@media (max-width: 600px) {
+    .input1, .input2 {
+        width: 100%;
+        margin: 5px 0; /* Modifica il margine per schermi più piccoli */
+    }
+}
+
+.profile-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Crea una griglia con colonne flessibili */
+    gap: 10px; /* Distanza tra i quadrati */
+    margin-bottom: 20px;
+    max-height: 50vh; /* Imposta l'altezza massima a metà dello schermo */
+    overflow-y: auto; /* Permette lo scrolling se i contenuti eccedono l'altezza massima */
+}
+
+.profile {
+    background-size: cover; /* Assicura che l'immagine copra completamente il quadrato */
+    background-position: center; /* Centra l'immagine nel quadrato */
+    cursor: pointer;
+    padding-top: 100%; /* Mantiene il quadrato proporzionale */
+    position: relative; /* Necessario per il padding-top */
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Allinea gli elementi ai lati opposti del contenitore */
+}
+
+.measure-section img {
+    display: block;
+    margin: 1px auto;
+    width: 50%; /* Adatta in base alle tue esigenze */
+}
+
+.measure-section div {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.measure-section input {
+    width: 80%;
+    padding: 5px;
+}
+.measure-section {
+    display: none;
+    /*display: flex;  Cambia il layout a flex per un migliore controllo */
+    align-items: center; /* Centra verticalmente il contenuto */
+    justify-content: center; /* Centra orizzontalmente il contenuto */
+    padding: 5px; /* Riduci il padding */
+    margin: auto;
+    width: 50%; /* Riduci la larghezza */
+}
+
+.image-container {
+    position: relative;
+    margin: 0; /* Riduci i margini */
+}
+
+.image-container img {
+    width: 100%; /* Adatta questo in base alle tue esigenze */
+    height: auto;
+}
+
+.input-lato {
+    position: absolute;
+    margin: 0;
+    /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
+}
+
+.button-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-section button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.input-section {
+
+    text-align: center;
+    margin-top: 20px;
+}
+
+#btnMostraCarrello {
+    position: fixed; /* Fissa il pulsante in una posizione sullo schermo */
+    top: 10px; /* Distanza dal bordo superiore della pagina */
+    right: 10px; /* Distanza dal bordo destro della pagina */
+    z-index: 1000; /* Assicura che il pulsante sia sopra altri elementi */
+    /* Aggiungi qui altri stili per il pulsante (dimensioni, colori, ecc.) */
+}
+
+.badge {
+    position: absolute;
+    top: -10px; /* Ajusta queste proprietà in base alle tue esigenze */
+    right: -10px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+}
+
+#elementiCarrello {
+    display: flex;
+    flex-wrap: wrap; /* Permette agli elementi di andare a capo se non ci sta spazio */
+    justify-content: space-around; /* Distribuisce lo spazio intorno agli elementi */
+    gap: 20px; /* Distanza tra gli elementi */
+}
+
+.elementoCarrello {
+    flex-basis: 40%; /* Ogni elemento occupa il 40% della larghezza del contenitore */
+    /* Altri stili per elementoCarrello se necessario */
+}
+.dettagliProfilo {
+    display: flex;
+    flex-direction: column; /* Assicura che gli elementi siano uno sopra l'altro */
+    /* Aggiungi altri stili come margini, padding ecc. */
+}
+
+.dettagliProfilo p {
+    margin: 5px 0; /* Spaziatura tra le righe */
+}
+#dettagliCarrello button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    /* Altri stili come colori, bordi, ecc. */
+}
+
+/* Aggiungi questo nel tuo file CSS */
+.imgCarrello {
+    width: 100%;
+    height: auto;
+    /* Altri stili se necessario */
+}
+
+
+#spessore {
+    padding: 10px; /* Più spazio per facilitare il tocco */
+    font-size: 16px; /* Testo più grande per una migliore leggibilità */
+    border: 1px solid #ccc; /* Un bordo leggero */
+    border-radius: 5px; /* Bordi arrotondati */
+}
+
+#materiale {
+    padding: 10px; /* Più spazio per facilitare il tocco */
+    font-size: 16px; /* Testo più grande per una migliore leggibilità */
+    border: 1px solid #ccc; /* Un bordo leggero */
+    border-radius: 5px; /* Bordi arrotondati */
+}
+
+#colore {
+    padding: 10px; /* Più spazio per facilitare il tocco */
+    font-size: 16px; /* Testo più grande per una migliore leggibilità */
+    border: 1px solid #ccc; /* Un bordo leggero */
+    border-radius: 5px; /* Bordi arrotondati */
+}
+
+
+.dropdown-container {
+    display: none;
+    flex-direction: column;
+
+    justify-content: center;
+    margin-left: auto; /* Spinge il contenitore verso destra */
+    max-width: 30%;
+}
+
+.dropdown {
+    margin-bottom: 10px;
+    width: 100%;
+
+}
+/* Aggiungi qui ulteriori stili specifici se necessario */
+
+/* Aggiungere eventuali stili aggiuntivi qui */
