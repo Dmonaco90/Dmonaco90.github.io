@@ -205,6 +205,7 @@
     </div>
     <button id="btnAggiungiElementi">Aggiungi Altro</button>
     <button id="downloadButton">Scarica Ordine</button>
+    <button id="btnInviaOrdine">Invia Ordine e Condividi</button>
 </div>
 
 
@@ -487,7 +488,31 @@
             document.body.removeChild(downloadLink);
         });
     });
+
+    document.getElementById('btnInviaOrdine').addEventListener('click', function() {
+        var nomeCliente = document.querySelector('.input1').value;
+        var riferimentoOrdine = document.querySelector('.input2').value;
+        var oggettoEmail = "Ordine Inventory - " + nomeCliente + " - " + riferimentoOrdine;
+        var corpoEmail = "Nuovo Ordine Inventory confermato da " + nomeCliente + ". Dettagli in allegato. Si prega di ricontattare " + nomeCliente + " per conferma lavorazione.";
     
+        // Converti il canvas in immagine
+       // var canvas = document.querySelector('.measure-section.' + profiloSelezionato + ' canvas');
+       // var immagineDataUrl = canvas.toDataURL("image/png");
+    
+        // Qui devi inviare i dati al tuo server o servizio di email
+        // Assicurati che il tuo server gestisca l'invio dell'email con l'immagine allegata
+        //inviaEmail(oggettoEmail, corpoEmail, immagineDataUrl);
+    
+        // Apri il link di condivisione WhatsApp
+        apriLinkWhatsApp(nomeCliente,riferimentoOrdine);
+    });
+    
+    function apriLinkWhatsApp(nomeCliente,riferimentoOrdine) {
+        var messaggioWhatsApp = encodeURIComponent("Ecco l'ordine che ho effettuato:"+riferimentoOrdine+". Nome Cliente: "+nomeCliente+". Allego immagine");
+        var urlWhatsApp = `https://wa.me/?text=${messaggioWhatsApp}`;
+        window.open(urlWhatsApp, '_blank');
+    }
+        
 </script>
 
 </body>
