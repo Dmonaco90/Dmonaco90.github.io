@@ -212,6 +212,11 @@ body {
     width: 100%;
 
 }
+
+.campoMancante {
+    border: 2px solid red; /* Cambia il bordo in rosso */
+}
+
 /* Aggiungi qui ulteriori stili specifici se necessario */
 
 /* Aggiungere eventuali stili aggiuntivi qui */

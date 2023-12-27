@@ -18,7 +18,7 @@
 </div>
 <div class="input-container">
     <input type="text" class="input1" placeholder="Nome Cliente">
-    <input type="text" class="input2" placeholder="Data">
+    <input type="text" class="input2" placeholder="Riferimento Ordine">
 </div>
 
 <div class="profile-section" id="profile-section">
@@ -301,35 +301,56 @@
         //gestion pulsante "carrello"
         var carrello = [];
         document.getElementById('btnAggiungiCarrello').addEventListener('click', function() {
-            // Cattura l'immagine del profilo selezionato
-
+            // Resetta gli stili dei campi in caso siano stati precedentemente marcato come mancanti
+            document.querySelectorAll('.campoMancante').forEach(function(campo) {
+                campo.classList.remove('campoMancante');
+            });
+        
+            var errori = [];
+        
             var dropdown1 = document.getElementById('spessore');
             var dropdown2 = document.getElementById('materiale');
-
-            if (!dropdown1.value || !dropdown2.value) {
-                alert("Inserici tutti i dati obbligatori.");
+            var numPezzi = document.getElementById('numPezzi');
+            var altezza = document.getElementById('altezza');
+        
+            [dropdown1, dropdown2, numPezzi, altezza].forEach(function(campo) {
+                if (!campo.value) {
+                    console.log("Campo vuoto trovato:", campo.id); // Aggiungi questo per il debugging
+                    campo.classList.add('campoMancante');
+                    errori.push(campo.getAttribute('id'));
+                }
+            });
+        
+            // Controlla e marca le input delle misurazioni se sono vuote
+            document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input) {
+                if (input.value === '') {
+                    input.classList.add('campoMancante');
+                    errori.push("misurazione");
+                }
+            });
+        
+            if (errori.length > 0) {
+                var messaggioErrore = "Per favore, completa i seguenti campi: " + errori.join(", ");
+                alert(messaggioErrore);
                 return;
             }
+        
+            // Procedi con il resto del codice per l'aggiunta al carrello
             html2canvas(document.querySelector('.measure-section.' + profiloSelezionato)).then(canvas => {
                 var immagineDataUrl = canvas.toDataURL("image/png");
         
                 var datiMisurazioni = {};
-                // Assicurati di raccogliere le misure dalla sezione attiva
                 document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
                     if (input.value !== '') {
                         datiMisurazioni["Lato" + (index + 1)] = input.value;
                     }
                 });
         
-                var numPezzi = document.getElementById('numPezzi').value;
-                var altezza = document.getElementById('altezza').value;
-        
                 var datiCarrello = {
                     profilo: profiloSelezionato,
                     immagineDataUrl: immagineDataUrl,
-                   // misurazioni: datiMisurazioni,
-                    pezzi: numPezzi,
-                    altezza: altezza
+                    pezzi: numPezzi.value,
+                    altezza: altezza.value
                 };
         
                 carrello.push(datiCarrello);
@@ -344,11 +365,12 @@
                 }, 2000);
         
                 // Reset delle input box dopo aver salvato i dati
-                document.querySelectorAll('.input-lato, #numPezzi, #altezza').forEach(function(input) {
+                document.querySelectorAll('#numPezzi, #altezza').forEach(function(input) {
                     input.value = '';
                 });
             });
         });
+        
         
         //mostra carrello
         document.getElementById('btnMostraCarrello').addEventListener('click', function() {
