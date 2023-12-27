@@ -204,7 +204,7 @@
         <!-- Dettagli degli elementi del carrello qui -->
     </div>
     <button id="btnAggiungiElementi">Aggiungi Altro</button>
-    <button id="btnSviluppoCarrello">Sviluppo</button>
+    <button id="downloadButton">Scarica Ordine</button>
 </div>
 
 
@@ -320,6 +320,13 @@
                     errori.push(campo.getAttribute('id'));
                 }
             });
+            if (!dropdown1.value) {
+                dropdown1.parentNode.classList.add('campoMancante'); // Applica lo stile al genitore della casella di selezione
+            }
+            if (!dropdown2.value) {
+                dropdown2.parentNode.classList.add('campoMancante'); // Applica lo stile al genitore della casella di selezione
+            }
+        
         
             // Controlla e marca le input delle misurazioni se sono vuote
             document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input) {
@@ -429,9 +436,9 @@
             // ... altre sezioni da mostrare se necessario ...
         });
         
-        document.getElementById('btnSviluppoCarrello').addEventListener('click', function() {
+        document.getElementById('downloadButton').addEventListener('click', function() {
             // Qui puoi implementare la logica per lo sviluppo o la visualizzazione di ulteriori dettagli
-            console.log("Sviluppo cliccato");
+            console.log("downloadButton cliccato");
         });
             
 
@@ -461,8 +468,26 @@
         document.getElementById('measureSection').style.display = 'none';
         document.getElementById('risultatiSviluppo').style.display = 'block';
         console.log("Dovrebbe essere visibile la sezione risultatiSviluppo");
+        
     });
 
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        html2canvas(document.getElementById('elementiCarrello')).then(function(canvas) {
+            // Converti il canvas in un'immagine
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            
+            // Crea un elemento di ancoraggio per il download
+            var downloadLink = document.createElement('a');
+            downloadLink.href = image;
+            downloadLink.download = 'immagine.png';
+            
+            // Simula il clic sull'elemento di ancoraggio
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        });
+    });
+    
 </script>
 
 </body>
