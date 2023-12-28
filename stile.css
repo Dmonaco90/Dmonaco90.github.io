@@ -191,8 +191,8 @@ body {
 
 
 /* Ottimizzazione degli input per dispositivi touch */
-#spessore, #materiale, #colore {
-    padding: 1rem;
+#spessore, #materiale, #colore, #tipologia {
+    padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -205,6 +205,7 @@ body {
     justify-content: center;
     margin-left: auto; /* Spinge il contenitore verso destra */
     max-width: 30%;
+    margin-right: 10%
 }
 
 .dropdown {

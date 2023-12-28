@@ -34,8 +34,8 @@
         <div class="profile" style="background-image: url('img\\OmegaAsi.png');" data-target="OmegaAsi"></div>
         <div class="profile" style="background-image: url('img\\OmegaInterno.png');"data-target="OmegaInterno"></div>
         <div class="profile" style="background-image: url('img\\u.png');"data-target="u"></div>
+        <!-- <div class="profile" style="background-image: url('img\\u.png');"></div>
         <div class="profile" style="background-image: url('img\\u.png');"></div>
-        <div class="profile" style="background-image: url('img\\u.png');"></div>
         <div class="profile" style="background-image: url('img\\omega.png');"></div>
         <div class="profile" style="background-image: url('img\\omega.png');"></div>
         <div class="profile" style="background-image: url('img\\omega.png');"></div>
@@ -55,7 +55,7 @@
         <div class="profile" style="background-image: url('img\\angolare.png');"></div>
         <div class="profile" style="background-image: url('img\\angolare.png');"></div>
         <div class="profile" style="background-image: url('img\\angolare.png');"></div>
-        <!-- ... altri 29 quadrati ... -->
+        ... altri 29 quadrati ... -->
     </div>
 </div>
 
@@ -159,22 +159,28 @@
             </div>
         </div>
 
-        <div class="dropdown-container" id="dropdownMenus" style="display: none;">
+        <div class="dropdown-container">
             <div class="dropdown-menus">
-                <select id="spessore" class="dropdown">
+                <select id="materiale" class="dropdown">
+                    <option value="" disabled selected hidden>Materiale</option>
+                    <option value="Alluminio">Alluminio</option>
+                    <option value="Ferro">Ferro</option>
+                    <option value="Acciaio">Acciaio</option>
+                </select>
+            </div>
+            <div class="dropdown-menus">
+                <select id="tipologia" class="dropdown" disabled>
+                    <option value="" disabled selected hidden>Tipologia</option>
+                </select>
+            </div>
+            <div class="dropdown-menus">
+                <select id="spessore" class="dropdown" disabled>
                     <option value="" disabled selected hidden>Spessore</option>
                 </select>
             </div>
-
             <div class="dropdown-menus">
-                <select id="colore" class="dropdown">
-                    <option value="" disabled selected>Colore</option>
-                </select>
-            </div>
-
-            <div class="dropdown-menus">
-                <select id="materiale" class="dropdown">
-                    <option value="" disabled selected>Materiale</option>
+                <select id="colore" class="dropdown" disabled>
+                    <option value="" disabled selected hidden>Colore</option>
                 </select>
             </div>
         </div>
@@ -211,33 +217,87 @@
 
 
 <script>
-    var dropdown = document.getElementById('spessore');
-    var dropdown2 = document.getElementById('colore');
-    var dropdown3 = document.getElementById('materiale');
-    var opzioni3 = ['SPO', 'ZIN', 'ACCS']; // Le tue opzioni
-    var opzioni = ['10/10', '12/10', '15/10']; // Le tue opzioni
-    var opzioni2 = ['Alluminio Bianco', 'Alluminio Nero', 'Alluminio Verde']; // Le tue opzioni
+    var materialeDropdown = document.getElementById('materiale');
+    var tipologiaDropdown = document.getElementById('tipologia');
+    var spessoreDropdown = document.getElementById('spessore');
+    var coloreDropdown = document.getElementById('colore');
     
-    opzioni3.forEach(function(opzione) {
-        var elemento3 = document.createElement('option');
-        elemento3.textContent = opzione;
-        elemento3.value = opzione;
-        dropdown3.appendChild(elemento3);
+    materialeDropdown.addEventListener('change', function() {
+        var materialeSelezionato = this.value;
+        aggiornaTipologia(materialeSelezionato);
     });
-
-    opzioni.forEach(function(opzione) {
-        var elemento = document.createElement('option');
-        elemento.textContent = opzione;
-        elemento.value = opzione;
-        dropdown.appendChild(elemento);
+    
+    tipologiaDropdown.addEventListener('change', function() {
+        var tipologiaSelezionata = this.value;
+        aggiornaSpessoreColore(materialeDropdown.value, tipologiaSelezionata);
     });
-
-    opzioni2.forEach(function(opzione) {
-        var elemento2 = document.createElement('option');
-        elemento2.textContent = opzione;
-        elemento2.value = opzione;
-        dropdown2.appendChild(elemento2);
-    });
+    
+    function aggiornaTipologia(materiale) {
+        var opzioniTipologia;
+        if (materiale === 'Alluminio') {
+            opzioniTipologia = ['Grezzo', 'Verniciato'];
+        } else if (materiale === 'Ferro') {
+            opzioniTipologia = ['Zincata', 'SPO', 'Nera'];
+        } else if (materiale === 'Acciaio') {
+            opzioniTipologia = ['Satinato', 'Lucido', 'S.B', 'Grezzo'];
+        }
+        aggiornaDropdown(tipologiaDropdown, opzioniTipologia);
+    }
+    
+    function aggiornaSpessoreColore(materiale, tipologia) {
+        var opzioniSpessore, opzioniColore;
+        
+        if (materiale === 'Alluminio') {
+            if (tipologia === 'Grezzo') {
+                opzioniSpessore = ['10/10', '15/10', '20/10', '30/10'];
+                coloreDropdown.disabled = true;
+            } else if (tipologia === 'Verniciato') {
+                opzioniSpessore = ['12/10'];
+                opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato'];
+                aggiornaDropdown(coloreDropdown, opzioniColore);
+                coloreDropdown.disabled = false;
+            }
+        } else if (materiale === 'Ferro') {
+            opzioniSpessore = ['8/10', '10/10', '12/10', '15/10', '20/10', '25/10', '30/10', '40/10', '50/10', '60/10', '80/10', '100/10'];
+            coloreDropdown.disabled = true;
+        } else if (materiale === 'Acciaio') {
+            opzioniSpessore = ['8/10', '10/10', '15/10', '20/10', '30/10'];
+            coloreDropdown.disabled = true;
+        }
+    
+        aggiornaDropdown(spessoreDropdown, opzioniSpessore);
+    }
+    
+    function aggiornaDropdown(dropdown, opzioni) {
+        dropdown.innerHTML = '';
+        var opzioneVuota = document.createElement('option');
+        opzioneVuota.value = "";
+        opzioneVuota.disabled = true;
+        opzioneVuota.selected = true;
+        opzioneVuota.hidden = true;
+    
+        // Imposta il testo del placeholder in base all'ID del dropdown
+        if (dropdown.id === 'tipologia') {
+            opzioneVuota.textContent = "Tipologia";
+        } else if (dropdown.id === 'spessore') {
+            opzioneVuota.textContent = "Spessore";
+        } else if (dropdown.id === 'colore') {
+            opzioneVuota.textContent = "Colore";
+        }
+    
+        dropdown.appendChild(opzioneVuota);
+    
+        opzioni.forEach(function(opzione) {
+            var elemento = document.createElement('option');
+            elemento.textContent = opzione;
+            elemento.value = opzione;
+            dropdown.appendChild(elemento);
+        });
+    
+        dropdown.disabled = false;
+    }
+    
+    
 
     var profiloSelezionato = null;
     document.addEventListener('DOMContentLoaded', function() {
@@ -253,9 +313,13 @@
 
                 // Mostra la sezione corrispondente
                 var targetSection = document.querySelector('.' + targetClass);
+                console.log("targetClass:", targetClass);
+                console.log("targetSection:", targetSection);
                 if (targetSection) {
                     targetSection.style.display = 'flex';
-                    document.getElementById('dropdownMenus').style.display = 'flex'; // Mostra le dropdown
+                    document.querySelectorAll('.dropdown-container').forEach(function(element) {
+                        element.style.display = 'flex';
+                    });
             }
 
             
@@ -508,7 +572,7 @@
     });
     
     function apriLinkWhatsApp(nomeCliente,riferimentoOrdine) {
-        var messaggioWhatsApp = encodeURIComponent("Ecco l'ordine che ho effettuato:"+riferimentoOrdine+". Nome Cliente: "+nomeCliente+". Allego immagine");
+        var messaggioWhatsApp = encodeURIComponent("Ciao, ti condivido l'ordine che ho effettuato:"+riferimentoOrdine+". Nome Cliente: "+nomeCliente);
         var urlWhatsApp = `https://wa.me/?text=${messaggioWhatsApp}`;
         window.open(urlWhatsApp, '_blank');
     }
