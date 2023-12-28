@@ -109,9 +109,9 @@
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 5%; left: 20%; width: 30px;" placeholder="Quota">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 80%; left: 30%; width: 30px;" placeholder="Quota">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 48%; right: 1%; width: 30px;" placeholder="Quota">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 47%; left: 1%; width: 30px;" placeholder="Quota">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 60%; left: 52%; width: 20px;" placeholder="Quota">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 30%; right: 22%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato4-OmegaAsi" style="top: 47%; left: 1%; width: 30px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato5-OmegaAsi" style="top: 60%; left: 52%; width: 20px;" placeholder="Quota">
+                <input type="number" class="input-lato lato-OmegaAsi" id="lato6-OmegaAsi" style="top: 30%; right: 22%; width: 30px;" placeholder="Quota">
                
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -193,13 +193,12 @@
             <input type="number" id="numPezzi" style="width: 50px;" placeholder="N. Pezzi">
             <input type="number" id="altezza" style="width: 50px;" placeholder="Altezza">
             <button id="btnAggiungiCarrello">Aggiungi al Carrello</button>
-           <!--  <button id="btnSviluppo">Sviluppo</button> -->
+           
         </div>
     </div>
 </div>
 <div class="risultatiSviluppo" id="risultatiSviluppo" style="display: none;">
-    <h2>Risultati Sviluppo</h2>
-    <div id="dati"></div>
+  
     <button id="btnTornaIndietro">Torna Indietro</button>
     <button id="btnProsegui">Prosegui</button>
 </div>
@@ -212,6 +211,7 @@
     <button id="btnAggiungiElementi">Aggiungi Altro</button>
     <button id="downloadButton">Scarica Ordine</button>
     <button id="btnInviaOrdine">Invia Ordine e Condividi</button>
+    <button id="btnSviluppo">Sviluppo</button> 
 </div>
 
 
@@ -426,7 +426,12 @@
                     profilo: profiloSelezionato,
                     immagineDataUrl: immagineDataUrl,
                     pezzi: numPezzi.value,
-                    altezza: altezza.value
+                    altezza: altezza.value,
+                    spessore: dropdown1.value,
+                    materiale: dropdown2.value,
+                    tipologia: dropdown3.value,
+                    colore: dropdown4.value,
+                    datiMisurazioni: datiMisurazioni
                 };
         
                 carrello.push(datiCarrello);
@@ -580,6 +585,95 @@
         var urlWhatsApp = `https://wa.me/?text=${messaggioWhatsApp}`;
         window.open(urlWhatsApp, '_blank');
     }
+
+    document.getElementById('btnSviluppo').addEventListener('click', function() {
+        var nomeCliente = document.querySelector('.input1').value;
+        var riferimentoOrdine = document.querySelector('.input2').value;
+        var dataOdierna = new Date().toLocaleDateString();
+    
+        // Raggruppa gli elementi per materiale
+        var materialeGruppi = {};
+    
+        carrello.forEach(function(elemento) {
+            var materiale = elemento.materiale;
+            if (!materialeGruppi[materiale]) {
+                materialeGruppi[materiale] = [];
+            }
+            materialeGruppi[materiale].push(elemento);
+        });
+    
+        var finestraStampa = window.open('', '_blank');
+        if (finestraStampa) {
+            finestraStampa.document.write('<html><head><title>Dettagli Ordine</title><style>');
+      
+            finestraStampa.document.write('body { display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; box-sizing: border-box; }');
+            finestraStampa.document.write('.container { border: 1px solid black; width: 210mm; height: 297mm; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }');
+            finestraStampa.document.write('.elemento { display: flex; flex-direction: column; align-items: center; margin: 10px; width: 30%; text-align: center; }');
+            finestraStampa.document.write('.elemento img { width: 70%; height: auto; }'); // L'immagine occupa il 70% dello spazio
+            finestraStampa.document.write('.dettagli { margin-top: 10px; }'); // Margine superiore per i dettagli
+            finestraStampa.document.write('.header-info { display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px; }');
+            finestraStampa.document.write('.row { display: flex; width: 100%; justify-content: flex-start; flex-wrap: wrap; }');
+            finestraStampa.document.write('</style></head><body>');
+    
+            for (var materiale in materialeGruppi) {
+                finestraStampa.document.write('<div class="container">');
+                finestraStampa.document.write('<div class="header-info"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span><span>Materiale: ' + materiale + '</span></div>');
+    
+                var elementiCarrello = materialeGruppi[materiale];
+                elementiCarrello.sort((a, b) => b.altezza - a.altezza);
+    
+                var elementoContatore = 0;
+                    
+                elementiCarrello.forEach(function(elemento) {
+                    if (elementoContatore % 3 === 0) {
+                        finestraStampa.document.write('<div class="row">'); // Start a new row
+                    }
+                    
+                    var sommaMisurazioni = 0;
+                    var elementoSomma = 0; // Inizializza una variabile per la somma delle misurazioni per l'elemento corrente
+
+                    for (var key in elemento.datiMisurazioni) {
+                        var valoreMisurazione = parseFloat(elemento.datiMisurazioni[key]);
+                        if (!isNaN(valoreMisurazione)) {
+                            sommaMisurazioni += valoreMisurazione;
+                        }
+                    }
+    
+                    finestraStampa.document.write('<div class="elemento">');
+                    finestraStampa.document.write('<img src="' + elemento.immagineDataUrl + '">');
+                    finestraStampa.document.write('<div class="dettagli">');
+                    
+                    finestraStampa.document.write('<p>Altezza: ' + elemento.altezza + ' x '+sommaMisurazioni+'</p>');
+                    finestraStampa.document.write('<p>N. Pezzi: ' + elemento.pezzi + '</p>');
+   
+                  
+                    finestraStampa.document.write('</div></div>');
+    
+                    elementoContatore++;
+    
+                    if (elementoContatore % 3 === 0 || elementoContatore === elementiCarrello.length) {
+                        finestraStampa.document.write('</div>'); // Close the row
+                    }
+                });
+    
+                finestraStampa.document.write('</div>'); // Close the container
+            }
+    
+            finestraStampa.document.write('</body></html>');
+            finestraStampa.document.close();
+            finestraStampa.focus();
+        } else {
+            console.error('Impossibile aprire la finestra di stampa.');
+        }
+    });
+    
+    
+    
+
+    
+        
+  
+    
         
 </script>
 
