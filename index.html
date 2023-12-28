@@ -193,7 +193,7 @@
             <input type="number" id="numPezzi" style="width: 50px;" placeholder="N. Pezzi">
             <input type="number" id="altezza" style="width: 50px;" placeholder="Altezza">
             <button id="btnAggiungiCarrello">Aggiungi al Carrello</button>
-            <button id="btnSviluppo">Sviluppo</button>
+           <!--  <button id="btnSviluppo">Sviluppo</button> -->
         </div>
     </div>
 </div>
@@ -375,22 +375,26 @@
         
             var dropdown1 = document.getElementById('spessore');
             var dropdown2 = document.getElementById('materiale');
+            var dropdown3 = document.getElementById('tipologia');
+            var dropdown4 = document.getElementById('colore');
             var numPezzi = document.getElementById('numPezzi');
             var altezza = document.getElementById('altezza');
         
-            [dropdown1, dropdown2, numPezzi, altezza].forEach(function(campo) {
-                if (!campo.value) {
-                    console.log("Campo vuoto trovato:", campo.id); // Aggiungi questo per il debugging
+            [dropdown1, dropdown2, dropdown3, dropdown4, numPezzi, altezza].forEach(function(campo) {
+                // Controlla se la dropdown è abilitata e se il valore è vuoto
+                if (!campo.disabled && !campo.value) {
+                    console.log("Campo vuoto trovato:", campo.id);
                     campo.classList.add('campoMancante');
                     errori.push(campo.getAttribute('id'));
                 }
             });
-            if (!dropdown1.value) {
-                dropdown1.parentNode.classList.add('campoMancante'); // Applica lo stile al genitore della casella di selezione
-            }
-            if (!dropdown2.value) {
-                dropdown2.parentNode.classList.add('campoMancante'); // Applica lo stile al genitore della casella di selezione
-            }
+        
+            // Aggiungi la logica per applicare lo stile al genitore della casella di selezione
+            [dropdown1, dropdown2, dropdown3, dropdown4].forEach(function(dropdown) {
+                if (!dropdown.disabled && !dropdown.value) {
+                    dropdown.parentNode.classList.add('campoMancante');
+                }
+            });
         
         
             // Controlla e marca le input delle misurazioni se sono vuote
