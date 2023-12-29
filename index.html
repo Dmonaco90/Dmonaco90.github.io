@@ -217,6 +217,8 @@
 
 
 <script>
+
+
     var materialeDropdown = document.getElementById('materiale');
     var tipologiaDropdown = document.getElementById('tipologia');
     var spessoreDropdown = document.getElementById('spessore');
@@ -225,13 +227,33 @@
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
+
     });
     
     tipologiaDropdown.addEventListener('change', function() {
         var tipologiaSelezionata = this.value;
         aggiornaSpessoreColore(materialeDropdown.value, tipologiaSelezionata);
+
     });
     
+    function aggiornaBadgeCarrello() {
+        var conteggio = carrello.length;
+        document.getElementById('conteggioCarrello').textContent = conteggio;
+    }
+
+    function resetColoreDropdown() {
+        // Resetta la dropdown del colore al suo stato iniziale
+        coloreDropdown.innerHTML = '';
+        var opzioneVuota = document.createElement('option');
+        opzioneVuota.textContent = "Colore";
+        opzioneVuota.value = "";
+        opzioneVuota.disabled = true;
+        opzioneVuota.selected = true;
+        opzioneVuota.hidden = true;
+        coloreDropdown.appendChild(opzioneVuota);
+        coloreDropdown.disabled = true;
+    }
+
     function aggiornaTipologia(materiale) {
         var opzioniTipologia;
         if (materiale === 'Alluminio') {
@@ -249,6 +271,7 @@
         
         if (materiale === 'Alluminio') {
             if (tipologia === 'Grezzo') {
+                resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
                 opzioniSpessore = ['10/10', '15/10', '20/10', '30/10'];
                 coloreDropdown.disabled = true;
             } else if (tipologia === 'Verniciato') {
@@ -258,9 +281,11 @@
                 coloreDropdown.disabled = false;
             }
         } else if (materiale === 'Ferro') {
+            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['8/10', '10/10', '12/10', '15/10', '20/10', '25/10', '30/10', '40/10', '50/10', '60/10', '80/10', '100/10'];
             coloreDropdown.disabled = true;
         } else if (materiale === 'Acciaio') {
+            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['8/10', '10/10', '15/10', '20/10', '30/10'];
             coloreDropdown.disabled = true;
         }
@@ -297,8 +322,8 @@
         dropdown.disabled = false;
     }
     
-    
 
+    
     var profiloSelezionato = null;
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.profile').forEach(function(profile) {
@@ -461,11 +486,12 @@
             document.getElementById('input-section').style.display = 'none';
             document.getElementById('measureSection').style.display = 'none';
         
-            // Prepara e mostra i dettagli del carrello
-            var containerElementi = document.getElementById('elementiCarrello');
-            containerElementi.innerHTML = ''; // Pulisce vecchi contenuti
+            // Funzione per aggiornare la visualizzazione del carrello
+            function aggiornaVisualizzazioneCarrello() {
+                var containerElementi = document.getElementById('elementiCarrello');
+                containerElementi.innerHTML = ''; // Pulisce vecchi contenuti
         
-            carrello.forEach(function(elemento) {
+                carrello.forEach(function(elemento, indice) {
                 img = 'img\\' + elemento.immagineDataUrl
                 console.log("img: ", img);
                 var htmlProfilo = '<div class="elementoCarrello">' +
@@ -479,21 +505,62 @@
                     dettagliHtml += '<p>' + misura + ': ' + elemento.misurazioni[misura] + '</p>';
                 }
         
-                // Aggiungi N. Pezzi e Altezza
+                 // Aggiungi N. Pezzi e Altezza e altri dettagli
                 dettagliHtml += '<p>N. Pezzi: ' + elemento.pezzi + '</p>';
                 dettagliHtml += '<p>Altezza: ' + elemento.altezza + '</p>';
+                dettagliHtml += '<p>Materiale: ' + elemento.materiale + '</p>';
+                dettagliHtml += '<p>Spessore: ' + elemento.spessore + '</p>';
+                dettagliHtml += '<p>Tipologia: ' + elemento.tipologia + '</p>';
+                dettagliHtml += '<p>Colore: ' + elemento.colore + '</p>';
                 dettagliHtml += '</div>'; // Chiusura del contenitore dettagliProfilo
-        
-                htmlProfilo += dettagliHtml + '</div>'; // Chiusura del contenitore elementoCarrello
-        
+
+                // Aggiungi un'icona di rimozione
+                var iconaRimozioneHtml = '<span class="rimuovi-icona" data-indice="' + indice + '">&#10005;</span>';
+
+                // Aggiungi l'icona di rimozione al profilo HTML
+                var htmlProfilo = '<div class="elementoCarrello">' + iconaRimozioneHtml +
+                                '<img src="' + elemento.immagineDataUrl + '" alt="Profilo Quotato" class="imgCarrello">' +
+                                dettagliHtml + '</div>';
+
                 containerElementi.innerHTML += htmlProfilo;
             });
         
             // Mostra la sezione del carrello
             document.getElementById('dettagliCarrello').style.display = 'block';
-        });
+
+                // Aggiungi event listener per le icone di rimozione
+            document.querySelectorAll('.rimuovi-icona').forEach(function(icona) {
+                icona.addEventListener('click', function() {
+                    var indice = this.getAttribute('data-indice');
+                    if (confirm('Confermi la rimozione dell\'elemento dal carrello?')) {
+                        carrello.splice(indice, 1);
+                        aggiornaVisualizzazioneCarrello(); // Aggiorna nuovamente la visualizzazione del carrello
+                        aggiornaBadgeCarrello(); // Aggiorna il badge del carrello
+                    }
+                });
+            });
+        }
+
+        // Inizialmente popola la visualizzazione del carrello
+        aggiornaVisualizzazioneCarrello();
+        aggiornaBadgeCarrello(); // Aggiorna il badge del carrello
+    });
         
-        
+         // Aggiungi event listener per le icone di rimozione
+            document.querySelectorAll('.rimuovi-icona').forEach(function(icona) {
+                icona.addEventListener('click', function() {
+                    var indice = this.getAttribute('data-indice');
+                    if (confirm('Confermi la rimozione dell\'elemento dal carrello?')) {
+                        // Rimuovi l'elemento dal carrello
+                        carrello.splice(indice, 1);
+
+                        // Aggiorna la visualizzazione del carrello
+                        // Qui puoi chiamare nuovamente la funzione di visualizzazione del carrello o aggiornare direttamente il DOM
+                    }
+                });
+            });
+       
+
         function getUrlImmagine(profilo) {
             // Restituisci l'URL dell'immagine in base al nome del profilo
             // Ad esempio:
@@ -517,34 +584,6 @@
         });
             
 
-
-        // Gestione click su pulsante Sviluppo
-    document.getElementById('btnSviluppo').addEventListener('click', function() {
-        console.log("Pulsante Sviluppo cliccato"); // Messaggio di debug
-        var dati = {};
-        // Raccoglie tutti gli input per i lati
-        document.querySelectorAll('.input-lato').forEach(function(input, index) {
-            dati["Lato" + (index + 1)] = input.value;
-        });
-
-        // Aggiungi gli altri input che non sono lati
-        dati["N. Pezzi"] = document.getElementById('numPezzi').value;
-        dati["Altezza"] = document.getElementById('altezza').value;
-        console.log("Dati raccolti:", dati);
-        var containerDati = document.getElementById('dati');
-        containerDati.innerHTML = ''; // Pulisce vecchi risultati
-
-        for (var key in dati) {
-            containerDati.innerHTML += '<p>' + key + ': ' + dati[key] + '</p>';
-        }
-        console.log("Dati aggiunti al container");
-        // Nasconde le sezioni correnti e mostra i risultati
-        document.getElementById('profile-section').style.display = 'none'; // Aggiunto per nascondere la sezione dei profili
-        document.getElementById('measureSection').style.display = 'none';
-        document.getElementById('risultatiSviluppo').style.display = 'block';
-        console.log("Dovrebbe essere visibile la sezione risultatiSviluppo");
-        
-    });
 
     document.getElementById('downloadButton').addEventListener('click', function() {
         html2canvas(document.getElementById('elementiCarrello')).then(function(canvas) {
@@ -594,45 +633,66 @@
     
         // Raggruppa gli elementi per materiale e poi per profilo e misurazioni
         var materialeGruppi = {};
-    
+
+            // Estrai combinazioni uniche
+            var combinazioniUniche = {};
+            carrello.forEach(function(elemento) {
+                var chiaveCombinazione = getElementoChiaveCombinazione(elemento); // Funzione per determinare la chiave
+                if (!combinazioniUniche[chiaveCombinazione]) {
+                    combinazioniUniche[chiaveCombinazione] = { somma: 0, descrizione: chiaveCombinazione };
+                }
+                var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
+                combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * elemento.altezza * sommaMisurazioni;
+            });
+
+        // Calcola il numero di colonne e righe per la griglia
+        var numeroCombinazioni = Object.keys(combinazioniUniche).length;
+        var colonne = Math.ceil(Math.sqrt(numeroCombinazioni));
+        var righe = Math.ceil(numeroCombinazioni / colonne);
+
         carrello.forEach(function(elemento) {
-            var materiale = elemento.materiale;
+            var materialeFittizio = "MaterialeUnico"; // Valore fittizio
             var chiaveProfiloMisurazione = elemento.profilo + JSON.stringify(elemento.datiMisurazioni);
     
-            if (!materialeGruppi[materiale]) {
-                materialeGruppi[materiale] = {};
+            if (!materialeGruppi[materialeFittizio]) {
+                materialeGruppi[materialeFittizio] = {};
             }
-            if (!materialeGruppi[materiale][chiaveProfiloMisurazione]) {
-                materialeGruppi[materiale][chiaveProfiloMisurazione] = {
+            if (!materialeGruppi[materialeFittizio][chiaveProfiloMisurazione]) {
+                materialeGruppi[materialeFittizio][chiaveProfiloMisurazione] = {
                     elementi: [],
                     datiMisurazioni: elemento.datiMisurazioni,
                     profilo: elemento.profilo
                 };
             }
-            materialeGruppi[materiale][chiaveProfiloMisurazione].elementi.push(elemento);
+            materialeGruppi[materialeFittizio][chiaveProfiloMisurazione].elementi.push(elemento);
         });
     
         var finestraStampa = window.open('', '_blank');
         if (finestraStampa) {
             finestraStampa.document.write('<html><head><title>Dettagli Ordine</title><style>');
       
-                finestraStampa.document.write('.elemento { display: flex; flex-direction: column; align-items: center; width: 45%; margin: 10px; text-align: center; border: 1px solid black; }'); // Modificato per layout in colonna
+
             finestraStampa.document.write('.container { border: 1px solid black; width: 210mm; height: 297mm; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }');
-            finestraStampa.document.write('.elemento { display: flex; flex-direction: row; align-items: center; width: 49%; margin: 0px; text-align: center; border: 1px solid black;margin-left: auto;margin-right: auto }'); // Layout in riga per .elemento
-            finestraStampa.document.write('.dettagli-container { width: 50%; }'); // Container per i dettagli
+            finestraStampa.document.write('.elemento { display: flex; flex-direction: column; align-items: center; width: 45%; margin: 10px; border: 1px solid black; }'); // Layout in colonna per .elemento
+            finestraStampa.document.write('.content { display: flex; flex-direction: row; width: 100%; }'); // Stile per .content
+            finestraStampa.document.write('.dettagli-container { display: flex; flex-direction: column; width: 50%; }'); // Stile per .dettagli-container
+            finestraStampa.document.write('.info-section { width: 100%; text-align: center; border-top: 1px solid gray; }'); // Stile per .info-section
+      
             finestraStampa.document.write('.dettagli { margin: 5px; border: 1px solid gray; }'); // Stile per .dettagli
-         finestraStampa.document.write('.elemento img { width: 100%; height: auto; max-height: 100%; }'); // Imposta max-height in percentuale
-            
+            finestraStampa.document.write('.elemento img { width: 100%; height: auto; max-height: 100%; }'); // Imposta max-height in percentuale
+       
           
             
             finestraStampa.document.write('.header-info { display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px; }');
             finestraStampa.document.write('.row { display: flex; width: 100%; justify-content: flex-start; flex-wrap: wrap; }');
+          
+    
             finestraStampa.document.write('</style></head><body>');
 
             for (var materiale in materialeGruppi) {
                 finestraStampa.document.write('<div class="container">');
-                finestraStampa.document.write('<div class="header-info"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span><span>Materiale: ' + materiale + '</span></div>');
-    
+                finestraStampa.document.write('<div class="header-info"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span></div>');
+               
               
     
                 var profiliMisurazioniGruppi = materialeGruppi[materiale];
@@ -641,27 +701,37 @@
                 for (var chiaveProfiloMisurazione in profiliMisurazioniGruppi) {
                     var gruppo = profiliMisurazioniGruppi[chiaveProfiloMisurazione];
                     var percentualeAltezza = 100 / gruppo.elementi.length;
-    
+                     // Ordina gli elementi del gruppo per altezza, dal maggiore al minore
+                    gruppo.elementi.sort((a, b) => b.altezza - a.altezza);
+
                     if (elementoContatore % 2 === 0) {
                         finestraStampa.document.write('<div class="row">');
                     }
     
                     finestraStampa.document.write('<div class="elemento">');
-                    finestraStampa.document.write('<img src="' + gruppo.elementi[0].immagineDataUrl + '" style="width: 50%;">'); // Immagine con larghezza 45%
-                    finestraStampa.document.write('<div class="dettagli-container">'); // Container per i dettagli
-        
+                        finestraStampa.document.write('<div class="content">'); // Nuovo div .content
+                        finestraStampa.document.write('<img src="' + gruppo.elementi[0].immagineDataUrl + '" style="width: 50%;">'); // Immagine
+                        finestraStampa.document.write('<div class="dettagli-container">'); // Container per i dettagli
+                           
                         gruppo.elementi.forEach(function(elemento) {
                             var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
         
                             finestraStampa.document.write('<div class="dettagli">');
-                            finestraStampa.document.write('<p>Altezza: ' + elemento.altezza + 'x ' + sommaMisurazioni + '</p>');
-                            finestraStampa.document.write('<p>N. Pezzi: ' + elemento.pezzi + '</p>');
+                            finestraStampa.document.write('<p>N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
+                        
                             finestraStampa.document.write('</div>'); // Chiusura dei div 'dettagli'
                         });
         
                         finestraStampa.document.write('</div>'); // Chiusura di .dettagli-container
-                        finestraStampa.document.write('</div>'); // Chiusura di .elemento
+                        finestraStampa.document.write('</div>'); // Chiusura di .content
+
+                        gruppo.elementi.forEach(function(elemento) {
+                            var detagliFooter = getElementoChiaveCombinazione(elemento); 
+                            finestraStampa.document.write('<div class="info-section">'+detagliFooter+' </div>'); // Nuova sezione .info-section
+                       });
         
+                        finestraStampa.document.write('</div>'); // Chiusura di .elemento
+            
     
                     elementoContatore++;
     
@@ -669,19 +739,40 @@
                         finestraStampa.document.write('</div>'); // Close the row
                     }
                 }
-    
+                
+                // Aggiungi stile CSS per il footer
+
+                    finestraStampa.document.write('<div class="footer" style="grid-template-columns: repeat(' + colonne + ', 1fr); grid-template-rows: repeat(' + righe + ', 1fr);">');
+                    Object.values(combinazioniUniche).forEach(function(combinazione) {
+                        finestraStampa.document.write('<div class="footer-cell">' + combinazione.descrizione + ' - Somma: ' + combinazione.somma + '</div>');
+                    });
+                    finestraStampa.document.write('</div>'); // Chiusura del footer
+                
+                    
+
+                        finestraStampa.document.write('<style>');
+                            finestraStampa.document.write('.footer { display: grid; width: 100%; }');
+                            finestraStampa.document.write('.footer-cell { border: 1px solid black; padding: 10px; }');
+                        finestraStampa.document.write('</style>');;
                 finestraStampa.document.write('</div>'); // Close the container
             }
-    
+               
             finestraStampa.document.write('</body></html>');
             finestraStampa.document.close();
             finestraStampa.focus();
-        } else {
-            console.error('Impossibile aprire la finestra di stampa.');
+ 
+            } else {
+                console.error('Impossibile aprire la finestra di stampa.');
         }
     });
-    
-    
+
+    function getElementoChiaveCombinazione(elemento) {
+        if (elemento.materiale === "Alluminio" && elemento.tipologia === "Verniciato") {
+            return `${elemento.materiale} ${elemento.colore}`;
+        } else {
+            return `${elemento.spessore} ${elemento.materiale} ${elemento.tipologia} ${elemento.colore}`;
+        }
+    }
 
     
         
