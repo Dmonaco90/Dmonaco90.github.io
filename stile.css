@@ -98,6 +98,7 @@ body {
     padding: 5px; /* Riduci il padding */
     margin: auto;
     width: 50%; /* Riduci la larghezza */
+    transform: scale(1.1);
 }
 
 .image-container {
@@ -113,6 +114,7 @@ body {
 .input-lato {
     position: absolute;
     margin: 0;
+    
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
 
