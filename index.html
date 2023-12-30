@@ -630,7 +630,26 @@
         var nomeCliente = document.querySelector('.input1').value;
         var riferimentoOrdine = document.querySelector('.input2').value;
         var dataOdierna = new Date().toLocaleDateString();
-    
+            // Ordina il carrello prima di raggrupparlo
+        carrello.sort(function(a, b) {
+            // Confronta per Materiale
+            if (a.materiale < b.materiale) return -1;
+            if (a.materiale > b.materiale) return 1;
+
+            // Confronta per Tipologia
+            if (a.tipologia < b.tipologia) return -1;
+            if (a.tipologia > b.tipologia) return 1;
+
+            // Confronta per Colore
+            if (a.colore < b.colore) return -1;
+            if (a.colore > b.colore) return 1;
+
+            // Confronta per Spessore
+            if (a.spessore < b.spessore) return -1;
+            if (a.spessore > b.spessore) return 1;
+
+            return 0; // Se tutti i criteri sono uguali
+        });
         // Raggruppa gli elementi per materiale e poi per profilo e misurazioni
         var materialeGruppi = {};
 
@@ -652,7 +671,7 @@
 
         carrello.forEach(function(elemento) {
             var materialeFittizio = "MaterialeUnico"; // Valore fittizio
-            var chiaveProfiloMisurazione = elemento.profilo + JSON.stringify(elemento.datiMisurazioni);
+            var chiaveProfiloMisurazione = `${materialeFittizio}-${elemento.profilo}-${JSON.stringify(elemento.datiMisurazioni)}-${elemento.materiale}-${elemento.tipologia}-${elemento.spessore}-${elemento.colore || ''}`;
     
             if (!materialeGruppi[materialeFittizio]) {
                 materialeGruppi[materialeFittizio] = {};
@@ -661,8 +680,13 @@
                 materialeGruppi[materialeFittizio][chiaveProfiloMisurazione] = {
                     elementi: [],
                     datiMisurazioni: elemento.datiMisurazioni,
-                    profilo: elemento.profilo
-                };
+                    profilo: elemento.profilo,
+                    // Aggiungi le nuove proprietà per il raggruppamento
+                    materiale: elemento.materiale,
+                    tipologia: elemento.tipologia,
+                    spessore: elemento.spessore,
+                    colore: elemento.colore || ''  // Gestisce il caso in cui colore non è disponibile
+            };
             }
             materialeGruppi[materialeFittizio][chiaveProfiloMisurazione].elementi.push(elemento);
         });
@@ -693,6 +717,7 @@
                 finestraStampa.document.write('<div class="container">');
                 finestraStampa.document.write('<div class="header-info"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span></div>');
                
+
               
     
                 var profiliMisurazioniGruppi = materialeGruppi[materiale];
@@ -707,12 +732,12 @@
                     if (elementoContatore % 2 === 0) {
                         finestraStampa.document.write('<div class="row">');
                     }
-    
+                    
                     finestraStampa.document.write('<div class="elemento">');
                         finestraStampa.document.write('<div class="content">'); // Nuovo div .content
                         finestraStampa.document.write('<img src="' + gruppo.elementi[0].immagineDataUrl + '" style="width: 50%;">'); // Immagine
                         finestraStampa.document.write('<div class="dettagli-container">'); // Container per i dettagli
-                           
+                        var infoSectionContent = `${gruppo.materiale} ${gruppo.spessore} ${gruppo.tipologia} ${gruppo.colore}`;    
                         gruppo.elementi.forEach(function(elemento) {
                             var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
         
@@ -724,12 +749,8 @@
         
                         finestraStampa.document.write('</div>'); // Chiusura di .dettagli-container
                         finestraStampa.document.write('</div>'); // Chiusura di .content
-
-                        gruppo.elementi.forEach(function(elemento) {
-                            var detagliFooter = getElementoChiaveCombinazione(elemento); 
-                            finestraStampa.document.write('<div class="info-section">'+detagliFooter+' </div>'); // Nuova sezione .info-section
-                       });
-        
+                        finestraStampa.document.write('<div class="info-section">' + infoSectionContent + '</div>');
+                        
                         finestraStampa.document.write('</div>'); // Chiusura di .elemento
             
     
@@ -754,6 +775,10 @@
                             finestraStampa.document.write('.footer { display: grid; width: 100%; }');
                             finestraStampa.document.write('.footer-cell { border: 1px solid black; padding: 10px; }');
                         finestraStampa.document.write('</style>');;
+                
+                         // Per ogni gruppo, visualizza l'info-section una sola volta
+                
+
                 finestraStampa.document.write('</div>'); // Close the container
             }
                
