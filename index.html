@@ -70,7 +70,7 @@
                 <img src="img\zeta2.png" alt="zeta">
                 <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 2%; left: 10%; width: 20px;" placeholder="x">
                 <input type="number" class="input-lato lato-zeta" id="lato2-zeta" style="top: 82%; left: 55%; width: 20px;" placeholder="x">
-                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 60%; width: 20px; height: 20px;" placeholder="x">
+                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 60%; width: 20px" placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
         </div>
@@ -450,11 +450,15 @@
                 alert(messaggioErrore);
                 return;
             }
-            window.scrollTo(0,0)
+            document.querySelectorAll('.input-lato').forEach(function(input) {
+                input.style.height = '20px'; // Aumenta l'altezza per la cattura
+            });
             // Procedi con il resto del codice per l'aggiunta al carrello
             html2canvas(document.querySelector('.measure-section.' + profiloSelezionato)).then(canvas => {
                 var immagineDataUrl = canvas.toDataURL("image/png", 1.0); // Alta qualità
-
+                document.querySelectorAll('.input-lato').forEach(function(input) {
+                    input.style.height = ''; // Reimposta all'altezza originale
+                });
         
                 var datiMisurazioni = {};
                 document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
