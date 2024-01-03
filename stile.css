@@ -116,7 +116,7 @@ body {
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
-    
+    line-height: 1.20em;
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
 
