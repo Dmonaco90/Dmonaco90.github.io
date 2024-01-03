@@ -114,8 +114,9 @@ body {
 .input-lato {
     position: absolute;
     margin: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 1px; /* Riduci il padding superiore per spingere il testo verso l'alto */
+    padding-bottom: 10px; /* Aumenta il padding inferiore per mantenere l'input della stessa altezza */
+    line-height: normal; 
    
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
