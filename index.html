@@ -814,6 +814,15 @@
         }
     });
 
+    document.querySelectorAll('input, select').forEach(function(element) {
+        element.addEventListener('focus', function() {
+            aggiornaViewport(true); // Disabilita lo zoom quando l'input riceve il focus
+        });
+        element.addEventListener('blur', function() {
+            aggiornaViewport(false); // Riabilita lo zoom quando l'input perde il focus
+        });
+    });
+
     function getElementoChiaveCombinazione(elemento) {
         if (elemento.materiale === "Alluminio" && elemento.tipologia === "Verniciato") {
             return `${elemento.materiale} ${elemento.colore}`;
@@ -837,7 +846,10 @@
         }
     }
     
-        
+    function aggiornaViewport(disableZoom) {
+        var content = disableZoom ? "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" : "width=device-width, initial-scale=1.0";
+        document.querySelector('meta[name="viewport"]').setAttribute("content", content);
+    }      
   
     
         
