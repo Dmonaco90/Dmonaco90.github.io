@@ -408,7 +408,7 @@
             document.querySelectorAll('.campoMancante').forEach(function(campo) {
                 campo.classList.remove('campoMancante');
             });
-        
+            document.body.style.zoom = 1;
             var errori = [];
         
             var dropdown1 = document.getElementById('spessore');
@@ -448,7 +448,7 @@
                 alert(messaggioErrore);
                 return;
             }
-        
+            
             // Procedi con il resto del codice per l'aggiunta al carrello
             html2canvas(document.querySelector('.measure-section.' + profiloSelezionato)).then(canvas => {
                 var immagineDataUrl = canvas.toDataURL("image/png", 1.0); // Alta qualità
@@ -643,6 +643,7 @@
         var nomeCliente = document.querySelector('.input1').value;
         var riferimentoOrdine = document.querySelector('.input2').value;
         var dataOdierna = new Date().toLocaleDateString();
+        document.body.style.zoom = 1;
             // Ordina il carrello prima di raggrupparlo
         carrello.sort(function(a, b) {
             // Confronta per Materiale
