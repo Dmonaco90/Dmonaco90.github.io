@@ -114,6 +114,8 @@ body {
 .input-lato {
     position: absolute;
     margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
