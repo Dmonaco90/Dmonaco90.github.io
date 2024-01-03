@@ -719,8 +719,8 @@
             finestraStampa.document.write('.container { border: 1px solid black; width: 210mm; height: 297mm; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }');
             finestraStampa.document.write('.elemento { display: flex; flex-direction: column; align-items: center; width: 49%; margin: 1px; border: 1px solid black; }'); // Layout in colonna per .elemento
             finestraStampa.document.write('.content { display: flex; flex-direction: row; width: 100%; }'); // Stile per .content
-            finestraStampa.document.write('.dettagli-container { display: flex; flex-direction: column; width: 50%; }'); // Stile per .dettagli-container
-            finestraStampa.document.write('.info-section { width: 100%; text-align: center; border-top: 1px solid gray; }'); // Stile per .info-section
+            finestraStampa.document.write('.dettagli-container { display: flex; flex-direction: column; width: 50%;color: red;  font-weight: bold; text-align: end; margin: 12px;}'); // Stile per .dettagli-container
+            finestraStampa.document.write('.info-section { width: 100%; text-align: center; border-top: 1px solid gray; color: red;  font-weight: bold;}'); // Stile per .info-section
       
             finestraStampa.document.write('.dettagli { margin: 1px; }'); // Stile per .dettagli
             finestraStampa.document.write('.elemento img { width: 100%; height: auto; max-height: 100%; }'); // Imposta max-height in percentuale
@@ -820,7 +820,12 @@
         }
     });
 
-  
+    document.querySelectorAll('.input-lato').forEach(function(input) {
+        input.addEventListener('focus', function() {
+            // Resetta il valore dell'input quando riceve il focus
+            this.value = '';
+        });
+    });
 
     function getElementoChiaveCombinazione(elemento) {
         if (elemento.materiale === "Alluminio" && elemento.tipologia === "Verniciato") {
