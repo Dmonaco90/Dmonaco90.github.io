@@ -408,7 +408,9 @@
             document.querySelectorAll('.campoMancante').forEach(function(campo) {
                 campo.classList.remove('campoMancante');
             });
-            document.body.style.zoom = 1;
+            const viewportmeta = document.querySelector('meta[name=viewport]');
+            viewportmeta.setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
+        
             var errori = [];
         
             var dropdown1 = document.getElementById('spessore');
@@ -643,7 +645,7 @@
         var nomeCliente = document.querySelector('.input1').value;
         var riferimentoOrdine = document.querySelector('.input2').value;
         var dataOdierna = new Date().toLocaleDateString();
-        document.body.style.zoom = 1;
+        
             // Ordina il carrello prima di raggrupparlo
         carrello.sort(function(a, b) {
             // Confronta per Materiale
@@ -814,14 +816,7 @@
         }
     });
 
-    document.querySelectorAll('input, select').forEach(function(element) {
-        element.addEventListener('focus', function() {
-            aggiornaViewport(true); // Disabilita lo zoom quando l'input riceve il focus
-        });
-        element.addEventListener('blur', function() {
-            aggiornaViewport(false); // Riabilita lo zoom quando l'input perde il focus
-        });
-    });
+  
 
     function getElementoChiaveCombinazione(elemento) {
         if (elemento.materiale === "Alluminio" && elemento.tipologia === "Verniciato") {
@@ -846,11 +841,7 @@
         }
     }
     
-    function aggiornaViewport(disableZoom) {
-        var content = disableZoom ? "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" : "width=device-width, initial-scale=1.0";
-        document.querySelector('meta[name="viewport"]').setAttribute("content", content);
-    }      
-  
+
     
         
 </script>
