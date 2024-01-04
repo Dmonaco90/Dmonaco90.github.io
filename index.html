@@ -33,7 +33,7 @@
         <div class="profile" style="background-image: url('img\\gancio.png');"data-target="gancio"></div>
         <div class="profile" style="background-image: url('img\\L.png');"data-target="L"></div>
         <div class="profile" style="background-image: url('img\\OmegaAsi.png');" data-target="OmegaAsi"></div>
-        <div class="profile" style="background-image: url('img\\OmegaInterno.png');"data-target="OmegaInterno"></div>
+        <div class="profile" style="background-image: url('img\\OmegaInterno2.png');"data-target="OmegaInterno"></div>
         <div class="profile" style="background-image: url('img\\u.png');"data-target="u"></div>
         <div class="profile" style="background-image: url('img\\Linea.png');"data-target="Linea"></div>
         <!-- <div class="profile" style="background-image: url('img\\u.png');"></div>
@@ -92,6 +92,11 @@
                 <input type="number" class="input-lato lato-L" id="lato2-L" style="top: 31%; left: 1%; width: 20px;" placeholder="x">
                 <input type="number" class="input-lato lato-L" id="lato3-L" style="top: 55%; right: 35%; width: 20px;" placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+                <div id="scelteVerniciato" style="display: none;">
+                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta1" style="position: absolute;  margin: 0; width: auto; top: 35%; left: 23%;">
+                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta2" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 7%;">
+                 </div>
+
             </div>
         </div>
 
@@ -133,12 +138,12 @@
 
         <div class="measure-section OmegaInterno" id="drawSection">
             <div class="image-container">
-                <img src="img\OmegaInterno.png" alt="OmegaInterno">
-                <input type="number" class="input-lato lato-OmegaInterno" id="lato1-u" style="top: 20%; left: 20%; width: 20px;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInterno" id="lato2-u" style="top: 70%; left: 35%; width: 20px;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInterno" id="lato3-u" style="top: 20%; right: 15%; width: 20px;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInterno" id="lato4-u" style="top: 47%; right: 2%; width: 20px;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInterno" id="lato5-u" style="top: 47%; left: 2%; width: 20px;" placeholder="x">
+                <img src="img\OmegaInterno2.png" alt="OmegaInterno">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato1-u" style="top: 15%; left: 20%; width: 20px;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato2-u" style="top: 80%; left: 50%; width: 20px;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato3-u" style="top: 15%; right: 15%; width: 20px;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato4-u" style="top: 50%; right: 1%; width: 20px;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaInterno" id="lato5-u" style="top: 50%; left: 3%; width: 20px;" placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
         </div>
@@ -170,9 +175,10 @@
                 <input type="number" class="input-lato lato-gancio" id="lato2-gancio" style="top: 70%; left: 40%; width: 20px;" placeholder="x">
                 <input type="number" class="input-lato lato-gancio" id="lato3-gancio" style="top: 50%; left: 1%; width: 20px;" placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+                
             </div>
         </div>
-
+        
         <div class="dropdown-container">
             <div class="dropdown-menus">
                 <select id="materiale" class="dropdown">
@@ -419,6 +425,17 @@
             var dropdown4 = document.getElementById('colore');
             var numPezzi = document.getElementById('numPezzi');
             var altezza = document.getElementById('altezza');
+            var tipologiaSelezionata = document.getElementById('tipologia').value;
+
+            // Controlla se la tipologia è "Verniciato" e se almeno una delle opzioni è stata selezionata
+            if (tipologiaSelezionata === 'Verniciato') {
+                var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
+        
+                if (!opzioneSelezionata) {
+                    alert("Seleziona verso verniciatura.");
+                    return; // Interrompe ulteriori azioni di questo evento
+                }
+            }
         
             [dropdown1, dropdown2, dropdown3, dropdown4, numPezzi, altezza].forEach(function(campo) {
                 // Controlla se la dropdown è abilitata e se il valore è vuoto
@@ -850,7 +867,40 @@
         }
     }
     
-
+    document.getElementById('tipologia').addEventListener('change', function() {
+        var tipologiaSelezionata = this.value;
+        var contenitoreScelte = document.getElementById('scelteVerniciato');
+    
+        if (tipologiaSelezionata === 'Verniciato') {
+            contenitoreScelte.style.display = 'block'; // Mostra le opzioni per Verniciato
+        } else {
+            contenitoreScelte.style.display = 'none'; // Nascondi le opzioni
+        }
+    });
+    
+    // Gestione della selezione delle immagini
+    document.querySelectorAll('.opzioneVerniciato').forEach(function(img) {
+        img.addEventListener('click', function() {
+            // Se l'immagine cliccata è già selezionata, mostra entrambe le opzioni
+            if (this.classList.contains('selezionata')) {
+                document.querySelectorAll('.opzioneVerniciato').forEach(function(i) {
+                    i.style.display = 'block'; // Mostra l'immagine
+                    i.classList.remove('selezionata'); // Rimuovi la selezione
+                });
+            } else {
+                // Deseleziona eventuali altre immagini selezionate e nascondile
+                document.querySelectorAll('.opzioneVerniciato').forEach(function(i) {
+                    i.style.display = 'none'; // Nascondi l'immagine
+                    i.classList.remove('selezionata');
+                });
+    
+                // Mostra e seleziona l'immagine cliccata
+                this.style.display = 'block';
+                this.classList.add('selezionata');
+            }
+        });
+    });
+    
     
         
 </script>

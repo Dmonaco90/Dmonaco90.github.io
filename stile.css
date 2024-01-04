@@ -78,7 +78,7 @@ body {
 .measure-section img {
     display: block;
     margin: 1px auto;
-    width: 50%; /* Adatta in base alle tue esigenze */
+    width: 100%; /* Adatta in base alle tue esigenze */
 }
 
 .measure-section div {
@@ -174,8 +174,7 @@ body {
 .dettagliProfilo {
     display: flex;
     flex-direction: column; /* Assicura che gli elementi siano uno sopra l'altro */
-    color: red;
-    font-weight: bold;
+    
     /* Aggiungi altri stili come margini, padding ecc. */
 }
 
@@ -225,6 +224,14 @@ body {
 .campoMancante {
     border: 2px solid red; /* Cambia il bordo in rosso */
 }
+
+
+.opzioneVerniciato {
+    cursor: pointer;
+    border: 3px solid transparent; /* Bordo trasparente per mantenere lo spazio */
+}
+
+
 
 /* Aggiungi qui ulteriori stili specifici se necessario */
 
