@@ -917,15 +917,17 @@
     }
 
     function calcolaPesoTeorico(materiale, spessore) {
-        if (materiale === "Ferro") {
-            switch(spessore) {
-                case "20/10": return 0.016;
-                case "15/10": return 0.012;
-                case "10/10": return 0.008;
-                default: return 0; // Valore predefinito se lo spessore non corrisponde
-            }
+        // Converti il valore dello spessore in millimetri (es. "10/10" diventa 0.1)
+        var spessoreInMillimetri = parseFloat(spessore) / 10000;
+    
+        // Peso specifico per mq (kg/mq)
+        var pesoSpecificoFerroAcciaio = 8; // per Ferro e Acciaio
+        var pesoSpecificoAlluminio = 2.834; // per Alluminio
+    
+        if (materiale === "Ferro" || materiale === "Acciaio") {
+            return spessoreInMillimetri * pesoSpecificoFerroAcciaio;
         } else if (materiale === "Alluminio") {
-            return 0.026;
+            return spessoreInMillimetri * pesoSpecificoAlluminio;
         } else {
             return 0; // Valore predefinito per altri materiali
         }
