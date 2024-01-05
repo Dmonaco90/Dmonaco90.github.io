@@ -236,3 +236,35 @@ body {
 /* Aggiungi qui ulteriori stili specifici se necessario */
 
 /* Aggiungere eventuali stili aggiuntivi qui */
+
+
+
+
+
+button {
+    margin-right: 5px;
+}
+.button-selected {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+#toolbar {
+    display: flex; /* Imposta il layout flex */
+    flex-wrap: nowrap; /* Impedisce agli elementi di andare a capo */
+    justify-content: space-around; /* Distribuisce gli elementi in modo uniforme */
+    align-items: center; /* Allinea gli elementi verticalmente al centro */
+    width: 100%; /* Larghezza completa del contenitore */
+}
+
+#toolbar button {
+    flex: 1 1 auto; /* Assegna la possibilità di crescere e restringersi, con una base automatica */
+    min-width: 5px; /* Imposta una larghezza minima per ogni pulsante */
+    /* Altri stili per i pulsanti se necessario */
+}
+
+
+/* Stili per il canvas */
+#drawingCanvas {
+    width: 100%; /* Larghezza al 100% del contenitore */
+    /* Altezza può essere impostata qui o tramite JavaScript */
+}

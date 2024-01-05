@@ -20,33 +20,70 @@
             const ctx = canvas.getContext('2d');
             canvas.width = 500;
             canvas.height = 500;
-            const gridSize = 20; // Puoi modificare la dimensione della griglia qui
+            const gridSize = 20;
+
+            function setDrawing() {
+                isDrawing = true;
+                isErasing = false;
+                isDimensioning = false;
+                ctx.globalCompositeOperation = 'source-over'; // Modalità di disegno normale
+                ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
+                ctx.lineWidth = 2; // Spessore delle linee
+            }
 
             drawGrid();
-            ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
-            ctx.lineWidth = 2; // Spessore delle linee
 
             let isDrawing = false;
-            let isDimensioning = false; // Aggiungi questo
+            let isDimensioning = false;
             let lastX = 0;
             let lastY = 0;
             let isErasing = false;
 
-            function draw(e) {
-                if (!isDrawing && !isErasing) return;
-                e.preventDefault();
-                let [x, y] = getPosition(e);
+            document.getElementById('pencil').addEventListener('click', () => {
+                isDrawing = true;
+                isErasing = false;
+                isDimensioning = false;
+                ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
+                ctx.lineWidth = 2; // Spessore delle linee
+                ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
+            });
+
+            document.getElementById('eraserTool').addEventListener('click', () => {
+                isErasing = true;
+                isDrawing = false;
+                isDimensioning = false;
+                ctx.globalCompositeOperation = 'destination-out'; // Imposta la modalità di cancellazione
+                ctx.lineWidth = 10; // Imposta la dimensione della gomma
+            });
+
+            document.getElementById('dimension').addEventListener('click', () => {
+                isDimensioning = !isDimensioning;
+                isDrawing = false; // Disabilita il disegno quando si passa alla quotatura
+                isErasing = false; // Disabilita la gomma
+                updateButtonStyles();
+            });
+
+            document.getElementById('eraser').addEventListener('click', () => {
+                clearCanvas(); // Questa funzione pulisce il canvas
+                removeDimensions(); // Questa funzione rimuove tutte le quote
+                document.getElementById('pencil').click(); // Simula il clic sul pulsante "Matita"
+            });
             
-                if (isErasing) {
-                    ctx.globalCompositeOperation = 'destination-out'; // Imposta la modalità di cancellazione
-                    ctx.lineWidth = 10; // Imposta la dimensione della gomma
+            // Event listeners per il canvas
+            canvas.addEventListener('mousedown', (e) => {
+                if (isDimensioning) {
+                    addInputBox(e.offsetX, e.offsetY);
                 } else {
-                    ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
-                    ctx.lineWidth = 2; // o lo spessore che preferisci per il disegno
+                    isDrawing = true;
+                    lastX = e.offsetX;
+                    lastY = e.offsetY;
                 }
-            }
-          
-            
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDrawing) return;
+                draw(e);
+            });
 
             canvas.addEventListener('mouseup', () => {
                 isDrawing = false;
@@ -56,11 +93,7 @@
                 isDrawing = false;
             });
 
-            document.getElementById('dimension').addEventListener('click', () => {
-                isDimensioning = !isDimensioning;
-                isDrawing = false; // Disabilita il disegno quando si passa alla quotatura
-                updateButtonStyles();
-            });
+         
 
             document.getElementById('pencil').addEventListener('click', () => {
                 isDrawing = true;
@@ -81,16 +114,10 @@
             document.getElementById('deleteDimensions').addEventListener('click', removeDimensions);
 
 
-            document.getElementById('eraser').addEventListener('click', () => {
-                clearCanvas(); // Questa funzione pulisce il canvas
-                removeDimensions(); // Questa funzione rimuove tutte le quote
-            });
+       
             
             canvas.addEventListener('touchstart', handleTouchStart);
-            document.getElementById('dimension').addEventListener('click', () => {
-                isDimensioning = !isDimensioning;
-            });
-
+         
             function handleTouchStart(e) {
                 e.preventDefault();
                 if (isDimensioning) {
@@ -101,10 +128,7 @@
                 }
             }
             
-            document.getElementById('dimension').addEventListener('click', () => {
-                isDimensioning = !isDimensioning;
-            });
-            // Aggiungi eventi touch
+            
 
         
             function updateButtonStyles() {
@@ -149,14 +173,16 @@
                 }
             }
 
-            function startDrawing(e) {
-                isDrawing = true;
-                [lastX, lastY] = getPosition(e);
-
-                // Reimposta le proprietà di stile necessarie per il disegno
-                ctx.strokeStyle = '#000000'; // o qualsiasi altro colore desideri
-                ctx.lineWidth = 2; // o lo spessore che preferisci
+            function startDrawing(x, y) {
+                // Reimposta le proprietà di stile per il disegno
+                ctx.strokeStyle = '#000000'; // Colore nero per il disegno
+                ctx.lineWidth = 2;           // Spessore della linea per il disegno
+            
+                ctx.beginPath();
+                ctx.moveTo(x, y);
             }
+
+                
             function stopDrawing() {
                 // Non reimpostare isDrawing su false qui
                 // Così l'utente rimane in modalità disegno dopo aver rilasciato il mouse
@@ -277,8 +303,8 @@
                 input.style.position = 'absolute';
                 input.style.left = `${x + canvas.offsetLeft}px`;
                 input.style.top = `${y + canvas.offsetTop}px`;
-                input.style.width = '50px'; // Regola la larghezza
-                input.style.height = '20px'; // Regola l'altezza
+                input.style.width = '50px';
+                input.style.height = '20px';
                 input.style.fontSize = '13px';
                 input.style.border = '1px solid black';
                 input.style.margin = '0';
