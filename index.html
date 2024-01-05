@@ -770,27 +770,41 @@
         var colonne = Math.ceil(Math.sqrt(numeroCombinazioni));
         var righe = Math.ceil(numeroCombinazioni / colonne);
         var pesoTotale = 0;
+        var pesiTotaliPerCombinazione = {}; // Nuovo oggetto per tenere traccia del peso totale per ogni combinazione
+
         carrello.forEach(function(elemento) {
-            var materialeFittizio = "MaterialeUnico"; // Valore fittizio
+            var materialeFittizio = "MaterialeUnico";
+            var chiaveCombinazione = `${elemento.materiale}-${elemento.spessore}`; // Chiave basata su materiale e spessore
             var chiaveProfiloMisurazione = `${materialeFittizio}-${elemento.profilo}-${JSON.stringify(elemento.datiMisurazioni)}-${elemento.materiale}-${elemento.tipologia}-${elemento.spessore}-${elemento.colore || ''}`;
-            pesoTotale += calcolaPesoTeorico(elemento.materiale, elemento.spessore);
+
+            if (!pesiTotaliPerCombinazione[chiaveCombinazione]) {
+                pesiTotaliPerCombinazione[chiaveCombinazione] = 0;
+            }
+            
+            pesiTotaliPerCombinazione[chiaveCombinazione] += calcolaPesoTeorico(elemento.materiale, elemento.spessore);
+            console.log(`Aggiornamento peso totale per ${chiaveCombinazione}: ${pesiTotaliPerCombinazione[chiaveCombinazione]}`);
+
             if (!materialeGruppi[materialeFittizio]) {
                 materialeGruppi[materialeFittizio] = {};
             }
+
             if (!materialeGruppi[materialeFittizio][chiaveProfiloMisurazione]) {
                 materialeGruppi[materialeFittizio][chiaveProfiloMisurazione] = {
                     elementi: [],
                     datiMisurazioni: elemento.datiMisurazioni,
                     profilo: elemento.profilo,
-                    // Aggiungi le nuove proprietà per il raggruppamento
                     materiale: elemento.materiale,
                     tipologia: elemento.tipologia,
                     spessore: elemento.spessore,
-                    colore: elemento.colore || ''  // Gestisce il caso in cui colore non è disponibile
-            };
+                    colore: elemento.colore || ''
+                };
             }
+
             materialeGruppi[materialeFittizio][chiaveProfiloMisurazione].elementi.push(elemento);
         });
+
+        // Ora pesiTotaliPerCombinazione conterrà il peso totale per ogni combinazione unica di materiale e spessore
+        console.log(pesiTotaliPerCombinazione);
     
         var finestraStampa = window.open('', '_blank');
         if (finestraStampa) {
@@ -872,21 +886,47 @@
                 }
                 
                 // Aggiungi stile CSS per il footer
-                     finestraStampa.document.write('<div class="footer" style="grid-template-columns: repeat(' + colonne + ', 1fr); grid-template-rows: repeat(' + righe + ', 1fr);">');
-                    Object.values(combinazioniUniche).forEach(function(combinazione) {
-                        var pesoFinale = pesoTotale * (combinazione.somma/1000);
-                        pesoFinale=pesoFinale.toFixed(2);
-                        finestraStampa.document.write('<div class="footer-cell">' + combinazione.descrizione + ' - Peso teorico: ' + pesoFinale + ' kg</div>');
-                    });
-                        if (elementoContatore % 2 === 0 || elementoContatore === Object.keys(profiliMisurazioniGruppi).length) {
-                            finestraStampa.document.write('</div>'); // Close the row
+                // All'interno della funzione che genera il footer
+                finestraStampa.document.write('<div class="footer">');
+                    Object.keys(combinazioniUniche).forEach(function(chiaveCombinazione) {
+                        console.log(chiaveCombinazione);
+                        var parti = chiaveCombinazione.split(' ');
+                    
+                        var spessore, materiale, tipologia, colore;
+                        if (parti.length === 4) {
+                            // Ferro o Acciaio
+                            [spessore, materiale, tipologia, colore] = parti;
+                        } else if (parti.length === 2) {
+                            // Alluminio
+                            [materiale, colore] = parti;
+                            spessore = "12/10"; // Se vuoi usare un valore predefinito
                         }
-                       
-                        finestraStampa.document.write('</div>'); // Chiusura del footer
-                        finestraStampa.document.write('<style>');
-                        finestraStampa.document.write('.footer { display: grid; width: 100%; }');
-                        finestraStampa.document.write('.footer-cell { border: 1px solid black; padding: 10px; }');
-                        finestraStampa.document.write('</style>');;
+                    
+                        console.log(`Spessore: ${spessore}, Materiale: ${materiale}, Tipologia: ${tipologia}, Colore: ${colore}`);
+                        // Resto del codice...
+                        var pesoPerMetroQuadro = calcolaPesoTeorico(materiale, spessore);
+                        console.log(pesoPerMetroQuadro)
+                        var sommaMisurazioni = combinazioniUniche[chiaveCombinazione].somma; // Somma delle misurazioni in cm²
+                        console.log(sommaMisurazioni)
+                        var pesoFinale = (pesoPerMetroQuadro * sommaMisurazioni)/ 1000000; // Calcola il peso finale
+                        pesoFinale = pesoFinale.toFixed(2);
+                    
+                        finestraStampa.document.write('<div class="footer-cell">' + chiaveCombinazione + ' - Peso teorico: ' + pesoFinale + ' kg</div>');
+                    });
+                    
+                    
+                    
+                    if (elementoContatore % 2 === 0 || elementoContatore === Object.keys(profiliMisurazioniGruppi).length) {
+                        finestraStampa.document.write('</div>'); // Chiudi la riga
+                    }
+                    finestraStampa.document.write('</div>'); // Chiudi il footer
+                    finestraStampa.document.write('<style>');
+                    finestraStampa.document.write('.footer { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }');
+                    finestraStampa.document.write('.footer-cell { border: 1px solid black; padding: 1px; }');
+                    finestraStampa.document.write('</style>');
+                    
+                    finestraStampa.document.write('</div>'); // Chiudi il contenitore
+                    
                 
                         
                 finestraStampa.document.write('</div>'); // Close the container
@@ -917,21 +957,21 @@
     }
 
     function calcolaPesoTeorico(materiale, spessore) {
-        // Converti il valore dello spessore in millimetri (es. "10/10" diventa 0.1)
-        var spessoreInMillimetri = parseFloat(spessore) / 10000;
-    
-        // Peso specifico per mq (kg/mq)
-        var pesoSpecificoFerroAcciaio = 8; // per Ferro e Acciaio
-        var pesoSpecificoAlluminio = 2.834; // per Alluminio
+        let pesoPerMetroQuadro;
     
         if (materiale === "Ferro" || materiale === "Acciaio") {
-            return spessoreInMillimetri * pesoSpecificoFerroAcciaio;
+            pesoPerMetroQuadro = 8; // peso in kg per metro quadro
         } else if (materiale === "Alluminio") {
-            return spessoreInMillimetri * pesoSpecificoAlluminio;
+            pesoPerMetroQuadro = 2.834; // peso in kg per metro quadro
         } else {
             return 0; // Valore predefinito per altri materiali
         }
+    
+        let spessoreInMillimetri = parseInt(spessore.split("/")[0]) / 10;
+        return pesoPerMetroQuadro * spessoreInMillimetri; // peso in kg per cm²
     }
+    
+    
     
     function resetScelteVerniciato() {
         document.querySelectorAll('.scelteVerniciato .opzioneVerniciato').forEach(function(img) {
