@@ -1096,18 +1096,127 @@
 
     function calcolaVarScalatura(profilo, spessore) {
         switch(profilo) {
-            case "zeta":
+            case "omega":
                 switch(spessore) {
+                    case "6/10":
                     case "8/10":
                     case "10/10":
-                    case "12/10":
-                    case "15/10": return 3;
-                    case "20/10": return 5;
-                    case "30/10": return 8;
+                    case "12/10": return 6;
+                    case "15/10": return 7;
+                    case "20/10": return 10;
+                    case "30/10": return 16;
                     // Aggiungi altri casi per "zeta" qui
                 }
                 break;
             // Aggiungi altri casi per diversi profili qui
+            case "zeta":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10":
+                    case "15/10": return 3;
+                    case "20/10": return 4;
+                    case "30/10": return 6;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+                break;
+            case "Ami":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10":
+                    case "15/10": return 6;
+                    case "20/10": return 5;
+                    case "30/10": return 8;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;   
+            case "OmegaInt":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 8;
+                    case "15/10": return 10;
+                    case "20/10": return 14;
+                    case "30/10": return 21;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break; 
+            case "L":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": 
+                    case "15/10": return 2;
+                    case "20/10": return 3;
+                    case "30/10": return 5;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
+            case "Omega5":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 12;
+                    case "15/10": return 14;
+                    case "20/10": return 20;
+                    case "30/10": return 31;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
+            case "OmegaAsi":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 8;
+                    case "15/10": return 12;
+                    case "20/10": return 16;
+                    case "30/10": return 20;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
+            case "OmegaAsi2":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10":
+                    case "15/10": return 8;
+                    case "20/10": return 11;
+                    case "30/10": return 19;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
+            case "Amo":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10":
+                    case "15/10": return 1;
+                    case "20/10": return 0;
+                    case "30/10": return 3;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
+            case "gancio":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 4;
+                    case "15/10": return 5;
+                    case "20/10": return 7;
+                    case "30/10": return 11;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
         }
         return 0; // Restituisci 0 se non viene trovata alcuna corrispondenza
     }
