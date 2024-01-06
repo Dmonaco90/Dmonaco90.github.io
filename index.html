@@ -248,8 +248,8 @@
                     <button id="pencil"><i class="fa fa-pencil-alt"></i></button>
                     <button id="eraser"><i class="fa fa-trash"></i></button>
                     <button id="dimension">Quota</button>
-                    <button id="deleteDimensions"><i class="fa fa-trash"></i></button>
-                    <button id="eraserTool"><i class="fa fa-eraser"></i></button>
+                    <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
+                    <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
                 </div>
                 <div id="drawingCanvasParent" style="position: relative;">
                     <canvas id="drawingCanvas" ></canvas>
@@ -475,357 +475,418 @@
                 section.classList.remove('active-section');
             });
         });
+
         document.getElementById('btnProsegui').addEventListener('click', function() {
             // Azioni da eseguire quando si clicca su Prosegui
             console.log("Prosegui premuto");
             // Qui puoi inserire il codice per navigare a una nuova pagina o altro
         });
-
-        let ctx;
+      
         const canvas = document.getElementById('drawingCanvas');
-        const drawSection = document.getElementById('drawSection');
-        const gridSize = 20;
-        let isDrawing = false, isDimensioning = false, lastX = 0, lastY = 0, isErasing = false;
-      
+        resizeCanvas(); // Imposta le dimensioni iniziali
+        window.addEventListener('resize', resizeCanvas); // Gestisci i cambiamenti di dimensione
+
+    });
     
-        function initializeCanvas() {
-            drawSection.style.display = 'flex';
-            if (!canvas.getAttribute('data-initialized')) {
-                canvas.width = drawSection.offsetWidth;
-                canvas.height = drawSection.offsetHeight;
-                ctx = canvas.getContext('2d');
-                canvas.setAttribute('data-initialized', 'true');
-                drawGrid();
-                setupEventListeners();
-            }
-        }
+    function resizeCanvas() {
+        const parentDiv = document.getElementById('drawingCanvasParent');
+        canvas.width = parentDiv.offsetWidth;
+        canvas.height = parentDiv.offsetHeight;
+    }
+    //Inizio disegno libero
 
-      
+    let ctx;
+    let StartX;
+    let StartY;
+    const canvas = document.getElementById('drawingCanvas');
+    const drawSection = document.getElementById('drawSection');
+    const gridSize = 20;
+    let isDrawing = false, isDimensioning = false, lastX = 0, lastY = 0, isErasing = false;
+    document.getElementById('pencil').addEventListener('click', () => {
+        isDrawing = true;
+        isErasing = false;
+        isDimensioning = false;
+        ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
+        ctx.lineWidth = 2; // Spessore delle linee
+        ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
+        updateButtonStyles();
+    });
 
-        function setDrawing() {
+    document.getElementById('eraserTool').addEventListener('click', () => {
+        isErasing = true;
+        isDrawing = false;
+        isDimensioning = false;
+        
+        undo();
+    });
+
+    document.getElementById('dimension').addEventListener('click', () => {
+        isDimensioning = !isDimensioning;
+        isDrawing = false; // Disabilita il disegno quando si passa alla quotatura
+        isErasing = false; // Disabilita la gomma
+        updateButtonStyles();
+    });
+
+    document.getElementById('eraser').addEventListener('click', () => {
+        clearCanvas(); // Questa funzione pulisce il canvas
+        removeDimensions(); // Questa funzione rimuove tutte le quote
+        document.getElementById('pencil').click(); // Simula il clic sul pulsante "Matita"
+    });
+
+    //document.getElementById('deleteDimensions').addEventListener('click', removeDimensions);
+
+    // Event listeners per il canvas
+    canvas.addEventListener('mousedown', (e) => {
+        if (isDimensioning) {
+            addInputBox(e.offsetX, e.offsetY);
+        } else {
+            StartX = e.offsetX;
+            StartY = e.offsetY;
             isDrawing = true;
-            isErasing = false;
-            isDimensioning = false;
-            ctx.globalCompositeOperation = 'source-over'; // Modalità di disegno normale
-            ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
-            ctx.lineWidth = 2; // Spessore delle linee
+            lastX = e.offsetX;
+            lastY = e.offsetY;
         }
+    });
 
-        //drawGrid();
+    canvas.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
+        [lastX, lastY] = getPosition(e); // Traccia solo le coordinate
+    });
 
-      
-
-        document.getElementById('pencil').addEventListener('click', () => {
-            isDrawing = true;
-            isErasing = false;
-            isDimensioning = false;
-            ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
-            ctx.lineWidth = 2; // Spessore delle linee
-            ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
-            updateButtonStyles();
-        });
-
-        document.getElementById('eraserTool').addEventListener('click', () => {
-            isErasing = true;
-            isDrawing = false;
-            isDimensioning = false;
-            ctx.globalCompositeOperation = 'destination-out'; // Imposta la modalità di cancellazione
-            ctx.lineWidth = 10; // Imposta la dimensione della gomma
-        });
-
-        document.getElementById('dimension').addEventListener('click', () => {
-            isDimensioning = !isDimensioning;
-            isDrawing = false; // Disabilita il disegno quando si passa alla quotatura
-            isErasing = false; // Disabilita la gomma
-            updateButtonStyles();
-        });
-
-        document.getElementById('eraser').addEventListener('click', () => {
-            clearCanvas(); // Questa funzione pulisce il canvas
-            removeDimensions(); // Questa funzione rimuove tutte le quote
-            document.getElementById('pencil').click(); // Simula il clic sul pulsante "Matita"
-        });
-
-      
-        
-        // Event listeners per il canvas
-        canvas.addEventListener('mousedown', (e) => {
-            if (isDimensioning) {
-                addInputBox(e.offsetX, e.offsetY);
-            } else {
-                isDrawing = true;
-                lastX = e.offsetX;
-                lastY = e.offsetY;
-            }
-        });
-
-        canvas.addEventListener('mousemove', (e) => {
-            if (!isDrawing) return;
-            draw(e);
-        });
-
-        canvas.addEventListener('mouseup', () => {
-            isDrawing = false;
-        });
-
-        canvas.addEventListener('mouseout', () => {
-            isDrawing = false;
-        });
-
-     
-
-       
-        
-        setupEventListeners();
-        function drawLine(ctx, x1, y1, x2, y2) {
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
+    canvas.addEventListener('mouseup', () => {
+        if (isErasing) {
+            drawGrid(); // Ridisegna la griglia
         }
-        
-        document.getElementById('deleteDimensions').addEventListener('click', removeDimensions);
-
-
-   
-        
-        canvas.addEventListener('touchstart', handleTouchStart);
-     
-        function handleTouchStart(e) {
-            e.preventDefault();
-            if (isDimensioning) {
-                // Logica per quotatura
-            } else {
-                [lastX, lastY] = getPosition(e);
-                isDrawing = true; // Inizia disegno o gomma
-            }
+        if (isDrawing) {
+            drawLineFromStartToEnd();
+            StartX = lastX;
+            StartY = lastY;
         }
-        
-        
+        isDrawing = false;
+        ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
+    });
 
-    
-        function updateButtonStyles() {
-            const pencilButton = document.getElementById('pencil');
-            const dimensionButton = document.getElementById('dimension');
-            const eraserToolButton = document.getElementById('eraserTool');
-
-            if (isDrawing) {
-                pencilButton.classList.add('button-selected');
-                dimensionButton.classList.remove('button-selected');
-                eraserToolButton.classList.remove('button-selected');
-            } else if (isDimensioning) {
-                dimensionButton.classList.add('button-selected');
-                pencilButton.classList.remove('button-selected');
-                eraserToolButton.classList.remove('button-selected');
-            } else if (isErasing) {
-                eraserToolButton.classList.add('button-selected');
-                pencilButton.classList.remove('button-selected');
-                dimensionButton.classList.remove('button-selected');
-            } else {
-                pencilButton.classList.remove('button-selected');
-                dimensionButton.classList.remove('button-selected');
-                eraserToolButton.classList.remove('button-selected');
-            }
+    canvas.addEventListener('mouseout', stopDrawing);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', (e) => {
+        if (!isDrawing) return;
+        [lastX, lastY] = getPosition(e); // Traccia solo le coordinate
+    });
+    canvas.addEventListener('touchend', () => {
+        if (isErasing) {
+            drawGrid(); // Ridisegna la griglia
         }
+        if (isDrawing) {
+            drawLineFromStartToEnd();
+            StartX = lastX;
+            StartY = lastY;
+        }
+        isDrawing = false;
+        ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
         
-        
-    
-        function clearCanvas() {
-            if (!ctx) return; // Verifica che ctx sia definito
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+
+
+
+    function initializeCanvas() {
+        drawSection.style.display = 'flex';
+        if (!canvas.getAttribute('data-initialized')) {
+            canvas.width = drawSection.offsetWidth;
+            canvas.height = drawSection.offsetHeight;
+            ctx = canvas.getContext('2d');
+            canvas.setAttribute('data-initialized', 'true');
             drawGrid();
+            //setupEventListeners();
         }
+       
+    }
 
-        function drawGrid() {
-            if (!ctx) return;
-            ctx.strokeStyle = '#eaeaea';
-            ctx.lineWidth = 1;
-            for (let x = 0; x <= canvas.width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y <= canvas.height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
-            }
+    function updateButtonStyles() {
+        const pencilButton = document.getElementById('pencil');
+        const dimensionButton = document.getElementById('dimension');
+        const eraserToolButton = document.getElementById('eraserTool');
+
+        if (isDrawing) {
+            pencilButton.classList.add('button-selected');
+            dimensionButton.classList.remove('button-selected');
+            eraserToolButton.classList.remove('button-selected');
+        } else if (isDimensioning) {
+            dimensionButton.classList.add('button-selected');
+            pencilButton.classList.remove('button-selected');
+            eraserToolButton.classList.remove('button-selected');
+        } else if (isErasing) {
+            eraserToolButton.classList.add('button-selected');
+            pencilButton.classList.remove('button-selected');
+            dimensionButton.classList.remove('button-selected');
+        } else {
+            pencilButton.classList.remove('button-selected');
+            dimensionButton.classList.remove('button-selected');
+            eraserToolButton.classList.remove('button-selected');
         }
+    }
 
-        function startDrawing(x, y) {
-            // Reimposta le proprietà di stile per il disegno
-            ctx.strokeStyle = '#000000'; // Colore nero per il disegno
-            ctx.lineWidth = 2;           // Spessore della linea per il disegno
-        
+    function clearCanvas() {
+        if (!ctx) return; // Verifica che ctx sia definito
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid();
+    }
+
+    function setDrawing() {
+        isDrawing = true;
+        isErasing = false;
+        isDimensioning = false;
+        ctx.globalCompositeOperation = 'source-over'; // Modalità di disegno normale
+        ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
+        ctx.lineWidth = 2; // Spessore delle linee
+    }
+
+    function drawGrid() {
+        if (!ctx) return;
+        ctx.strokeStyle = '#eaeaea';
+        ctx.lineWidth = 1;
+        for (let x = 0; x <= canvas.width; x += gridSize) {
             ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-
-            
-        function stopDrawing() {
-            // Non reimpostare isDrawing su false qui
-            // Così l'utente rimane in modalità disegno dopo aver rilasciato il mouse
-            // isDrawing = false; // Commenta o rimuovi questa linea
-        }
-        
-
-        
-
-        function draw(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
-        
-            let [x, y] = getPosition(e);
-            let angle = calculateAngle(lastX, lastY, x, y);
-        
-            if (angle < 40) {
-                drawHorizontalLine(lastY, x);
-            } else if (angle >= 40 && angle <= 50) {
-                drawObliqueLineFrom(lastX, lastY, angle);
-            } else {
-                drawVerticalLine(lastX, y);
-            }
-        }
-        
-        
-        function drawHorizontalLine(y, xTo) {
-            ctx.beginPath();
-            ctx.moveTo(lastX, y);
-            ctx.lineTo(xTo, y);
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
             ctx.stroke();
         }
-        
-        function drawVerticalLine(x, yTo) {
+        for (let y = 0; y <= canvas.height; y += gridSize) {
             ctx.beginPath();
-            ctx.moveTo(x, lastY);
-            ctx.lineTo(x, yTo);
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
             ctx.stroke();
         }
-        
-        function drawObliqueLineFrom(x1, y1, angle) {
-            let length = Math.sqrt(Math.pow(x1 - lastX, 2) + Math.pow(y1 - lastY, 2));
-            let x2 = x1 + length / Math.sqrt(2); // Calcolo per 45 gradi
-            let y2 = y1 + length / Math.sqrt(2);
-        
-            if (angle > 90 && angle < 270) {
-                y2 = y1 - length / Math.sqrt(2); // Angolo verso il basso
-            }
-        
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-        }
-        
-        
+    }
 
-        function calculateAngle(x1, y1, x2, y2) {
-            let dy = y2 - y1;
-            let dx = x2 - x1;
-            let theta = Math.atan2(dy, dx); // Intervallo [-π, π]
-            let angle = theta * 180 / Math.PI; // Converti in gradi
-            return Math.abs(angle); // Restituisci il valore assoluto dell'angolo
+    //commentare
+    function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+    
+        let [x, y] = getPosition(e);
+        let angle = calculateAngle(StartX, StartY, x, y);
+    
+        // Aggiornamento del range per la linea obliqua
+        if (angle < 20 || angle > 160) {
+            drawHorizontalLine(StartY, x);
+        } else if (angle >= 20 && angle <= 70 || angle >= 110 && angle <= 160) {
+            drawObliqueLineFrom(StartX, StartY, angle);
+        } else {
+            drawVerticalLine(StartX, y);
         }
-        
+    
+        // Aggiornamento delle coordinate di partenza per il prossimo segmento
+        StartX = x;
+        StartY = y;
+    }
 
-
-        
-        function setupEventListeners() {
-            canvas.addEventListener('mousedown', handleMouseDown);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', () => {
-                if (isErasing) {
-                    drawGrid(); // Ridisegna la griglia
-                }
-                isDrawing = false;
-                ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
-            });
-            canvas.addEventListener('mouseout', stopDrawing);
-            canvas.addEventListener('touchstart', handleTouchStart);
-            canvas.addEventListener('touchmove', (e) => {
-                if (isDrawing || isErasing) {
-                    draw(e);
-                }
-            });
-            canvas.addEventListener('touchend', () => {
-                if (isErasing) {
-                    drawGrid(); // Ridisegna la griglia
-                }
-                isDrawing = false;
-                ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
-            });
+    function drawLineFromStartToEnd() {
+        let angle = calculateAngle(StartX, StartY, lastX, lastY);
+        let deltaX = Math.abs(lastX - StartX); // Differenza assoluta in X
+    
+        let threshold = 10; // Un valore soglia per decidere tra verticale e obliqua
+    
+        if (angle < 20 || angle > 160 && angle < 200 || angle > 340) {
+            drawHorizontalLine(StartY, lastX);
+        } else if (deltaX < threshold) {
+            // Considera la linea verticale se la differenza in X è minore della soglia
+            drawVerticalLine(StartX, lastY);
+        } else {
+            // Altrimenti, considerala obliqua
+            drawObliqueLineFrom(StartX, StartY, lastX, lastY);
         }
-        
-        function handleTouchStart(e) {
-            e.preventDefault();
-            [lastX, lastY] = getPosition(e);
-        
-            if (isDimensioning) {
-                const [x, y] = getPosition(e);
-                addInputBox(x, y);
-            } else {
-                isDrawing = true; // Attiva sia la modalità disegno che cancellazione
-            }
+    }
+    
+    let undoStack = [];
+    
+    function saveState() {
+        const canvasState = canvas.toDataURL();
+        const inputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => {
+            return {
+                id: input.id,
+                value: input.value,
+                position: { left: input.style.left, top: input.style.top }
+            };
+        });
+    
+        undoStack.push({ canvasState, inputsState });
+    }
+    
+    function undo() {
+        if (undoStack.length > 0) {
+            const lastState = undoStack.pop();
+            restoreCanvas(lastState.canvasState);
+            restoreInputs(lastState.inputsState);
         }
-
-        function handleMouseDown(e) {
-            if (isDimensioning) {
-                addInputBox(e.offsetX, e.offsetY);
-            } else {
-                startDrawing(e);
-            }
-        
-        }
-        function getPosition(e) {
-            let x, y;
-            if (e.touches && e.touches.length > 0) {
-                const rect = canvas.getBoundingClientRect();
-                const touch = e.touches[0];
-                x = touch.clientX - rect.left;
-                y = touch.clientY - rect.top;
-            } else {
-                x = e.offsetX;
-                y = e.offsetY;
-            }
-            return [x, y];
-        }
-        
-
-        function clearCanvas() {
+    }
+    
+    function restoreCanvas(dataUrl) {
+        let img = new Image();
+        img.onload = function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawGrid(); // Ridisegna la griglia dopo la pulizia
-        }
-        function addInputBox(x, y) {
+            ctx.drawImage(img, 0, 0);
+        };
+        img.src = dataUrl;
+    }
+
+    
+    
+    
+    function restoreInputs(inputsState) {
+        // Rimuovi tutte le input-box esistenti
+      
+        const inputs = document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)');
+        inputs.forEach(input => input.remove());
+     
+        // Ricrea le input-box salvate
+        inputsState.forEach(inputState => {
             const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
+            console.log("entro restoreInputs Ricrea")
             const input = document.createElement('input');
             input.type = 'text';
             input.style.position = 'absolute';
-            input.style.left = `${x-42}px`; // Posizionamento rispetto al contenitore
-            input.style.top = `${y-25}px`;
+            input.style.left = inputState.position.left;
+            input.style.top = inputState.position.top;
             input.style.width = '50px';
             input.style.height = '20px';
             input.style.border = '1px solid #ccc';
-            input.style.zIndex = '100'; // Assicurati che sia sopra il canvas
+            input.style.zIndex = '100';
+            input.value = inputState.value; // Assicurati di ripristinare il valore
             container.appendChild(input); // Aggiungi al contenitore esterno
-        }
-        function removeDimensions() {
-            const inputs = document.querySelectorAll('input[type="text"]');
-            inputs.forEach(input => input.remove());
-        }
-
-        document.getElementById('eraserTool').addEventListener('click', () => {
-            isErasing = true;
-            isDrawing = false;
-            isDimensioning = false;
-            ctx.globalCompositeOperation = 'destination-out'; // Imposta la modalità di cancellazione
-            updateButtonStyles();
         });
-        
-        
+    }
 
-    });
+    
+    
+
+    function drawLine(ctx, x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function getPosition(e) {
+        let x, y;
+        const rect = canvas.getBoundingClientRect();
+    
+        if (e.touches && e.touches.length > 0) {
+            const touch = e.touches[0];
+            x = (touch.clientX - rect.left) * (canvas.width / rect.width);
+            y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+        } else {
+            x = (e.offsetX - rect.left) * (canvas.width / rect.width);
+            y = (e.offsetY - rect.top) * (canvas.height / rect.height);
+        }
+    
+        return [x, y];
+    }
+    
+    
+    
+    
+
+    function calculateAngle(startX, startY, endX, endY) {
+        let dy = endY - startY;
+        let dx = endX - startX;
+        let theta = Math.atan2(dy, dx); // Restituisce un angolo in radianti
+        let angle = theta * 180 / Math.PI; // Converti in gradi
+        if (angle < 0) {
+            angle += 360; // Normalizza l'angolo tra 0 e 360
+        }
+        return angle;
+    }
+    
+
+
+    function drawHorizontalLine(y, xTo) {
+        let startX = Math.min(StartX, xTo);
+        let endX = Math.max(StartX, xTo);
+        
+        ctx.beginPath();
+        ctx.moveTo(startX, y);
+        ctx.lineTo(endX, y);
+        ctx.stroke();
+    }
+    
+    function drawVerticalLine(x, yTo) {
+        console.log(`drawVerticalLine: StartY = ${StartY}, yTo = ${yTo}`);
+    
+        let startY = Math.min(StartY, yTo);
+        let endY = Math.max(StartY, yTo);
+    
+        ctx.beginPath();
+        ctx.moveTo(x, startY);
+        ctx.lineTo(x, endY);
+        ctx.stroke();
+    }
+    
+    
+    
+    function drawObliqueLineFrom(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+
+    function startDrawing(x, y) {
+        // Reimposta le proprietà di stile per il disegno
+        ctx.strokeStyle = '#000000'; // Colore nero per il disegno
+        ctx.lineWidth = 2;           // Spessore della linea per il disegno
+    
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+
+    function stopDrawing() {
+        // Non reimpostare isDrawing su false qui
+        // Così l'utente rimane in modalità disegno dopo aver rilasciato il mouse
+        // isDrawing = false; // Commenta o rimuovi questa linea
+    }
+
+    function handleTouchStart(e) {
+        e.preventDefault();
+        [StartX, StartY] = getPosition(e); // Imposta StartX e StartY per il tocco
+        
+    
+        if (isDimensioning) {
+            const [x, y] = getPosition(e);
+            addInputBox(x, y);
+        } else {
+            isDrawing = true; // Inizia il disegno
+        }
+    
+        lastX = StartX; // Imposta anche lastX e lastY
+        lastY = StartY;
+        saveState();
+    }
+
+    function addInputBox(x, y) {
+        saveState();
+        const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.style.position = 'absolute';
+        input.style.left = `${x-42}px`; // Posizionamento rispetto al contenitore
+        input.style.top = `${y-25}px`;
+        input.style.width = '50px';
+        input.style.height = '20px';
+        input.style.border = '1px solid #ccc';
+        input.style.zIndex = '100'; // Assicurati che sia sopra il canvas
+        container.appendChild(input); // Aggiungi al contenitore esterno
+        console.log("entro addInputBox ")
+    }
+
+    function removeDimensions() {
+        const inputs = document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)');
+        inputs.forEach(input => input.remove());
+    }
+
+
+
         // Gestione navigazione con tasto Enter
         var inputBoxes = document.querySelectorAll('.input-lato');
         inputBoxes.forEach(function(input, index) {
