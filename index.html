@@ -522,6 +522,7 @@
             ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
             ctx.lineWidth = 2; // Spessore delle linee
             ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
+            updateButtonStyles();
         });
 
         document.getElementById('eraserTool').addEventListener('click', () => {
@@ -573,13 +574,7 @@
 
      
 
-        document.getElementById('pencil').addEventListener('click', () => {
-            isDrawing = true;
-            isErasing = false;
-            isDimensioning = false;
-            ctx.globalCompositeOperation = 'source-over'; // Imposta la modalità di disegno normale
-            updateButtonStyles();
-        });
+       
         
         setupEventListeners();
         function drawLine(ctx, x1, y1, x2, y2) {
@@ -681,23 +676,60 @@
         function draw(e) {
             if (!isDrawing) return;
             e.preventDefault();
+        
             let [x, y] = getPosition(e);
+            let angle = calculateAngle(lastX, lastY, x, y);
         
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            [lastX, lastY] = [x, y];
-        
-            if (isErasing) {
-                ctx.globalCompositeOperation = 'destination-out'; // Modalità di cancellazione
-                ctx.lineWidth = 10; // Larghezza del tratto per la gomma
+            if (angle < 40) {
+                drawHorizontalLine(lastY, x);
+            } else if (angle >= 40 && angle <= 50) {
+                drawObliqueLineFrom(lastX, lastY, angle);
             } else {
-                ctx.globalCompositeOperation = 'source-over'; // Modalità di disegno normale
-                ctx.lineWidth = 2; // Larghezza del tratto per la matita
+                drawVerticalLine(lastX, y);
             }
+        }
         
-            ctx.lineTo(x, y);
+        
+        function drawHorizontalLine(y, xTo) {
+            ctx.beginPath();
+            ctx.moveTo(lastX, y);
+            ctx.lineTo(xTo, y);
             ctx.stroke();
         }
+        
+        function drawVerticalLine(x, yTo) {
+            ctx.beginPath();
+            ctx.moveTo(x, lastY);
+            ctx.lineTo(x, yTo);
+            ctx.stroke();
+        }
+        
+        function drawObliqueLineFrom(x1, y1, angle) {
+            let length = Math.sqrt(Math.pow(x1 - lastX, 2) + Math.pow(y1 - lastY, 2));
+            let x2 = x1 + length / Math.sqrt(2); // Calcolo per 45 gradi
+            let y2 = y1 + length / Math.sqrt(2);
+        
+            if (angle > 90 && angle < 270) {
+                y2 = y1 - length / Math.sqrt(2); // Angolo verso il basso
+            }
+        
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+        
+        
+
+        function calculateAngle(x1, y1, x2, y2) {
+            let dy = y2 - y1;
+            let dx = x2 - x1;
+            let theta = Math.atan2(dy, dx); // Intervallo [-π, π]
+            let angle = theta * 180 / Math.PI; // Converti in gradi
+            return Math.abs(angle); // Restituisci il valore assoluto dell'angolo
+        }
+        
+
 
         
         function setupEventListeners() {
@@ -1062,6 +1094,23 @@
         window.open(urlWhatsApp, '_blank');
     }
 
+    function calcolaVarScalatura(profilo, spessore) {
+        switch(profilo) {
+            case "zeta":
+                switch(spessore) {
+                    case "8/10":
+                    case "10/10":
+                    case "15/10": return 3;
+                    case "20/10": return 7;
+                    case "30/10": return 8;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+                break;
+            // Aggiungi altri casi per diversi profili qui
+        }
+        return 0; // Restituisci 0 se non viene trovata alcuna corrispondenza
+    }
+    
     document.getElementById('btnSviluppo').addEventListener('click', function() {
         var nomeCliente = document.querySelector('.input1').value;
         var riferimentoOrdine = document.querySelector('.input2').value;
@@ -1097,7 +1146,12 @@
                 if (!combinazioniUniche[chiaveCombinazione]) {
                     combinazioniUniche[chiaveCombinazione] = { somma: 0, descrizione: chiaveCombinazione };
                 }
+
+                var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
+                console.log(`varScalatura  ${varScalatura},profilo ${elemento.profilo}, spessore${elemento.spessore} `);
                 var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
+                sommaMisurazioni = sommaMisurazioni - varScalatura;
+                console.log(`sommaMisurazioni  ${sommaMisurazioni}`);
                 combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * elemento.altezza * sommaMisurazioni;
             });
 
@@ -1199,7 +1253,11 @@
 
                        
                         gruppo.elementi.forEach(function(elemento) {
+                            var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
+                            console.log(`varScalatura  ${varScalatura},profilo ${elemento.profilo}, spessore${elemento.spessore} `);
                             var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
+                            sommaMisurazioni = sommaMisurazioni - varScalatura;
+                            console.log(`sommaMisurazioni  ${sommaMisurazioni}`);
         
                             finestraStampa.document.write('<div class="dettagli">');
                             finestraStampa.document.write('<p>N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
