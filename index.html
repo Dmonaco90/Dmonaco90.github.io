@@ -250,7 +250,7 @@
                     <button id="dimension">Quota</button>
                     <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
                     <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
-                    <button id="refresh" title="refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    <button id="refresh" title="refresh"><i class="fa fa-save" aria-hidden="true"></i></button>
                 </div>
                 <div id="drawingCanvasParent" style="position: relative;">
                     <canvas id="drawingCanvas" ></canvas>
@@ -539,9 +539,11 @@
 
     document.getElementById('refresh').addEventListener('click', () => {
         drawGrid();
+        saveState();
         if (undoStack.length > 0) {
             const lastState = undoStack[undoStack.length - 1];
             console.log("lastState:", lastState);
+            
             restoreCanvas(lastState.canvasState);
             restoreInputs(lastState.inputsState);
         } else {
@@ -659,6 +661,8 @@
         if (!ctx) return; // Verifica che ctx sia definito
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid();
+        undoStack.length = 0;
+
     }
 
     function setDrawing() {
@@ -730,19 +734,21 @@
     let undoStack = [];
     
     function saveState() {
-        const canvasState = canvas.toDataURL();
-        const inputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => {
-            return {
-                id: input.id,
-                value: input.value,
-                position: { left: input.style.left, top: input.style.top }
-            };
-        });
+        const currentCanvasState = canvas.toDataURL();
+        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => ({
+            id: input.id,
+            value: input.value,
+            position: { left: input.style.left, top: input.style.top }
+        }));
     
-        undoStack.push({ canvasState, inputsState });
-        console.log(undoStack); // Log dello stack per debug
-
+        const lastState = undoStack[undoStack.length - 1];
+    
+        // Controlla se lo stato corrente è diverso dall'ultimo stato salvato
+        if (!lastState || lastState.canvasState !== currentCanvasState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
+            undoStack.push({ canvasState: currentCanvasState, inputsState: currentInputsState });
+        }
     }
+    
     
     function undo() {
         if (undoStack.length > 0) {
@@ -907,11 +913,12 @@
     
         lastX = StartX; // Imposta anche lastX e lastY
         lastY = StartY;
+        console.log("entro handleTouchStart")
         saveState();
     }
 
     function addInputBox(x, y) {
-        saveState();
+        
         const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
         const input = document.createElement('input');
         input.type = 'text';
