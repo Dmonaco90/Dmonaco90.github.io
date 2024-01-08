@@ -327,7 +327,15 @@
     
 
 
-
+    document.querySelectorAll('.input-box').forEach(input => {
+        input.addEventListener('change', () => {
+           
+            drawGrid();
+            restoreCanvas();
+            restoreInputs();
+           
+        });
+    });
    
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
