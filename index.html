@@ -250,6 +250,7 @@
                     <button id="dimension">Quota</button>
                     <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
                     <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
+                    <button id="refresh" title="refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                 </div>
                 <div id="drawingCanvasParent" style="position: relative;">
                     <canvas id="drawingCanvas" ></canvas>
@@ -326,18 +327,7 @@
     var coloreDropdown = document.getElementById('colore');
     
 
-   // window.addEventListener('resize', handleResize);
-
-   document.querySelectorAll('.input-box').forEach(input => {
-    input.addEventListener('keydown', (e) => {
-        if (e.keyCode === 190 || e.keyCode === 110) {
-            // Il tasto punto è stato premuto
-            // Il tasto "Invio" è stato premuto
-            drawGrid();
-            // Qui puoi inserire il codice per gestire l'evento
-        }
-    });
-});
+   
 
    document.querySelectorAll('.input-box').forEach(input => {
         input.addEventListener('change', () => {
@@ -547,6 +537,18 @@
         undo();
     });
 
+    document.getElementById('refresh').addEventListener('click', () => {
+        drawGrid();
+        if (undoStack.length > 0) {
+            const lastState = undoStack[undoStack.length - 1];
+            console.log("lastState:", lastState);
+            restoreCanvas(lastState.canvasState);
+            restoreInputs(lastState.inputsState);
+        } else {
+            console.log("undoStack è vuoto");
+        }
+    });
+
     document.getElementById('dimension').addEventListener('click', () => {
         isDimensioning = !isDimensioning;
         isDrawing = false; // Disabilita il disegno quando si passa alla quotatura
@@ -738,6 +740,8 @@
         });
     
         undoStack.push({ canvasState, inputsState });
+        console.log(undoStack); // Log dello stack per debug
+
     }
     
     function undo() {
