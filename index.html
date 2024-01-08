@@ -328,6 +328,14 @@
 
     window.addEventListener('resize', handleResize);
 
+
+   document.querySelectorAll('.input-box').forEach(input => {
+        input.addEventListener('blur', () => {
+            restoreCanvas(lastState.canvasState);
+            restoreInputs(lastState.inputsState);
+            drawGrid();
+        });
+    });
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
@@ -773,6 +781,8 @@
             }, 500); // Ritardo di 500 ms, ad esempio
         }
     }
+    
+    
     
     
 
