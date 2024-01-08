@@ -327,15 +327,15 @@
     
 
    // window.addEventListener('resize', handleResize);
+   window.addEventListener('resize', function() {
+        var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-
-   document.querySelectorAll('.input-box').forEach(input => {
-        input.addEventListener('blur', () => {
-            restoreCanvas(lastState.canvasState);
-            restoreInputs(lastState.inputsState);
-            drawGrid();
-        });
+        alert('Larghezza: ' + width + ', Altezza: ' + height);
     });
+
+
+   
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
