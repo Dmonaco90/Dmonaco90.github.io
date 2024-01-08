@@ -130,6 +130,7 @@ body {
     margin: auto;
     width: 50%; /* Riduci la larghezza */
     transform: scale(1.1);
+    
 }
 
 .image-container {
@@ -148,6 +149,7 @@ body {
     line-height: normal; 
     padding: 0%;
     font-size: 75%;
+    background-color: transparent;
    
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
@@ -241,9 +243,9 @@ body {
     flex-direction: column;
 
     justify-content: center;
-    margin-left: auto; /* Spinge il contenitore verso destra */
+  
     max-width: 30%;
-    margin-right: 10%
+    margin-right: 1%
 }
 
 .dropdown {
