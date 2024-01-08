@@ -330,7 +330,8 @@
 
    document.querySelectorAll('.input-box').forEach(input => {
     input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.keyCode === 13) {
+        if (e.keyCode === 190 || e.keyCode === 110) {
+            // Il tasto punto è stato premuto
             // Il tasto "Invio" è stato premuto
             drawGrid();
             // Qui puoi inserire il codice per gestire l'evento
