@@ -572,21 +572,14 @@
     //document.getElementById('deleteDimensions').addEventListener('click', removeDimensions);
 
     // Event listeners per il canvas
-    canvas.addEventListener('mousedown', (e) => {
-        if (isDimensioning) {
-            addInputBox(e.offsetX, e.offsetY);
-        } else {
-            StartX = e.offsetX;
-            StartY = e.offsetY;
-            isDrawing = true;
-            lastX = e.offsetX;
-            lastY = e.offsetY;
-        }
-    });
+    canvas.addEventListener('mousedown', handleTouchStart);
 
     canvas.addEventListener('mousemove', (e) => {
         if (!isDrawing) return;
         [lastX, lastY] = getPosition(e); // Traccia solo le coordinate
+        console.log("entro mousemove: ")
+        console.log("lastX: "+lastX)
+        console.log("lastY: "+lastY)
     });
 
     canvas.addEventListener('mouseup', () => {
@@ -594,12 +587,16 @@
             drawGrid(); // Ridisegna la griglia
         }
         if (isDrawing) {
+          
+            console.log("diolastX: "+lastX)
+            console.log("diolasty: "+lastY)
             drawLineFromStartToEnd();
             StartX = lastX;
             StartY = lastY;
         }
         isDrawing = false;
         ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
+        
     });
 
     canvas.addEventListener('mouseout', stopDrawing);
@@ -722,8 +719,14 @@
 
     function drawLineFromStartToEnd() {
         let angle = calculateAngle(StartX, StartY, lastX, lastY);
+        console.log("drawLineFromStartToEnd: ")
+        console.log("angle: "+angle)
+        console.log("StartX: "+StartX)
+        console.log("StartY: "+StartY)
+        console.log("lastX: "+lastX)
+        console.log("lastY: "+lastY)
         let deltaX = Math.abs(lastX - StartX); // Differenza assoluta in X
-    
+        console.log("deltaX: "+deltaX)
         let threshold = 10; // Un valore soglia per decidere tra verticale e obliqua
     
         if (angle < 20 || angle > 160 && angle < 200 || angle > 340) {
@@ -811,7 +814,7 @@
         // Ricrea le input-box salvate
         inputsState.forEach(inputState => {
             const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
-            console.log("entro restoreInputs Ricrea")
+            console.log("entro restoreInputs Ricrea");
             const input = document.createElement('input');
             input.type = 'text';
             input.style.position = 'absolute';
@@ -854,18 +857,25 @@
     function getPosition(e) {
         let x, y;
         const rect = canvas.getBoundingClientRect();
-    
+        console.log("rect.left: "+rect.left)
+        console.log("rect.top: "+rect.top)
         if (e.touches && e.touches.length > 0) {
             const touch = e.touches[0];
             x = (touch.clientX - rect.left) * (canvas.width / rect.width);
             y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+            console.log("x: "+x)
+            console.log("y: "+y)
         } else {
-            x = (e.offsetX - rect.left) * (canvas.width / rect.width);
-            y = (e.offsetY - rect.top) * (canvas.height / rect.height);
+            // Usa direttamente e.offsetX e e.offsetY per gli eventi desktop
+            x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            console.log("x: "+x)
+            console.log("y: "+y)
         }
     
         return [x, y];
     }
+    
     
     
     
@@ -955,8 +965,8 @@
         const input = document.createElement('input');
         input.type = 'text';
         input.style.position = 'absolute';
-        input.style.left = `${x-42}px`; // Posizionamento rispetto al contenitore
-        input.style.top = `${y-25}px`;
+        input.style.left = `${x}px`; // Posizionamento rispetto al contenitore
+        input.style.top = `${y}px`;
         input.style.width = '50px';
         input.style.height = '20px';
         input.style.border = '1px solid #ccc';
