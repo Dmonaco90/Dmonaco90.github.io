@@ -489,17 +489,17 @@
         });
       
         const canvas = document.getElementById('drawingCanvas');
-        resizeCanvas(); // Imposta le dimensioni iniziali
-        window.addEventListener('resize', resizeCanvas); // Gestisci i cambiamenti di dimensione
+     
 
     });
     
-    function resizeCanvas() {
-        const parentDiv = document.getElementById('drawingCanvasParent');
-        canvas.width = parentDiv.offsetWidth;
-        canvas.height = parentDiv.offsetHeight;
-    }
-    //Inizio disegno libero
+    window.addEventListener('resize', (e) => {
+        if (document.activeElement.tagName === "INPUT") {
+            e.preventDefault();
+            console.log("resize preventDefault")
+            // Puoi anche inserire qui la logica per mantenere il canvas come desiderato
+        }
+    });
 
     let ctx;
     let StartX;
