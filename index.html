@@ -251,6 +251,7 @@
                     <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
                     <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
                     <button id="refresh" title="refresh"><i class="fa fa-save" aria-hidden="true"></i></button>
+                
                 </div>
                 <div id="drawingCanvasParent" style="position: relative;">
                     <canvas id="drawingCanvas" ></canvas>
@@ -329,19 +330,7 @@
 
    
 
-   document.querySelectorAll('.input-box').forEach(input => {
-        input.addEventListener('change', () => {
-            // Codice da eseguire quando il valore dell'input cambia e l'elemento perde il focus
-            drawGrid();
-        });
-    });
-   document.querySelectorAll('.input-box').forEach(input => {
-        input.addEventListener('blur', () => {
-            restoreCanvas(lastState.canvasState);
-            restoreInputs(lastState.inputsState);
-            drawGrid();
-        });
-    });
+  
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
@@ -515,10 +504,16 @@
     let ctx;
     let StartX;
     let StartY;
+ 
     const canvas = document.getElementById('drawingCanvas');
     const drawSection = document.getElementById('drawSection');
-    const gridSize = 20;
+    const gridSize = 20*2.3;
     let isDrawing = false, isDimensioning = false, lastX = 0, lastY = 0, isErasing = false;
+    
+
+
+
+
     document.getElementById('pencil').addEventListener('click', () => {
         isDrawing = true;
         isErasing = false;
@@ -617,8 +612,7 @@
         
     });
 
-
-
+  
 
     function initializeCanvas() {
         drawSection.style.display = 'flex';
@@ -627,6 +621,7 @@
             canvas.height = drawSection.offsetHeight;
             ctx = canvas.getContext('2d');
             canvas.setAttribute('data-initialized', 'true');
+            
             drawGrid();
             //setupEventListeners();
         }
@@ -676,6 +671,7 @@
 
     function drawGrid() {
         if (!ctx) return;
+        
         ctx.strokeStyle = '#eaeaea';
         ctx.lineWidth = 1;
         for (let x = 0; x <= canvas.width; x += gridSize) {
@@ -729,11 +725,16 @@
             // Altrimenti, considerala obliqua
             drawObliqueLineFrom(StartX, StartY, lastX, lastY);
         }
-        isCanvasModified = true;
+        lineeDisegnate.push({ StartX, StartY, lastX, lastY, angle });
     }
     
+
+    
+
+
     let undoStack = [];
     let isCanvasModified = false;
+    let lineeDisegnate = [];
 
     function saveState() {
         const currentCanvasState = canvas.toDataURL();
@@ -1022,7 +1023,16 @@
                 input.style.height = '20px'; // Aumenta l'altezza per la cattura
             });
             // Procedi con il resto del codice per l'aggiunta al carrello
-            html2canvas(document.querySelector('.measure-section.' + profiloSelezionato)).then(canvas => {
+
+                console.log ("profiloSelezionato: "+profiloSelezionato)
+            if (profiloSelezionato == 'libero') {
+                myCanvas = html2canvas(document.getElementById('drawingCanvas'))
+            } else {
+                myCanvas = html2canvas(document.querySelector('.measure-section.' + profiloSelezionato))
+            }
+            
+            
+            myCanvas.then(canvas => {
                 var immagineDataUrl = canvas.toDataURL("image/png", 1.0); // Alta qualità
                 document.querySelectorAll('.input-lato').forEach(function(input) {
                     input.style.height = ''; // Reimposta all'altezza originale
