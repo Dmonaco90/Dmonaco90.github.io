@@ -326,17 +326,21 @@
     var coloreDropdown = document.getElementById('colore');
     
 
+   // window.addEventListener('resize', handleResize);
 
-    document.querySelectorAll('.input-box').forEach(input => {
+   document.querySelectorAll('.input-box').forEach(input => {
         input.addEventListener('change', () => {
-           
+            // Codice da eseguire quando il valore dell'input cambia e l'elemento perde il focus
             drawGrid();
-            restoreCanvas();
-            restoreInputs();
-           
         });
     });
-   
+   document.querySelectorAll('.input-box').forEach(input => {
+        input.addEventListener('blur', () => {
+            restoreCanvas(lastState.canvasState);
+            restoreInputs(lastState.inputsState);
+            drawGrid();
+        });
+    });
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
@@ -895,7 +899,7 @@
         saveState();
         const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
         const input = document.createElement('input');
-        input.type = 'number';
+        input.type = 'text';
         input.style.position = 'absolute';
         input.style.left = `${x-42}px`; // Posizionamento rispetto al contenitore
         input.style.top = `${y-25}px`;
