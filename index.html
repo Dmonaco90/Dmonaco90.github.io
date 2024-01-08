@@ -325,6 +325,9 @@
     var spessoreDropdown = document.getElementById('spessore');
     var coloreDropdown = document.getElementById('colore');
     
+
+    window.addEventListener('resize', handleResize);
+
     materialeDropdown.addEventListener('change', function() {
         var materialeSelezionato = this.value;
         aggiornaTipologia(materialeSelezionato);
@@ -758,16 +761,21 @@
     }
 
     
-    function addInputFocusListener() {
-    document.querySelectorAll('.input-box').forEach(input => {
-        saveState(); // Salva lo stato prima che l'utente inizi a modificare l'input
-        input.addEventListener('focus', () => {
+    function handleResize() {
+        console.log("resize event");
+        
+        if (undoStack.length > 0) {
+            const lastState = undoStack[undoStack.length - 1]; // Accedi all'ultimo stato salvato
             restoreCanvas(lastState.canvasState);
             restoreInputs(lastState.inputsState);
-            
-        });
-    });
-}
+            drawGrid();
+        } else {
+            // Gestisci il caso in cui non ci sono stati salvati (ad esempio, ridisegna il canvas vuoto)
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+        }
+    }
+    
 
     function drawLine(ctx, x1, y1, x2, y2) {
         ctx.beginPath();
@@ -887,7 +895,7 @@
         input.style.zIndex = '100'; // Assicurati che sia sopra il canvas
         container.appendChild(input); // Aggiungi al contenitore esterno
         console.log("entro addInputBox ")
-        addInputFocusListener();
+        
     }
 
     function removeDimensions() {
