@@ -533,8 +533,9 @@
     });
 
     document.getElementById('refresh').addEventListener('click', () => {
+        
+        SaveInput();
         drawGrid();
-        saveState();
         if (undoStack.length > 0) {
             const lastState = undoStack[undoStack.length - 1];
             console.log("lastState:", lastState);
@@ -749,6 +750,23 @@
          // Controlla se il canvas è stato modificato o se le input-box sono cambiate
         if (isCanvasModified || !lastState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
             undoStack.push({ canvasState: currentCanvasState, inputsState: currentInputsState });
+            isCanvasModified = false; // Resetta il flag dopo aver salvato lo stato
+        }
+    }
+
+    function SaveInput() {
+        
+        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => ({
+            id: input.id,
+            value: input.value,
+            position: { left: input.style.left, top: input.style.top }
+        }));
+    
+        const lastState = undoStack[undoStack.length - 1];
+      
+         // Controlla se il canvas è stato modificato o se le input-box sono cambiate
+        if (isCanvasModified || !lastState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
+            undoStack.push({ canvasState: lastState.canvasState, inputsState: currentInputsState });
             isCanvasModified = false; // Resetta il flag dopo aver salvato lo stato
         }
     }
