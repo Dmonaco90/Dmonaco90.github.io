@@ -15,7 +15,7 @@
     <span id="conteggioCarrello" class="badge">0</span>
 </button>
 <div class="header">
-    <h1>Monaco's Inventory</h1>
+    <h2>Monaco's Inventory</h2>
 </div>
 <div class="input-container">
     <input type="text" class="input1" placeholder="Nome Cliente">
@@ -269,6 +269,7 @@
                     <option value="Alluminio">Alluminio</option>
                     <option value="Ferro">Ferro</option>
                     <option value="Acciaio">Acciaio</option>
+                    <option value="PVC">PVC</option>
                 </select>
             </div>
             <div class="dropdown-menus">
@@ -369,6 +370,8 @@
             opzioniTipologia = ['Zincata', 'SPO', 'Nera'];
         } else if (materiale === 'Acciaio') {
             opzioniTipologia = ['Satinato', 'Lucido', 'S.B', 'Grezzo'];
+        } else if (materiale === 'PVC') {
+            opzioniTipologia = ['Verniciato'];
         }
         aggiornaDropdown(tipologiaDropdown, opzioniTipologia);
     }
@@ -383,7 +386,7 @@
                 coloreDropdown.disabled = true;
             } else if (tipologia === 'Verniciato') {
                 opzioniSpessore = ['12/10'];
-                opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato'];
+                opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato','Marrone','Marrone Raf.'];
                 aggiornaDropdown(coloreDropdown, opzioniColore);
                 coloreDropdown.disabled = false;
             }
@@ -395,6 +398,12 @@
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['8/10', '10/10', '15/10', '20/10', '30/10'];
             coloreDropdown.disabled = true;
+        } else if (materiale === 'PVC') {
+            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+            opzioniSpessore = ['12/10'];
+            opzioniColore = ['Golden OAK', 'Noce', 'Bianco Venato', 'Rovere Sbiancato'];
+            aggiornaDropdown(coloreDropdown, opzioniColore);
+            coloreDropdown.disabled = false;
         }
     
         aggiornaDropdown(spessoreDropdown, opzioniSpessore);
@@ -496,7 +505,7 @@
     window.addEventListener('resize', (e) => {
         if (document.activeElement.tagName === "INPUT") {
             e.preventDefault();
-            console.log("resize preventDefault")
+            console.log("resize preventDefault  ")
             // Puoi anche inserire qui la logica per mantenere il canvas come desiderato
         }
     });
@@ -1001,7 +1010,7 @@
             if (tipologiaSelezionata === 'Verniciato') {
                 var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
         
-                if (!opzioneSelezionata) {
+                if (!opzioneSelezionata && !profiloSelezionato=="Linea") {
                     alert("Seleziona verso verniciatura.");
                     return; // Interrompe ulteriori azioni di questo evento
                 }
@@ -1600,7 +1609,7 @@
     });
 
     function getElementoChiaveCombinazione(elemento) {
-        if (elemento.materiale === "Alluminio" && elemento.tipologia === "Verniciato") {
+        if ((elemento.materiale === "Alluminio" ||elemento.materiale === "PVC" ) && elemento.tipologia === "Verniciato") {
             return `${elemento.materiale} ${elemento.colore}`;
         } else {
             return `${elemento.spessore} ${elemento.materiale} ${elemento.tipologia} ${elemento.colore}`;
