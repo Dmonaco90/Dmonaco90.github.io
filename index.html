@@ -729,10 +729,12 @@
             // Altrimenti, considerala obliqua
             drawObliqueLineFrom(StartX, StartY, lastX, lastY);
         }
+        isCanvasModified = true;
     }
     
     let undoStack = [];
-    
+    let isCanvasModified = false;
+
     function saveState() {
         const currentCanvasState = canvas.toDataURL();
         const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => ({
@@ -742,10 +744,11 @@
         }));
     
         const lastState = undoStack[undoStack.length - 1];
-    
-        // Controlla se lo stato corrente è diverso dall'ultimo stato salvato
-        if (!lastState || lastState.canvasState !== currentCanvasState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
+      
+         // Controlla se il canvas è stato modificato o se le input-box sono cambiate
+        if (isCanvasModified || !lastState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
             undoStack.push({ canvasState: currentCanvasState, inputsState: currentInputsState });
+            isCanvasModified = false; // Resetta il flag dopo aver salvato lo stato
         }
     }
     
@@ -765,6 +768,7 @@
             ctx.drawImage(img, 0, 0);
         };
         img.src = dataUrl;
+        console.log("entro restoreCanvas ")
     }
 
     
