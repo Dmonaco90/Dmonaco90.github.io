@@ -329,6 +329,16 @@
    // window.addEventListener('resize', handleResize);
 
    document.querySelectorAll('.input-box').forEach(input => {
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            // Il tasto "Invio" è stato premuto
+            drawGrid();
+            // Qui puoi inserire il codice per gestire l'evento
+        }
+    });
+});
+
+   document.querySelectorAll('.input-box').forEach(input => {
         input.addEventListener('change', () => {
             // Codice da eseguire quando il valore dell'input cambia e l'elemento perde il focus
             drawGrid();
