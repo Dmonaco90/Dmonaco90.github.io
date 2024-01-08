@@ -758,7 +758,16 @@
     }
 
     
-    
+    function addInputFocusListener() {
+    document.querySelectorAll('.input-box').forEach(input => {
+        saveState(); // Salva lo stato prima che l'utente inizi a modificare l'input
+        input.addEventListener('focus', () => {
+            restoreCanvas(lastState.canvasState);
+            restoreInputs(lastState.inputsState);
+            
+        });
+    });
+}
 
     function drawLine(ctx, x1, y1, x2, y2) {
         ctx.beginPath();
@@ -878,6 +887,7 @@
         input.style.zIndex = '100'; // Assicurati che sia sopra il canvas
         container.appendChild(input); // Aggiungi al contenitore esterno
         console.log("entro addInputBox ")
+        addInputFocusListener();
     }
 
     function removeDimensions() {
