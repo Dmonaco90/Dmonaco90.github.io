@@ -1091,6 +1091,7 @@
                 document.getElementById('conteggioCarrello').textContent = carrello.length;
                 var btn = document.getElementById('btnAggiungiCarrello');
                 btn.textContent = 'Aggiunto!';
+                document.getElementById('btnMostraCarrello').style.display = 'block';
                 setTimeout(function() {
                     btn.textContent = 'Aggiungi al Carrello';
                 }, 2000);

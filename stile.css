@@ -177,13 +177,14 @@ body {
     z-index: 1000;
     padding: 1rem; /* Aumenta il padding per dispositivi touch */
     font-size: 1.5rem; /* Aumenta la dimensione del testo */
+    display: none;
 }
 
 .badge {
     position: absolute;
     top: -1%; /* Ajusta queste proprietà in base alle tue esigenze */
-    right: -1%;
-    padding: 0.5;
+    right: 0%;
+    padding: 4.5%;
     border-radius: 50%;
     background-color: red;
     color: white;
