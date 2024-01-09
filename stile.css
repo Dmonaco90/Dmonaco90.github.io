@@ -11,6 +11,12 @@ body {
     }
 }
 
+@media (min-width: 800px) { /* 768px è un breakpoint comune per dispositivi più grandi */
+    body {
+        transform: scale(1.1);
+    }
+}
+
 .header {
     background-color: #f1f1f1;
     padding: 2px;
@@ -153,6 +159,10 @@ body {
    
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
+
+
+
+
 
 .button-section {
     text-align: center;
