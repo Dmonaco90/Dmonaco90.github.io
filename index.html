@@ -964,9 +964,10 @@
         const container = document.getElementById('drawingCanvasParent'); // Usa il contenitore esterno
         const input = document.createElement('input');
         input.type = 'text';
+        input.className= 'input-lato libero';
         input.style.position = 'absolute';
-        input.style.left = `${x}px`; // Posizionamento rispetto al contenitore
-        input.style.top = `${y}px`;
+        input.style.left = `${x-30}px`; // Posizionamento rispetto al contenitore
+        input.style.top = `${y-13}px`;
         input.style.width = '50px';
         input.style.height = '20px';
         input.style.border = '1px solid #ccc';
@@ -1063,7 +1064,7 @@
 
                 console.log ("profiloSelezionato: "+profiloSelezionato)
             if (profiloSelezionato == 'libero') {
-                myCanvas = html2canvas(document.getElementById('drawingCanvas'))
+                myCanvas = html2canvas(document.getElementById('drawingCanvasParent'))
             } else {
                 myCanvas = html2canvas(document.querySelector('.measure-section.' + profiloSelezionato))
             }
