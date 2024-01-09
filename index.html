@@ -79,14 +79,14 @@
             <div class="image-container">
                 <img src="img\omega5.png" alt="u">
                 <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; left: 25%; width: 15%;" placeholder="x">
-                <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; right: 25%; width: 15%;" placeholder="x">
+                <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; right: 13%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato2-Omega5" style="top: 75%; left: 47%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 59%; right: 10%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 59%; left: 10%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 64%; right: 23%; width: 15%; text-align:center;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 64%; left: 24%; width: 15%;text-align:right;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; left: 1%; width: 15%;text-align:right;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; right: 1%; width: 15%;" placeholder="x">
+                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 64%; left: 20%; width: 15%;text-align:right;" placeholder="x">
+                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; left: -1%; width: 15%;text-align:right;" placeholder="x">
+                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; right: -1%; width: 15%;" placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
                     <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 22%; left: 83%;">
                     <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 35%; left: 69%;">
@@ -190,7 +190,7 @@
                 <input type="number" class="input-lato lato-OmegaInt" id="lato1-OmegaInt" style="top: 25%; left: 20%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato2-OmegaInt" style="top: 80%; left: 50%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato3-OmegaInt" style="top: 25%; right: 15%; width: 15%;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato4-OmegaInt" style="top: 50%; right: 1%; width: 15%;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaInt" id="lato4-OmegaInt" style="top: 50%; right: -1%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato5-OmegaInt" style="top: 50%; left: 3%; width: 15%;" placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
@@ -1131,7 +1131,7 @@
                 img = 'img\\' + elemento.immagineDataUrl
                 console.log("img: ", img);
                 var htmlProfilo = '<div class="elementoCarrello">' +
-                    '<img src="'+ elemento.immagineDataUrl + '" alt="Profilo xto" class="imgCarrello">';  
+                    '<img src="'+ elemento.immagineDataUrl + '" alt="Profilo Quotato" class="imgCarrello">';  
             
         
                 var dettagliHtml = '<div class="dettagliProfilo">';
@@ -1155,7 +1155,7 @@
 
                 // Aggiungi l'icona di rimozione al profilo HTML
                 var htmlProfilo = '<div class="elementoCarrello">' + iconaRimozioneHtml +
-                                '<img src="' + elemento.immagineDataUrl + '" alt="Profilo xto" class="imgCarrello">' +
+                                '<img src="' + elemento.immagineDataUrl + '" alt="Profilo Quotato"  class="imgCarrello">' +
                                 dettagliHtml + '</div>';
 
                 containerElementi.innerHTML += htmlProfilo;
