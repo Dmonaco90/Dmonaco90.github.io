@@ -5,15 +5,16 @@ body {
     background-color: #f9f9f9; /* Colore di sfondo leggero */
 }
 
-@media (min-width: 1024px) { /* 768px è un breakpoint comune per dispositivi più grandi */
-    body {
-        transform: scale(1.2);
-    }
-}
+
 
 @media (min-width: 800px) { /* 768px è un breakpoint comune per dispositivi più grandi */
     body {
-        transform: scale(1.1);
+        transform: scale(1.0);
+    }
+    .input-section2{
+        width: 30%;
+        height: 2vw;
+        margin-top:5vw;
     }
 }
 
@@ -69,16 +70,27 @@ body {
 }
 
 
-
-.profile-grid {
-    display: flex; /* Usa flexbox anziché grid */
-    overflow-x: auto; /* Permette lo scorrimento orizzontale */
-    gap: 5px; /* Mantiene la stessa distanza tra i profili */
-    margin-bottom: 20px;
-    align-items: center; /* Centra gli elementi verticalmente */
-    height: 22vh;
+@media (max-width: 600px) {
+    .profile-grid {
+        display: flex; /* Usa flexbox anziché grid */
+        overflow-x: auto; /* Permette lo scorrimento orizzontale */
+        gap: 5px; /* Mantiene la stessa distanza tra i profili */
+        margin-bottom: 20px;
+        align-items: center; /* Centra gli elementi verticalmente */
+        height: 22vh;
+    }
 }
 
+@media (min-width: 601px) {
+    .profile-grid {
+        display: flex; /* Usa flexbox anziché grid */
+        overflow-x: auto; /* Permette lo scorrimento orizzontale */
+        gap: 1%; /* Mantiene la stessa distanza tra i profili */
+        margin-bottom: 1.2vh;
+        align-items: center; /* Centra gli elementi verticalmente */
+        height: 32vh;
+    }
+}
 
 
 .profile {
@@ -154,12 +166,24 @@ body {
     margin: 0;
     line-height: normal; 
     padding: 0%;
-    font-size: 75%;
+    font-size: 3.5vw;
     background-color: transparent;
    
     /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
 }
 
+@media (min-width: 600px) {
+    .input-lato {
+        position: absolute;
+        margin: 0;
+        line-height: normal; 
+        padding: 0%;
+        font-size:  0.7vw;
+        background-color: transparent;
+    
+        /* Stili aggiuntivi per gli input qui (dimensione, bordi, ecc.) */
+    }
+}
 
 
 
@@ -181,6 +205,13 @@ body {
     text-align: center;
     margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+    #numPezzi,#altezza {
+        width: 50px;
+    }
+}
+
 
 #btnMostraCarrello {
     position: fixed;

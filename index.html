@@ -112,8 +112,8 @@
             <div class="image-container">
                 <img src="img\OmegaAsi2.png" alt="u">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 29%; right: 8%; width: 15%;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 33%; right: 27%; width: 15%;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 55%; right: 8%; width: 15%;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 33%; right: 24%; width: 15%;text-align: right;" placeholder="x">
+                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 55%; right: 7%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 55%; left: 12%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 68%; left: 47%; width: 15%;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 39%; right: 18%; width: 15%;" placeholder="x">
@@ -293,12 +293,12 @@
 
 
     <div class="input-section" id="input-section">
-        <div>
-            <input type="number" id="numPezzi" style="width: 50px;" placeholder="N. Pezzi">
-            <input type="number" id="altezza" style="width: 50px;" placeholder="Altezza">
-            <button id="btnAggiungiCarrello">Aggiungi al Carrello</button>
+        
+            <input type="number"  class="input-section2" id="numPezzi"  placeholder="N. Pezzi">
+            <input type="number"  class="input-section2" id="altezza"  placeholder="Altezza">
+            <button id="btnAggiungiCarrello" class="input-section2">Aggiungi al Carrello</button>
            
-        </div>
+     
     </div>
 </div>
 <div class="risultatiSviluppo" id="risultatiSviluppo" style="display: none;">
@@ -1066,7 +1066,7 @@
             if (profiloSelezionato == 'libero') {
                 myCanvas = html2canvas(document.getElementById('drawingCanvasParent'))
             } else {
-                myCanvas = html2canvas(document.querySelector('.measure-section.' + profiloSelezionato))
+                myCanvas = html2canvas(document.querySelector('.image-container'))
             }
             
             
@@ -1568,8 +1568,9 @@
                         if (parti.length === 4) {
                             // Ferro o Acciaio
                             [spessore, materiale, tipologia, colore] = parti;
-                        } else if (parti.length === 2) {
+                        } else if (parti.length === 2 ||parti.length ===3 ) {
                             // Alluminio
+                            console.log("colore= "+colore );
                             [materiale, colore] = parti;
                             spessore = "12/10"; // Se vuoi usare un valore predefinito
                         }
