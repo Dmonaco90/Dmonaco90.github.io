@@ -1510,20 +1510,31 @@
            console.log("numeroTotaleElementi: "+numeroTotaleElementi)
            console.log("numeroPagine: "+numeroPagine)
            var elementiStampati = 0; // Variabile per tenere traccia degli elementi stampati
+           var indiceCorrente = 0; 
            
            for (var pagina = 0; pagina < numeroPagine; pagina++) {    
             
-                    finestraStampa.document.write('<div class="container">');
+                    finestraStampa.document.write('<div class="container" style="margin-bottom: 40px;">');
+
                     finestraStampa.document.write('<div class="header-info" style="font-weight: bold;"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span></div>');
                 
 
                 
         
+                    var contatore = 1;
                     var profiliMisurazioniGruppi = materialeGruppi[materiale];
+                    var chiaviProfiloMisurazione = Object.keys(profiliMisurazioniGruppi);
+                
                     var elementoContatore = 0;
-                    
+           
         
-                    for (var chiaveProfiloMisurazione in profiliMisurazioniGruppi) {
+                    while (indiceCorrente < chiaviProfiloMisurazione.length && contatore <= 8) {
+                        var chiaveProfiloMisurazione = chiaviProfiloMisurazione[indiceCorrente];
+                        console.log("Pagina: " + pagina + ", Giro del ciclo: " + contatore + ", Chiave: " + chiaveProfiloMisurazione + ", Indice corrente: " + indiceCorrente);
+                
+                        
+                        
+                        indiceCorrente++;
                         var gruppo = profiliMisurazioniGruppi[chiaveProfiloMisurazione];
                         var percentualeAltezza = 100 / gruppo.elementi.length;
 
@@ -1546,10 +1557,9 @@
                                 var infoSectionContent = `${gruppo.materiale} ${gruppo.spessore} ${gruppo.tipologia} ${gruppo.colore}`;    
                             }
                         
-                    
-                            elementoContatorePerPagina += gruppo.elementi.length;
-                            console.log("elementoContatorePerPagina: "+elementoContatorePerPagina)
-                            console.log("giro")
+                            
+                            
+                         
                             gruppo.elementi.forEach(function(elemento) {
                                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
                                 console.log(`varScalatura  ${varScalatura},profilo ${elemento.profilo}, spessore${elemento.spessore} `);
@@ -1575,8 +1585,17 @@
                         if (elementoContatore % 2 === 0 || elementoContatore === Object.keys(profiliMisurazioniGruppi).length) {
                             finestraStampa.document.write('</div>'); // Close the row
                         }
+
+                          // Condizione per limitare a 8 elementi per pagina
+                        if (contatore >= 8) {
+                            break; // Interrompe il ciclo interno, passando alla pagina successiva
+                        }
+                        contatore++;
+
+
+
                     }
-                    
+                        
                     // Aggiungi stile CSS per il footer
                     // All'interno della funzione che genera il footer
                     finestraStampa.document.write('<div class="footer">');
@@ -1624,7 +1643,10 @@
                        
                         finestraStampa.document.write('</div>'); // Close the container
                    
-                    
+                        if (indiceCorrente >= chiaviProfiloMisurazione.length) {
+                            // Fine dell'oggetto, esci dal ciclo esterno
+                            break;
+                        }   
                 
             }
                
