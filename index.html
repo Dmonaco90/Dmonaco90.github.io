@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
 
 
 <body>
@@ -114,10 +116,10 @@
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 32%; right: 8%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 43%; right: 22%;  text-align: right;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 69%; right: 0%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 68%; left: 10%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 68%; left: 9%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 83%; left: 47%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 56%; right: 18%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 19%; right: 9%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 55%; right: 18%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 18%; right: 9%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
                     <img src="img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 47%; left: 25%;">
                     <img src="img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 62%; left: 58%;">
@@ -1058,56 +1060,59 @@
                 return;
             }
             
-            // Procedi con il resto del codice per l'aggiunta al carrello
+            //screenshot del profilo quotato
 
-                console.log ("profiloSelezionato: "+profiloSelezionato)
             if (profiloSelezionato == 'libero') {
-                myCanvas = html2canvas(document.getElementById('drawingCanvasParent'))
+                var elemento = document.getElementById('drawingCanvasParent');
             } else {
-                myCanvas = html2canvas(myCanvas = document.querySelector('.image-container.' + profiloSelezionato));
+                var elemento = document.querySelector('.image-container.' + profiloSelezionato);
             }
             
+            domtoimage.toPng(elemento)
+                .then(function (dataUrl) {
+                    var immagineDataUrl = dataUrl;
+                    
+                    var datiMisurazioni = {};
+                    document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
+                        if (input.value !== '') {
+                            datiMisurazioni["Lato" + (index + 1)] = input.value;
+                        }
+                    });
             
-            myCanvas.then(canvas => {
-                var immagineDataUrl = canvas.toDataURL("image/png", 1.0); // Alta qualità
-              
-        
-                var datiMisurazioni = {};
-                document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
-                    if (input.value !== '') {
-                        datiMisurazioni["Lato" + (index + 1)] = input.value;
-                    }
+                    var datiCarrello = {
+                        profilo: profiloSelezionato,
+                        immagineDataUrl: immagineDataUrl,
+                        pezzi: numPezzi.value,
+                        altezza: altezza.value,
+                        spessore: dropdown1.value,
+                        materiale: dropdown2.value,
+                        tipologia: dropdown3.value,
+                        colore: dropdown4.value,
+                        datiMisurazioni: datiMisurazioni
+                    };
+            
+                    carrello.push(datiCarrello);
+                    console.log("dati aggiunti: ", carrello);
+            
+                    // Aggiorna il conteggio del carrello e resetta il pulsante e le input box
+                    document.getElementById('conteggioCarrello').textContent = carrello.length;
+                    var btn = document.getElementById('btnAggiungiCarrello');
+                    btn.textContent = 'Aggiunto!';
+                    document.getElementById('btnMostraCarrello').style.display = 'block';
+                    setTimeout(function() {
+                        btn.textContent = 'Aggiungi al Carrello';
+                    }, 2000);
+            
+                    // Reset delle input box dopo aver salvato i dati
+                    document.querySelectorAll('#numPezzi, #altezza').forEach(function(input) {
+                        input.value = '';
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Si è verificato un errore durante la conversione dell\'immagine:', error);
                 });
-        
-                var datiCarrello = {
-                    profilo: profiloSelezionato,
-                    immagineDataUrl: immagineDataUrl,
-                    pezzi: numPezzi.value,
-                    altezza: altezza.value,
-                    spessore: dropdown1.value,
-                    materiale: dropdown2.value,
-                    tipologia: dropdown3.value,
-                    colore: dropdown4.value,
-                    datiMisurazioni: datiMisurazioni
-                };
-        
-                carrello.push(datiCarrello);
-                console.log("dati aggiunti: ", carrello);
-        
-                // Aggiorna il conteggio del carrello e resetta il pulsante e le input box
-                document.getElementById('conteggioCarrello').textContent = carrello.length;
-                var btn = document.getElementById('btnAggiungiCarrello');
-                btn.textContent = 'Aggiunto!';
-                document.getElementById('btnMostraCarrello').style.display = 'block';
-                setTimeout(function() {
-                    btn.textContent = 'Aggiungi al Carrello';
-                }, 2000);
-        
-                // Reset delle input box dopo aver salvato i dati
-                document.querySelectorAll('#numPezzi, #altezza').forEach(function(input) {
-                    input.value = '';
-                });
-            });
+                
+           
         });
         
         
