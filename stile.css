@@ -32,6 +32,7 @@ body {
     padding: 2px;
     margin-bottom: 2px;
     margin-top: 2px;
+
     
 }
 .profile-section h2 {
@@ -77,7 +78,7 @@ body {
         gap: 5px; /* Mantiene la stessa distanza tra i profili */
         margin-bottom: 20px;
         align-items: center; /* Centra gli elementi verticalmente */
-        height: 22vh;
+        height: 20vh;
     }
 }
 
@@ -207,7 +208,7 @@ body {
 .input-section {
 
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 @media (max-width: 768px) {
