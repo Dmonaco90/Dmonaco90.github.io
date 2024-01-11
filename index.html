@@ -50,9 +50,9 @@
         <div class="measure-section zeta" id="drawSection">
             <div class="image-container zeta">
                 <img src="img\zeta2.png" alt="zeta">
-                <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 8%; left: 10%;  " placeholder="x">
+                <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 8%; left: 10%;   " placeholder="x">
                 <input type="number" class="input-lato lato-zeta" id="lato2-zeta" style="top: 82%; left: 69%;  " placeholder="x">
-                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 52%; " placeholder="x">
+                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 52%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
                     <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta1" style="position: absolute;  margin: 0; width: auto; top: 63%; left: 50%;">
                     <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta2" style="position: absolute;  margin: 0; width: auto; top: 19%; left: 37%;">
@@ -1057,9 +1057,7 @@
                 alert(messaggioErrore);
                 return;
             }
-            document.querySelectorAll('.input-lato').forEach(function(input) {
-                input.style.height = '20px'; // Aumenta l'altezza per la cattura
-            });
+            
             // Procedi con il resto del codice per l'aggiunta al carrello
 
                 console.log ("profiloSelezionato: "+profiloSelezionato)
@@ -1072,9 +1070,7 @@
             
             myCanvas.then(canvas => {
                 var immagineDataUrl = canvas.toDataURL("image/png", 1.0); // Alta qualità
-                document.querySelectorAll('.input-lato').forEach(function(input) {
-                    input.style.height = ''; // Reimposta all'altezza originale
-                });
+              
         
                 var datiMisurazioni = {};
                 document.querySelector('.measure-section.' + profiloSelezionato).querySelectorAll('.input-lato').forEach(function(input, index) {
