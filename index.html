@@ -36,6 +36,7 @@
         <div class="profile" style="background-image: url('img\\L.png');"data-target="L"></div>
         <div class="profile" style="background-image: url('img\\OmegaAsi.png');" data-target="OmegaAsi"></div>
         <div class="profile" style="background-image: url('img\\OmegaInt.png');"data-target="OmegaInt"></div>
+        <div class="profile" style="background-image: url('img\\OmegaIntAsi.png');"data-target="OmegaIntAsi"></div>
         <div class="profile" style="background-image: url('img\\u.png');"data-target="u"></div>
         <div class="profile" style="background-image: url('img\\Linea.png');"data-target="Linea"></div>
         <div class="profile" style="background-image: url('img\\OmegaAsi2.png');" data-target="OmegaAsi2"></div>
@@ -198,6 +199,22 @@
                 <input type="number" class="input-lato lato-OmegaInt" id="lato3-OmegaInt" style="top: 25%; right: 15%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato4-OmegaInt" style="top: 50%; right: -1%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato5-OmegaInt" style="top: 50%; left: 3%;  " placeholder="x">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+                <div class="scelteVerniciato" style="display: none;">
+                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
+                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
+                 </div>
+            </div>
+        </div>
+
+        <div class="measure-section OmegaIntAsi" id="drawSection">
+            <div class="image-container OmegaIntAsi">
+                <img src="img\OmegaIntAsi.png" alt="OmegaIntAsi">
+                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato1-OmegaIntAsi" style="top: 17%; left: 35%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato2-OmegaIntAsi" style="top: 80%; left: 50%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato3-OmegaIntAsi" style="top: 34%; right: 15%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato4-OmegaIntAsi" style="top: 50%; right: -1%;  " placeholder="x">
+                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato5-OmegaIntAsi" style="top: 50%; left: 3%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
                     <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
@@ -393,7 +410,10 @@
     var coloreDropdown = document.getElementById('colore');
     
 
-   
+    function triggerChangeEvent(element) {
+        var event = new Event('change');
+        element.dispatchEvent(event);
+    }
 
   
     materialeDropdown.addEventListener('change', function() {
@@ -465,25 +485,34 @@
     function aggiornaSpessoreColore(materiale, tipologia) {
         var opzioniSpessore, opzioniColore;
         
-        if (materiale === 'Alluminio') {
-            if (tipologia === 'Grezzo') {
-                resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
-                opzioniSpessore = ['10/10', '15/10', '20/10', '30/10'];
+        if (materiale === 'Alluminio' ) {
+            if (tipologia === 'Verniciato') {
+                  // Resetta il colore dopo il cambio di materiale
+                  opzioniSpessore = ['12/10'];
+                  opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato','Marrone','Marrone Raf.'];
+                  aggiornaDropdown(coloreDropdown, opzioniColore);
+                  coloreDropdown.disabled = false;
+                
+            } else  {
+                resetColoreDropdown();
+                opzioniSpessore = ['10/10', '12/10', '15/10', '20/10', '30/10'];
                 coloreDropdown.disabled = true;
-            } else if (tipologia === 'Verniciato') {
-                opzioniSpessore = ['12/10'];
-                opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato','Marrone','Marrone Raf.'];
-                aggiornaDropdown(coloreDropdown, opzioniColore);
-                coloreDropdown.disabled = false;
             }
-        } else if (materiale === 'Ferro') {
+
+            
+            
+        } else if (materiale === 'Acciaio') {
+            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+            opzioniSpessore = ['10/10', '12/10', '15/10', '20/10', '30/10'];
+            coloreDropdown.disabled = true;
+        
+        } 
+        
+        else if (materiale === 'Ferro') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['8/10', '10/10', '12/10', '15/10', '20/10', '25/10', '30/10', '40/10', '50/10', '60/10', '80/10', '100/10'];
             coloreDropdown.disabled = true;
-        } else if (materiale === 'Acciaio') {
-            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
-            opzioniSpessore = ['8/10', '10/10', '15/10', '20/10', '30/10'];
-            coloreDropdown.disabled = true;
+        
         } else if (materiale === 'PVC') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['12/10'];
@@ -677,7 +706,7 @@
             StartY = lastY;
         }
         isDrawing = false;
-        ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
+        ctx.lineWidth = 4; // Ripristina la larghezza della linea per il disegno
         
     });
 
@@ -697,7 +726,7 @@
             StartY = lastY;
         }
         isDrawing = false;
-        ctx.lineWidth = 2; // Ripristina la larghezza della linea per il disegno
+        ctx.lineWidth = 4; // Ripristina la larghezza della linea per il disegno
         
     });
 
@@ -755,7 +784,7 @@
         isDimensioning = false;
         ctx.globalCompositeOperation = 'source-over'; // Modalità di disegno normale
         ctx.strokeStyle = '#000000'; // Colore delle linee del disegno
-        ctx.lineWidth = 2; // Spessore delle linee
+        ctx.lineWidth = 4; // Spessore delle linee
     }
 
     function drawGrid() {
@@ -816,6 +845,7 @@
             drawObliqueLineFrom(StartX, StartY, lastX, lastY);
         }
         lineeDisegnate.push({ StartX, StartY, lastX, lastY, angle });
+        saveState();
     }
     
 
@@ -834,13 +864,13 @@
             position: { left: input.style.left, top: input.style.top }
         }));
     
-        const lastState = undoStack[undoStack.length - 1];
-      
-         // Controlla se il canvas è stato modificato o se le input-box sono cambiate
-        if (isCanvasModified || !lastState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
+        const lastState = undoStack.length > 0 ? undoStack[undoStack.length - 1] : null;
+
+        if (!lastState || lastState.canvasState !== currentCanvasState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
             undoStack.push({ canvasState: currentCanvasState, inputsState: currentInputsState });
-            isCanvasModified = false; // Resetta il flag dopo aver salvato lo stato
+            console.log('Stato salvato. Contenuto attuale di undoStack:', undoStack);
         }
+
     }
 
     function SaveInput() {
@@ -986,7 +1016,7 @@
     function startDrawing(x, y) {
         // Reimposta le proprietà di stile per il disegno
         ctx.strokeStyle = '#000000'; // Colore nero per il disegno
-        ctx.lineWidth = 2;           // Spessore della linea per il disegno
+        ctx.lineWidth = 4;           // Spessore della linea per il disegno
     
         ctx.beginPath();
         ctx.moveTo(x, y);
@@ -1039,7 +1069,7 @@
         input.style.zIndex = '100';
     
         container.appendChild(input);
-
+        saveState();
     }
     
 
@@ -1084,10 +1114,10 @@
             var tipologiaSelezionata = document.getElementById('tipologia').value;
 
             // Controlla se la tipologia è "Verniciato" e se almeno una delle opzioni è stata selezionata
-            if (tipologiaSelezionata === 'Verniciato') {
+            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B' ) {
                 var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
-        
-                if (!opzioneSelezionata && !profiloSelezionato=="Linea") {
+                console.log(opzioneSelezionata)
+                if (opzioneSelezionata === null && profiloSelezionato !== "Linea") {
                     alert("Seleziona verso verniciatura.");
                     return; // Interrompe ulteriori azioni di questo evento
                 }
@@ -1223,11 +1253,13 @@
 
                 // Aggiungi un'icona di rimozione
                 var iconaRimozioneHtml = '<span class="rimuovi-icona" data-indice="' + indice + '">&#10005;</span>';
+                // Aggiungi un'icona di modifica
+                var iconaModificaHtml = '<span class="modifica-icona" data-indice="' + indice + '">&#9998;</span>'; // Usa un simbolo appropriato per la modifica
 
-                // Aggiungi l'icona di rimozione al profilo HTML
-                var htmlProfilo = '<div class="elementoCarrello">' + iconaRimozioneHtml +
-                                '<img src="' + elemento.immagineDataUrl + '" alt="Profilo Quotato"  class="imgCarrello">' +
-                                dettagliHtml + '</div>';
+                // Modifica il profilo HTML per includere l'icona di modifica
+                var htmlProfilo = '<div class="elementoCarrello">' + iconaRimozioneHtml + iconaModificaHtml +
+                    '<img src="' + elemento.immagineDataUrl + '" alt="Profilo Quotato" class="imgCarrello">' +
+                    dettagliHtml + '</div>';
 
                 containerElementi.innerHTML += htmlProfilo;
             });
@@ -1246,6 +1278,73 @@
                     }
                 });
             });
+
+            // Aggiungi event listener per le icone di modifica
+            document.querySelectorAll('.modifica-icona').forEach(function(icona) {
+                icona.addEventListener('click', function() {
+                    var indice = this.getAttribute('data-indice');
+                    var elementoDaModificare = carrello[indice]; // Raccogli i dati dell'elemento
+
+                    if (confirm('Vuoi modificare questo elemento?')) {
+
+                        carrello.splice(indice, 1);
+                        aggiornaVisualizzazioneCarrello(); 
+                        aggiornaBadgeCarrello();
+                        // Nascondi la sezione del carrello e mostra le sezioni per aggiungere nuovi elementi
+                        document.getElementById('dettagliCarrello').style.display = 'none';
+                        document.getElementById('profile-section').style.display = 'block';
+                        document.getElementById('input-section').style.display = 'block';
+                        document.getElementById('measureSection').style.display = 'block';
+                        console.log('Contenuto del carrello:', carrello);
+                        // Imposta i valori nei campi di input e dropdown
+
+                          // Resettare tutti gli input a null quando si entra nella modalità di modifica
+                        document.querySelectorAll('.input-lato').forEach(function(input) {
+                            input.value = '';
+                        });
+
+
+                        document.getElementById('colore').value = '';
+                        document.getElementById('spessore').value = '';
+                        // Resettare e innescare l'evento change per le dropdown
+                        document.getElementById('materiale').value = '';
+                        
+                        document.getElementById('tipologia').value = '';
+            
+                        document.getElementById('materiale').value = elementoDaModificare.materiale;
+                        triggerChangeEvent(document.getElementById('materiale'));
+                        document.getElementById('tipologia').value = elementoDaModificare.tipologia;
+                        triggerChangeEvent(document.getElementById('tipologia'));
+                        document.getElementById('spessore').value = elementoDaModificare.spessore;
+                        document.getElementById('colore').value = elementoDaModificare.colore;
+                        document.getElementById('numPezzi').value = elementoDaModificare.pezzi;
+                        document.getElementById('altezza').value = elementoDaModificare.altezza;
+            
+                        // Gestione della visualizzazione del profilo selezionato
+                        var targetClass = elementoDaModificare.profilo; // Assumendo che 'profilo' sia una proprietà di elementoDaModificare
+                        profiloSelezionato = targetClass;
+                        if (profiloSelezionato === 'libero') {
+                            initializeCanvas();
+                        }
+                        // Nascondi tutte le sezioni
+                        document.querySelectorAll('.measure-section').forEach(function(section) {
+                            section.style.display = 'none';
+                        });
+                        // Mostra la sezione corrispondente
+                        var targetSection = document.querySelector('.' + targetClass);
+                        if (targetSection) {
+                            targetSection.style.display = 'flex';
+                            document.querySelectorAll('.dropdown-container').forEach(function(element) {
+                                element.style.display = 'flex';
+                            });
+                            resetScelteVerniciato();
+                        }
+                        targetSection.scrollIntoView();
+                    }
+                });
+            });
+
+
         }
 
         // Inizialmente popola la visualizzazione del carrello
@@ -1253,19 +1352,7 @@
         aggiornaBadgeCarrello(); // Aggiorna il badge del carrello
     });
         
-         // Aggiungi event listener per le icone di rimozione
-            document.querySelectorAll('.rimuovi-icona').forEach(function(icona) {
-                icona.addEventListener('click', function() {
-                    var indice = this.getAttribute('data-indice');
-                    if (confirm('Confermi la rimozione dell\'elemento dal carrello?')) {
-                        // Rimuovi l'elemento dal carrello
-                        carrello.splice(indice, 1);
-
-                        // Aggiorna la visualizzazione del carrello
-                        // Qui puoi chiamare nuovamente la funzione di visualizzazione del carrello o aggiornare direttamente il DOM
-                    }
-                });
-            });
+         
        
 
         function getUrlImmagine(profilo) {
@@ -1373,6 +1460,18 @@
                 }
             break;   
             case "OmegaInt":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 8;
+                    case "15/10": return 10;
+                    case "20/10": return 14;
+                    case "30/10": return 21;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break; 
+            case "OmegaIntAsi":
                 switch(spessore) {
                     case "6/10":
                     case "8/10":
@@ -1867,7 +1966,10 @@
             pesoPerMetroQuadro = 8; // peso in kg per metro quadro
         } else if (materiale === "Alluminio") {
             pesoPerMetroQuadro = 2.834; // peso in kg per metro quadro
-        } else {
+        } 
+        else if (materiale === "PVC") {
+            pesoPerMetroQuadro = 2.97; // peso in kg per metro quadro
+        }else {
             return 0; // Valore predefinito per altri materiali
         }
     
@@ -1889,7 +1991,7 @@
         var contenitoriScelte = document.querySelectorAll('.scelteVerniciato');
     
         contenitoriScelte.forEach(function(contenitore) {
-            if (tipologiaSelezionata === 'Verniciato') {
+            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B') {
                 contenitore.style.display = 'block'; // Mostra le opzioni per Verniciato
             } else {
                 contenitore.style.display = 'none'; // Nascondi le opzioni
