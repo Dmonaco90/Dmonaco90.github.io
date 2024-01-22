@@ -2090,7 +2090,22 @@
         });
     });
     
+    document.getElementById('sendEmailButton').addEventListener('click', function() {
+        sendEmail();
+    });
   
+    function sendEmail() {
+        fetch('http://indirizzo-del-tuo-server-backend/send_email', {
+            method: 'POST', // o GET, a seconda del tuo endpoint
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ /* dati da inviare, se necessari */ })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error) => console.error('Error:', error));
+    }
     
     
         
