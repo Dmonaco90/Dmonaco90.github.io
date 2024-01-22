@@ -16,9 +16,7 @@
     <i class="fa fa-shopping-cart"></i>
     <span id="conteggioCarrello" class="badge">0</span>
 </button>
-<div class="header">
-    <h2>Monaco's Inventory</h2>
-</div> 
+
 <div class="input-container">
     <input type="text" class="input1" placeholder="Nome Cliente">
     <input type="text" class="input2" placeholder="Riferimento Ordine">-
@@ -412,10 +410,15 @@
         <!-- Dettagli degli elementi del carrello qui -->
     </div>
     <button id="btnAggiungiElementi">Aggiungi Altro</button>
-    <button id="downloadButton">Scarica Ordine</button>
-    <button id="btnInviaOrdine">Invia Ordine e Condividi</button>
+      <!--  <button id="downloadButton">Scarica Ordine</button>
+    <button id="btnInviaOrdine">Invia Ordine e Condividi</button>-->
     <button id="btnSviluppo">Sviluppo</button> 
 </div>
+
+<footer>
+    <p>&copy; 2024 Daniele Monaco</p>
+    <p><a href="termini-di-servizio.html" target="_blank">Termini di Servizio</a></p>
+</footer>
 
 
 
@@ -1413,53 +1416,7 @@
             // ... altre sezioni da mostrare se necessario ...
         });
         
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            // Qui puoi implementare la logica per lo sviluppo o la visualizzazione di ulteriori dettagli
-         
-        });
-            
 
-
-    document.getElementById('downloadButton').addEventListener('click', function() {
-        html2canvas(document.getElementById('elementiCarrello')).then(function(canvas) {
-            // Converti il canvas in un'immagine
-            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            
-            // Crea un elemento di ancoraggio per il download
-            var downloadLink = document.createElement('a');
-            downloadLink.href = image;
-            downloadLink.download = 'immagine.png';
-            
-            // Simula il clic sull'elemento di ancoraggio
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        });
-    });
-
-    document.getElementById('btnInviaOrdine').addEventListener('click', function() {
-        var nomeCliente = document.querySelector('.input1').value;
-        var riferimentoOrdine = document.querySelector('.input2').value;
-        var oggettoEmail = "Ordine Inventory - " + nomeCliente + " - " + riferimentoOrdine;
-        var corpoEmail = "Nuovo Ordine Inventory confermato da " + nomeCliente + ". Dettagli in allegato. Si prega di ricontattare " + nomeCliente + " per conferma lavorazione.";
-    
-        // Converti il canvas in immagine
-       // var canvas = document.querySelector('.measure-section.' + profiloSelezionato + ' canvas');
-       // var immagineDataUrl = canvas.toDataURL("image/png");
-    
-        // Qui devi inviare i dati al tuo server o servizio di email
-        // Assicurati che il tuo server gestisca l'invio dell'email con l'immagine allegata
-        //inviaEmail(oggettoEmail, corpoEmail, immagineDataUrl);
-    
-        // Apri il link di condivisione WhatsApp
-        apriLinkWhatsApp(nomeCliente,riferimentoOrdine);
-    });
-    
-    function apriLinkWhatsApp(nomeCliente,riferimentoOrdine) {
-        var messaggioWhatsApp = encodeURIComponent("Ciao, ti condivido l'ordine che ho effettuato:"+riferimentoOrdine+". Nome Cliente: "+nomeCliente);
-        var urlWhatsApp = `https://wa.me/?text=${messaggioWhatsApp}`;
-        window.open(urlWhatsApp, '_blank');
-    }
 
     function calcolaVarScalatura(profilo, spessore) {
         switch(profilo) {

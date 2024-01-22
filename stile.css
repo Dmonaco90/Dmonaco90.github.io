@@ -210,6 +210,7 @@ body {
 
     text-align: center;
     margin-top: 10px;
+    height: 11.5vw;
 }
 
 @media (max-width: 768px) {
@@ -347,4 +348,34 @@ button {
 #drawingCanvas {
     width: 100%; /* Larghezza al 100% del contenitore */
     /* Altezza può essere impostata qui o tramite JavaScript */
+}
+
+footer {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 2.5px 0;
+    font-size: 12px; /* Ridotto del 50% */
+}
+
+footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    footer {
+        padding: 3px 0;
+    }
+
+    footer p {
+        font-size: 10px; /* Ancora più piccolo su schermi stretti */
+    }
 }
