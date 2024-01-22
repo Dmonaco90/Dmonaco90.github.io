@@ -46,6 +46,7 @@
         <div class="profile" style="background-image: url('img\\Freccia.png');"data-target="Freccia"></div>
         <div class="profile" style="background-image: url('img\\P.png');"data-target="P"></div>
         <div class="profile" style="background-image: url('img\\P_rovescia.png');"data-target="P_rovescia"></div>
+        <div class="profile" style="background-image: url('img\\Scatola.png');"data-target="Scatola"></div>
         <div class="profile" id="libero"style="background-image: url('img\\libero.png');"data-target="libero"></div>
     </div>
 </div>
@@ -219,6 +220,23 @@
                 <div class="scelteVerniciato" style="display: none;">
                     <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
                     <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
+                 </div>
+            </div>
+        </div>
+
+        <div class="measure-section Scatola" id="drawSection">
+            <div class="image-container Scatola">
+                <img src="img\Scatola.png" alt="Scatola">
+                <input type="number" class="input-lato lato-Scatola" id="lato1-Scatola" style="top: 63%; left: 5%;  " placeholder="x">
+                <input type="number" class="input-lato lato-Scatola" id="lato2-Scatola" style="top: 81%; left: 34%;  " placeholder="x">
+                <input type="number" class="input-lato lato-Scatola" id="lato3-Scatola" style="top: 69%; left: 67%;  " placeholder="x">
+                <input type="number" class="input-lato lato-Scatola" id="lato4-Scatola" style="top: 56%; right: 3%;  " placeholder="x">
+                <input type="number" class="input-lato lato-Scatola" id="lato5-Scatola" style="top: 24%; right: -6%;  " placeholder="x">
+                <input type="number" class="input-lato lato-Scatola" id="lato5-Scatola" style="top: 24%; left: 23%;  " placeholder="x">
+                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+                <div class="scelteVerniciato" style="display: none;">
+                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 72%; left: 27%;">
+                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 16%;">
                  </div>
             </div>
         </div>
@@ -471,9 +489,9 @@
     function aggiornaTipologia(materiale) {
         var opzioniTipologia;
         if (materiale === 'Alluminio') {
-            opzioniTipologia = ['Grezzo', 'Verniciato'];
+            opzioniTipologia = ['Grezzo', 'Verniciato','Mandorlato'];
         } else if (materiale === 'Ferro') {
-            opzioniTipologia = ['Zincata', 'SPO', 'Nera'];
+            opzioniTipologia = ['Zincata','Zincata Bugnata','Zincata Striata', 'SPO', 'Nera','Nera Bugnata','Nera Striata'];
         } else if (materiale === 'Acciaio') {
             opzioniTipologia = ['Satinato', 'Lucido', 'S.B', 'Grezzo'];
         } else if (materiale === 'PVC') {
@@ -493,7 +511,15 @@
                   aggiornaDropdown(coloreDropdown, opzioniColore);
                   coloreDropdown.disabled = false;
                 
-            } else  {
+            } 
+            
+            else if (tipologia === 'Mandorlato') {
+                resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+                opzioniSpessore = ['15/10', '20/10', '30/10'];
+                coloreDropdown.disabled = true;
+            
+            } 
+            else  {
                 resetColoreDropdown();
                 opzioniSpessore = ['10/10', '12/10', '15/10', '20/10', '30/10'];
                 coloreDropdown.disabled = true;
@@ -509,9 +535,17 @@
         } 
         
         else if (materiale === 'Ferro') {
-            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
-            opzioniSpessore = ['8/10', '10/10', '12/10', '15/10', '20/10', '25/10', '30/10', '40/10', '50/10', '60/10', '80/10', '100/10'];
-            coloreDropdown.disabled = true;
+            if (tipologia === 'Zincata Bugnata' || tipologia === 'Zincata Striata'|| tipologia === 'Nera Bugnata' || tipologia === 'Nera Striata') {
+                resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+                opzioniSpessore = ['20/10', '30/10','50/10'];
+                coloreDropdown.disabled = true;
+            } else {
+                resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+                opzioniSpessore = ['8/10', '10/10', '12/10', '15/10', '20/10', '25/10', '30/10', '40/10', '50/10', '60/10', '80/10', '100/10'];
+                coloreDropdown.disabled = true;
+            }
+   
+        
         
         } else if (materiale === 'PVC') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
@@ -565,6 +599,13 @@
                 if (profiloSelezionato === 'libero') {
                    
                     initializeCanvas();
+                }
+
+                if (profiloSelezionato === 'Scatola') {
+                    var elemento = document.getElementById('altezza');
+                    elemento.value = '1';        // Imposta il valore a 1
+       
+                    elemento.disabled = true;  
                 }
                 // Nascondi tutte le sezioni
                 document.querySelectorAll('.measure-section').forEach(function(section) {
@@ -1114,7 +1155,7 @@
             var tipologiaSelezionata = document.getElementById('tipologia').value;
 
             // Controlla se la tipologia è "Verniciato" e se almeno una delle opzioni è stata selezionata
-            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B' ) {
+            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Mandorlato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B' ) {
                 var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
                 console.log(opzioneSelezionata)
                 if (opzioneSelezionata === null && profiloSelezionato !== "Linea") {
@@ -1566,7 +1607,19 @@
                     case "30/10": return 11;
                     // Aggiungi altri casi per "zeta" qui
                 }
-
+            break;
+                case "Scatola":
+                switch(spessore) {
+                    case "6/10":
+                    case "8/10":
+                    case "10/10":
+                    case "12/10": return 4;
+                    case "15/10": return 5;
+                    case "20/10": return 7;
+                    case "30/10": return 11;
+                    // Aggiungi altri casi per "zeta" qui
+                }
+            break;
                 case "Freccia":
                 switch(spessore) {
                     case "6/10":
@@ -1578,7 +1631,7 @@
                     case "30/10": return 5;
                     // Aggiungi altri casi per "zeta" qui
                 }
-
+            break;
                 case "L45":
                 switch(spessore) {
                     case "6/10":
@@ -1590,7 +1643,7 @@
                     case "30/10": return 5;
                     // Aggiungi altri casi per "zeta" qui
                 }
-
+            break;
                 case "P":
                 switch(spessore) {
                     case "6/10":
@@ -1602,7 +1655,7 @@
                     case "30/10": return 16;
                     // Aggiungi altri casi per "zeta" qui
                 }
-
+            break;
                 case "P_rovescia":
                 switch(spessore) {
                     case "6/10":
@@ -1665,11 +1718,39 @@
                 }
 
                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
+                console.log(elemento)
+
+                if (elemento.profilo === "Scatola") {
+
+                    var sommaPrimiTreLati = parseFloat(elemento.datiMisurazioni.Lato1) 
+                        + parseFloat(elemento.datiMisurazioni.Lato2) 
+                        + parseFloat(elemento.datiMisurazioni.Lato3);
+
+                    var sommaPrimiSecondiLati = parseFloat(elemento.datiMisurazioni.Lato4) 
+                        + parseFloat(elemento.datiMisurazioni.Lato5) 
+                        + parseFloat(elemento.datiMisurazioni.Lato6);
+
+
+                        sommaPrimiTreLati = sommaPrimiTreLati - varScalatura
+                        sommaPrimiSecondiLati = sommaPrimiSecondiLati - varScalatura
+
+
+                    var sommaMisurazioni = sommaPrimiTreLati * sommaPrimiSecondiLati
+                   
+                    combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * sommaPrimiSecondiLati * sommaPrimiTreLati;
+                    console.log("elemento.pezzi:" +elemento.pezzi)
+                    console.log("sommaPrimiSecondiLati" +sommaPrimiSecondiLati)
+                    console.log("sommaPrimiTreLati:" +sommaPrimiTreLati)
+                    console.log(combinazioniUniche[chiaveCombinazione].somma)
+                }
             
-                var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
-                sommaMisurazioni = sommaMisurazioni - varScalatura;
-              
-                combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * elemento.altezza * sommaMisurazioni;
+                else {
+
+                    var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
+                    sommaMisurazioni = sommaMisurazioni - varScalatura;
+                    combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * elemento.altezza * sommaMisurazioni;
+                }
+                
             });
 
         // Calcola il numero di colonne e righe per la griglia
@@ -1700,7 +1781,7 @@
             }
             
             pesiTotaliPerCombinazione[chiaveCombinazione] += calcolaPesoTeorico(elemento.materiale, elemento.spessore);
-         
+            console.log("peso: "+pesiTotaliPerCombinazione[chiaveCombinazione])
 
             if (!materialeGruppi[materialeFittizio]) {
                 materialeGruppi[materialeFittizio] = {};
@@ -1848,9 +1929,36 @@
                             gruppo.elementi.forEach(function(elemento) {
                                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
                                
+                                if (elemento.profilo === "Scatola") {
+                                    console.log("entro scatola")
+                                    var sommaPrimiTreLati = parseFloat(elemento.datiMisurazioni.Lato1) 
+                                        + parseFloat(elemento.datiMisurazioni.Lato2) 
+                                        + parseFloat(elemento.datiMisurazioni.Lato3);
+                    
+                                    var sommaPrimiSecondiLati = parseFloat(elemento.datiMisurazioni.Lato4) 
+                                        + parseFloat(elemento.datiMisurazioni.Lato5) 
+                                        + parseFloat(elemento.datiMisurazioni.Lato6);
+                    
+                    
+                                        sommaPrimiTreLati = sommaPrimiTreLati - varScalatura
+                                        sommaPrimiSecondiLati = sommaPrimiSecondiLati - varScalatura
+                    
+                    
+                                    var sommaMisurazioni = sommaPrimiTreLati;
+                                    
+                                    elemento.altezza = sommaPrimiSecondiLati;
+                    
+                                    console.log("elemento.altezza. "+elemento.altezza)
+                                    console.log("sommaPrimiTreLati "+sommaPrimiTreLati)
+                                    console.log("sommaPrimiSecondiLati "+sommaPrimiSecondiLati)
+                                    console.log("varScalatura "+varScalatura)
+                                    }
+
+                                else {
+
                                 var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
                                 sommaMisurazioni = sommaMisurazioni - varScalatura;
-                               
+                            }
             
                                 finestraStampa.document.write('<div class="dettagli">');
                                 finestraStampa.document.write('<p>N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
@@ -1991,7 +2099,7 @@
         var contenitoriScelte = document.querySelectorAll('.scelteVerniciato');
     
         contenitoriScelte.forEach(function(contenitore) {
-            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B') {
+            if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Mandorlato'  || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B') {
                 contenitore.style.display = 'block'; // Mostra le opzioni per Verniciato
             } else {
                 contenitore.style.display = 'none'; // Nascondi le opzioni
