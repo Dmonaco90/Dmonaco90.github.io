@@ -1,0 +1,13 @@
+{
+    "profili": [
+      {
+        "id": "esempio",
+        "imageUrl": "static/img/esempio.png",
+        "inputBoxes": [
+          {"id": "lato1", "top": "10%", "left": "15%", "placeholder": "x"},
+          {"id": "lato2", "top": "20%", "left": "30%", "placeholder": "y"}
+        ]
+      }
+    ]
+  }
+  

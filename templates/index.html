@@ -2,66 +2,99 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stile.css">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
     
 </head>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
 
 
 <body>
+
+
 <button id="btnMostraCarrello">
     <i class="fa fa-shopping-cart"></i>
     <span id="conteggioCarrello" class="badge">0</span>
 </button>
 
 <div class="input-container">
-    <input type="text" class="input1" placeholder="Nome Cliente">
-    <input type="text" class="input2" placeholder="Riferimento Ordine">-
+    <input type="text" id="nome_cliente" placeholder="Nome Cliente">
+    <input type="text" id="riferimento_ordine" placeholder="Riferimento Ordine">
+  
 </div>
+
 
 <div class="profile-section" id="profile-section">
     <h2>Scegli Profilo</h2>
     <div class="profile-grid">
         <!-- Ripeti questo blocco per 30 volte, cambia l'URL dell'immagine di sfondo per ciascun quadrato -->
-        <div class="profile" style="background-image: url('img\\zeta2.png');" data-target="zeta"></div>
-        <div class="profile" style="background-image: url('img\\omega.png');"data-target="omega"></div>
-        <div class="profile" style="background-image: url('img\\Ami.png');"data-target="Ami"></div>
-        <div class="profile" style="background-image: url('img\\Amo.png');"data-target="Amo"></div>
-        <div class="profile" style="background-image: url('img\\gancio.png');"data-target="gancio"></div>
-        <div class="profile" style="background-image: url('img\\L.png');"data-target="L"></div>
-        <div class="profile" style="background-image: url('img\\OmegaAsi.png');" data-target="OmegaAsi"></div>
-        <div class="profile" style="background-image: url('img\\OmegaInt.png');"data-target="OmegaInt"></div>
-        <div class="profile" style="background-image: url('img\\OmegaIntAsi.png');"data-target="OmegaIntAsi"></div>
-        <div class="profile" style="background-image: url('img\\u.png');"data-target="u"></div>
-        <div class="profile" style="background-image: url('img\\Linea.png');"data-target="Linea"></div>
-        <div class="profile" style="background-image: url('img\\OmegaAsi2.png');" data-target="OmegaAsi2"></div>
-        <div class="profile" style="background-image: url('img\\LineaAngolare.png');"data-target="LineaAngolare"></div>
-        <div class="profile" style="background-image: url('img\\omega5.png');"data-target="omega5"></div>
-        <div class="profile" style="background-image: url('img\\L45.png');"data-target="L45"></div>
-        <div class="profile" style="background-image: url('img\\Freccia.png');"data-target="Freccia"></div>
-        <div class="profile" style="background-image: url('img\\P.png');"data-target="P"></div>
-        <div class="profile" style="background-image: url('img\\P_rovescia.png');"data-target="P_rovescia"></div>
-        <div class="profile" style="background-image: url('img\\Scatola.png');"data-target="Scatola"></div>
-        <div class="profile" id="libero"style="background-image: url('img\\libero.png');"data-target="libero"></div>
+        <div class="profile" style="background-image: url('static/img/zeta2.png');" data-target="zeta"></div>
+        <div class="profile" style="background-image: url('static/img/omega.png');"data-target="omega"></div>
+        <div class="profile" style="background-image: url('static/img/Ami.png');"data-target="Ami"></div>
+        <div class="profile" style="background-image: url('static/img/Amo.png');"data-target="Amo"></div>
+        <div class="profile" style="background-image: url('static/img/gancio.png');"data-target="gancio"></div>
+        <div class="profile" style="background-image: url('static/img/L.png');"data-target="L"></div>
+        <div class="profile" style="background-image: url('static/img/OmegaAsi.png');" data-target="OmegaAsi"></div>
+        <div class="profile" style="background-image: url('static/img/OmegaInt.png');"data-target="OmegaInt"></div>
+        <div class="profile" style="background-image: url('static/img/OmegaIntAsi.png');"data-target="OmegaIntAsi"></div>
+        <div class="profile" style="background-image: url('static/img/u.png');"data-target="u"></div>
+        <div class="profile" style="background-image: url('static/img/Linea.png');"data-target="Linea"></div>
+        <div class="profile" style="background-image: url('static/img/OmegaAsi2.png');" data-target="OmegaAsi2"></div>
+        <div class="profile" style="background-image: url('static/img/LineaAngolare.png');"data-target="LineaAngolare"></div>
+        <div class="profile" style="background-image: url('static/img/omega5.png');"data-target="omega5"></div>
+        <div class="profile" style="background-image: url('static/img/L45.png');"data-target="L45"></div>
+        <div class="profile" style="background-image: url('static/img/Freccia.png');"data-target="Freccia"></div>
+        <div class="profile" style="background-image: url('static/img/P.png');"data-target="P"></div>
+        <div class="profile" style="background-image: url('static/img/P_rovescia.png');"data-target="P_rovescia"></div>
+        <div class="profile" style="background-image: url('static/img/Scatola.png');"data-target="Scatola"></div>
+        <div class="profile" id="libero"style="background-image: url('static/img/libero.png');"data-target="libero"></div>
+        <div class="profile" id="addProfile"style="background-image: url('static/img/addProfile.png');"data-target="addProfile"></div>
     </div>
 </div>
 
 
 <div class="measure-section2" id="measureSection">
+    <div class="flex-container flex-container-addProfile">
+        
+        <div class="measure-section addProfile" id="drawSection">
+          
+            <div id="containerInputControllo"> <!-- Contenitore per le input di controllo -->
+                <!-- Le input di controllo verranno aggiunte qui -->
+            </div>
 
-    <div class="flex-container">
+            <div id="listaSviluppo" style="display: none;"> <!-- Contenitore nascosto inizialmente -->
+                <!-- La lista e le input box verranno generate qui -->
+            </div>
+
+
+            <div class="image-container addProfile">
+                <img id="imagePreview" src="static/img/addProfile2.png" alt="addProfile">
+                <button id="uploadButton">Carica Profilo</button>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <input type="number" id="numeroQuote" placeholder="N. quote">
+                <button id="datiSviluppoButton">Dati Sviluppo</button> <!-- Pulsante aggiunto qui -->
+    
+                <div id="containerInputQuote"> <!-- Contenitore per le input quote -->
+                    <!-- Le input quote verranno aggiunte qui -->
+                </div>
+
+            </div>
+        </div>
+   
+
         <div class="measure-section zeta" id="drawSection">
             <div class="image-container zeta">
-                <img src="img\zeta2.png" alt="zeta">
+                <img src="static/img/zeta2.png" alt="zeta">
                 <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 8%; left: 10%;   " placeholder="x">
                 <input type="number" class="input-lato lato-zeta" id="lato2-zeta" style="top: 82%; left: 69%;  " placeholder="x">
                 <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 52%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta1" style="position: absolute;  margin: 0; width: auto; top: 63%; left: 50%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta2" style="position: absolute;  margin: 0; width: auto; top: 27%; left: 37%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta1" style="position: absolute;  margin: 0; width: auto; top: 63%; left: 50%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta2" style="position: absolute;  margin: 0; width: auto; top: 27%; left: 37%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -69,13 +102,13 @@
 
         <div class="measure-section u" id="drawSection">
             <div class="image-container u">
-                <img src="img\u.png" alt="u">
+                <img src="static/img/u.png" alt="u">
                 <input type="number" class="input-lato lato-u" id="lato1-u" style="top: 45%; left: 12%;  " placeholder="x">
                 <input type="number" class="input-lato lato-u" id="lato2-u" style="top: 65%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-u" id="lato3-u" style="top: 45%; right: 1%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 47%; left: 30%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 18%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 47%; left: 30%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 18%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -83,7 +116,7 @@
 
         <div class="measure-section omega5" id="drawSection">
             <div class="image-container omega5">
-                <img src="img\omega5.png" alt="u">
+                <img src="static/img/omega5.png" alt="u">
                 <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; left: 25%;  " placeholder="x">
                 <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; right: 13%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato2-Omega5" style="top: 75%; left: 47%;  " placeholder="x">
@@ -94,8 +127,8 @@
                 <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; left: -1%;  text-align:right;" placeholder="x">
                 <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; right: -1%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 22%; left: 83%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 35%; left: 69%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 22%; left: 83%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 35%; left: 69%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -103,20 +136,20 @@
 
         <div class="measure-section LineaAngolare" id="drawSection">
             <div class="image-container LineaAngolare">
-                <img src="img\LineaAngolare.png" alt="u">
+                <img src="static/img/LineaAngolare.png" alt="u">
                 <input type="number" class="input-lato lato-LineaAngolare" id="lato1-LineaAngolare" style="top: 43%; right: 29%;  " placeholder="x">
                 <input type="number" class="input-lato lato-LineaAngolare" id="lato2-LineaAngolare" style="top: 48%; left: 42%;  " placeholder="x">
                  <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                  <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 25%;">
-                    <img src="img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 59%; left: 58%;">
+                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 25%;">
+                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 59%; left: 58%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section OmegaAsi2" id="drawSection">
             <div class="image-container OmegaAsi2">
-                <img src="img\OmegaAsi2.png" alt="u">
+                <img src="static/img/OmegaAsi2.png" alt="u">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 32%; right: 8%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 43%; right: 22%;  text-align: right;" placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 69%; right: 0%;  " placeholder="x">
@@ -125,8 +158,8 @@
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 55%; right: 18%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 18%; right: 9%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 65%; left: 25%;">
-                    <img src="img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 58%;">
+                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 65%; left: 25%;">
+                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 58%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -134,14 +167,14 @@
 
         <div class="measure-section L" id="drawSection">
             <div class="image-container L">
-                <img src="img\L.png" alt="L">
+                <img src="static/img/L.png" alt="L">
 
                 <input type="number" class="input-lato lato-L" id="lato2-L" style="top: 50%; left: 6%;  " placeholder="x">
                 <input type="number" class="input-lato lato-L" id="lato3-L" style="top: 75%; right: 35%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta111" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 31%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta222" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 19%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta111" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 31%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta222" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 19%;">
                  </div>
 
             </div>
@@ -149,7 +182,7 @@
 
         <div class="measure-section Linea" id="drawSection">
             <div class="image-container Linea">
-                <img src="img\Linea.png" alt="Linea">
+                <img src="static/img/Linea.png" alt="Linea">
 
                 <input type="number" class="input-lato lato-Linea" id="lato2-Linea" style="top: 40%; left: 50%;  " placeholder="x">
 
@@ -159,7 +192,7 @@
 
         <div class="measure-section omega" id="drawSection">
             <div class="image-container omega">
-                <img src="img\omega.png" alt="omega">
+                <img src="static/img/omega.png" alt="omega">
                 <input type="number" class="input-lato lato-omega" id="lato1-omega" style="top: 20%; left: 10%;  " placeholder="x">
                 <input type="number" class="input-lato lato-omega" id="lato2-omega" style="top: 75%; left: 52%;  " placeholder="x">
                 <input type="number" class="input-lato lato-omega" id="lato3-omega" style="top: 20%; right: 5%;  " placeholder="x">
@@ -167,15 +200,15 @@
                 <input type="number" class="input-lato lato-omega" id="lato5-omega" style="top: 50%; left: 22%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 52%; left: 35%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 64%; left: 22%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 52%; left: 35%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 64%; left: 22%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section OmegaAsi" id="drawSection">
             <div class="image-container OmegaAsi">
-                <img src="img\OmegaAsi.png" alt="u">
+                <img src="static/img/OmegaAsi.png" alt="u">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 12%; left: 38%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 80%; left: 38%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 61%; right: 1%;  " placeholder="x">
@@ -183,8 +216,8 @@
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato5-OmegaAsi" style="top: 61%; left: 54%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaAsi" id="lato6-OmegaAsi" style="top: 30%; right: 30%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 38%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 68%; left: 26%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 38%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 68%; left: 26%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -192,7 +225,7 @@
 
         <div class="measure-section OmegaInt" id="drawSection">
             <div class="image-container OmegaInt">
-                <img src="img\OmegaInt.png" alt="OmegaInt">
+                <img src="static/img/OmegaInt.png" alt="OmegaInt">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato1-OmegaInt" style="top: 25%; left: 20%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato2-OmegaInt" style="top: 80%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaInt" id="lato3-OmegaInt" style="top: 25%; right: 15%;  " placeholder="x">
@@ -200,15 +233,15 @@
                 <input type="number" class="input-lato lato-OmegaInt" id="lato5-OmegaInt" style="top: 50%; left: 3%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section OmegaIntAsi" id="drawSection">
             <div class="image-container OmegaIntAsi">
-                <img src="img\OmegaIntAsi.png" alt="OmegaIntAsi">
+                <img src="static/img/OmegaIntAsi.png" alt="OmegaIntAsi">
                 <input type="number" class="input-lato lato-OmegaIntAsi" id="lato1-OmegaIntAsi" style="top: 17%; left: 35%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaIntAsi" id="lato2-OmegaIntAsi" style="top: 80%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-OmegaIntAsi" id="lato3-OmegaIntAsi" style="top: 34%; right: 15%;  " placeholder="x">
@@ -216,15 +249,15 @@
                 <input type="number" class="input-lato lato-OmegaIntAsi" id="lato5-OmegaIntAsi" style="top: 50%; left: 3%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section Scatola" id="drawSection">
             <div class="image-container Scatola">
-                <img src="img\Scatola.png" alt="Scatola">
+                <img src="static/img/Scatola.png" alt="Scatola">
                 <input type="number" class="input-lato lato-Scatola" id="lato1-Scatola" style="top: 63%; left: 5%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Scatola" id="lato2-Scatola" style="top: 81%; left: 34%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Scatola" id="lato3-Scatola" style="top: 69%; left: 67%;  " placeholder="x">
@@ -233,20 +266,20 @@
                 <input type="number" class="input-lato lato-Scatola" id="lato5-Scatola" style="top: 24%; left: 23%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 72%; left: 27%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 72%; left: 27%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section Amo" id="drawSection">
             <div class="image-container Amo">
-                <img src="img\Amo.png" alt="Amo">
+                <img src="static/img/Amo.png" alt="Amo">
                 <input type="number" class="input-lato lato-Amo" id="lato1-Amo" style="top: 32%; left: 15%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Amo" id="lato2-Amo" style="top: 65%; left: 50%;  " placeholder="x">
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 44%; left: 34%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 55%; left: 24%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 44%; left: 34%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 55%; left: 24%;">
                  </div>
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
             </div>
@@ -254,86 +287,86 @@
 
         <div class="measure-section Ami" id="drawSection">
             <div class="image-container Ami">
-                <img src="img\Ami.png" alt="Ami">
+                <img src="static/img/Ami.png" alt="Ami">
                 <input type="number" class="input-lato lato-Ami" id="lato1-Ami" style="top: 32%; left: 22%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Ami" id="lato2-Ami" style="top: 60%; left: 48%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Ami" id="lato3-Ami" style="top: 32%; right: 18%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 36%;">
-                    <img src="img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 51%;">
+                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 36%;">
+                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 51%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section gancio" id="drawSection">
             <div class="image-container gancio">
-                <img src="img\gancio.png" alt="gancio">
+                <img src="static/img/gancio.png" alt="gancio">
                 <input type="number" class="input-lato lato-gancio" id="lato1-gancio" style="top: 28%; left: 30%;  " placeholder="x">
                 <input type="number" class="input-lato lato-gancio" id="lato2-gancio" style="top: 70%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-gancio" id="lato3-gancio" style="top: 50%; left: 15%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section P_rovescia" id="drawSection">
             <div class="image-container P_rovescia">
-                <img src="img\P_rovescia.png" alt="P_rovescia">
+                <img src="static/img/P_rovescia.png" alt="P_rovescia">
                 <input type="number" class="input-lato lato-P_rovescia" id="lato1-P_rovescia" style="top: 32%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P_rovescia" id="lato2-P_rovescia" style="top: 69%; left: 61%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P_rovescia" id="lato3-P_rovescia" style="top: 43%; left: 25%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P_rovescia" id="lato4-P_rovescia" style="top: 50%; left: 70%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 31%; left: 68%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 43%; left: 55%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 31%; left: 68%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 43%; left: 55%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section P" id="drawSection">
             <div class="image-container P">
-                <img src="img\P.png" alt="P">
+                <img src="static/img/P.png" alt="P">
                 <input type="number" class="input-lato lato-P" id="lato1-P" style="top: 25%; left: 37%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P" id="lato2-P" style="top: 61%; left: 45%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P" id="lato3-P" style="top: 43%; left: 24%;  " placeholder="x">
                 <input type="number" class="input-lato lato-P" id="lato3-P" style="top: 34%; left: 47%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section Freccia" id="drawSection">
             <div class="image-container Freccia">
-                <img src="img\Freccia.png" alt="Freccia">
+                <img src="static/img/Freccia.png" alt="Freccia">
 
                 <input type="number" class="input-lato lato-Freccia" id="lato2-Freccia" style="top: 62%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Freccia" id="lato3-Freccia" style="top: 44%; left: 20%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
                  </div>
             </div>
         </div>
 
         <div class="measure-section L45" id="drawSection">
             <div class="image-container L45">
-                <img src="img\L45.png" alt="L45">
+                <img src="static/img/L45.png" alt="L45">
              
                 <input type="number" class="input-lato lato-Freccia" id="lato2-Freccia" style="top: 62%; left: 50%;  " placeholder="x">
                 <input type="number" class="input-lato lato-Freccia" id="lato3-Freccia" style="top: 44%; left: 20%;  " placeholder="x">
                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
+                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
+                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
                  </div>
             </div>
         </div>
@@ -360,6 +393,7 @@
         
         
         <div class="dropdown-container">
+            <input type="text"  class="riferimento" id="riferimento"  placeholder="Riferimento">
             <div class="dropdown-menus">
                 <select id="materiale" class="dropdown">
                     <option value="" disabled selected hidden>Materiale</option>
@@ -410,19 +444,137 @@
         <!-- Dettagli degli elementi del carrello qui -->
     </div>
     <button id="btnAggiungiElementi">Aggiungi Altro</button>
-      <!--  <button id="downloadButton">Scarica Ordine</button>
-    <button id="btnInviaOrdine">Invia Ordine e Condividi</button>-->
+      <!--  <button id="downloadButton">Scarica Ordine</button>-->
+    <button id="sendEmailButton">Invia Ordine</button>
     <button id="btnSviluppo">Sviluppo</button> 
 </div>
 
 <footer>
     <p>&copy; 2024 Daniele Monaco</p>
-    <p><a href="termini-di-servizio.html" target="_blank">Termini di Servizio</a></p>
+    <p><a href="/templates/termini-di-servizio.html" target="_blank">Termini di Servizio</a></p>
 </footer>
 
 
 
 <script>
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+        document.getElementById('imageUpload').click();
+    });
+
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.getElementById('imagePreview');
+            imgElement.src = e.target.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+
+    document.getElementById('numeroQuote').addEventListener('change', function() {
+        const numQuote = this.value;
+        const containerInputQuote = document.getElementById('containerInputQuote');
+        const containerInputControllo = document.getElementById('containerInputControllo');
+    
+    
+        // Pulisci entrambi i contenitori
+        containerInputQuote.innerHTML = '';
+        containerInputControllo.innerHTML = '';
+    
+        // Calcola le percentuali e crea gli input
+        for (let i = 1; i <= numQuote; i++) {
+            const percentualeLeft = ((i - 1) % 4) * 25; // Distribuisce le input box su 4 colonne
+            const percentualeTop = Math.floor((i - 1) / 4) * 30 + 10; // Incrementa la riga ogni 4 input
+    
+    
+            const inputBox = document.createElement('input');
+            inputBox.type = 'number';
+            inputBox.className = `input-lato lato-addProfile`; // Modifica 'lato-esempio' con l'ID del profilo appropriato
+            inputBox.id = `lato${i}-addProfile`; // Modifica 'esempio' con l'ID del profilo appropriato
+            inputBox.style.cssText = `top: ${percentualeTop}%; left: ${percentualeLeft}%;`;
+            inputBox.placeholder = 'x';
+            containerInputQuote.appendChild(inputBox);
+            inputBox.addEventListener('click', function() {
+                // Rimuovi eventuali input di controllo esistenti
+                removeControlInputs();
+    
+                // Crea input di controllo per 'top' e 'left'
+                createControlInput(this, 'top');
+                createControlInput(this, 'left');
+            });
+        }
+    });
+
+
+   
+    function createControlInput(inputBox, type) {
+        const containerInputControllo = document.getElementById('containerInputControllo');
+        const label = document.createElement('label');
+        
+        label.textContent = type === 'top' ? "Coordinata Y quota:" : "Coordinata X quota:";
+        containerInputControllo.appendChild(label);
+    
+        const controlInput = document.createElement('input');
+        controlInput.type = 'number';
+        controlInput.className = `input-controllo-${type}`;
+        controlInput.value = type === 'top' ? extractPercentage(inputBox.style.top) : extractPercentage(inputBox.style.left);
+        
+        controlInput.addEventListener('input', function() {
+            inputBox.style[type] = `${this.value}%`;
+        });
+    
+        containerInputControllo.appendChild(controlInput);
+    }
+
+    
+    function removeControlInputs() {
+        const containerInputControllo = document.getElementById('containerInputControllo');
+        containerInputControllo.innerHTML = ''; 
+    }
+    
+    function extractPercentage(value) {
+        const match = value.match(/(\d+)%/);
+        return match ? match[1] : "0"; // Restituisce "0" se non c'è corrispondenza
+    }
+    
+
+    document.getElementById('datiSviluppoButton').addEventListener('click', function() {
+        // Nascondi le input di controllo
+        const containerInputControllo = document.getElementById('containerInputControllo');
+        containerInputControllo.style.display = 'none';
+        const listaSviluppo = document.getElementById('listaSviluppo');
+        listaSviluppo.innerHTML = ''; // Pulisci il contenitore prima di aggiungere nuovi elementi
+        listaSviluppo.style.display = 'block'; // Rendi visibile il contenitore
+    
+        // Aggiungi una intestazione
+        const heading = document.createElement('h3');
+        heading.textContent = 'Configura scalatura in base allo spessore';
+        listaSviluppo.appendChild(heading);
+    
+        const date = ['8/10', '10/10', '12/10', '15/10', '20/10', '30/10'];
+    
+        date.forEach(function(data) {
+            const div = document.createElement('div');
+    
+            // Aggiungi uno spazio vuoto prima di "8/10" se è presente
+            if (data === '8/10') {
+                div.textContent = '\u2000' + data + ': '; // Aggiungi un carattere di spazio largo prima di "8/10"
+            } else {
+                div.textContent = data + ': ';
+            }
+            
+            
+    
+            const input = document.createElement('input');
+            input.type = 'text'; // O 'number', a seconda delle tue esigenze
+            input.placeholder = 'Inserisci valore';
+    
+            div.appendChild(input);
+            listaSviluppo.appendChild(div);
+        });
+    });
+    
+    
 
 
     var materialeDropdown = document.getElementById('materiale');
@@ -591,46 +743,117 @@
     }
     
 
-  
+    
 
     var profiloSelezionato = null;
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.profile').forEach(function(profile) {
-            profile.addEventListener('click', function() {
-                var targetClass = this.getAttribute('data-target');
-                profiloSelezionato = targetClass;
-                if (profiloSelezionato === 'libero') {
-                   
-                    initializeCanvas();
-                }
 
-                if (profiloSelezionato === 'Scatola') {
-                    var elemento = document.getElementById('altezza');
-                    elemento.value = '1';        // Imposta il valore a 1
-       
-                    elemento.disabled = true;  
-                }
-                // Nascondi tutte le sezioni
-                document.querySelectorAll('.measure-section').forEach(function(section) {
-                    section.style.display = 'none';
+        fetch('/data/profili')
+        .then(response => response.json())
+        .then(data => {
+            data.profili.forEach(profilo => {
+            addProfileToGrid(profilo);
+            addProfileToMeasureSection(profilo);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the JSON:', error);
+        });
+
+            function addProfileToMeasureSection(profilo) {
+                console.log("Aggiunta sezione di misura per:", profilo.id);
+                let measureSection = document.createElement('div');
+                measureSection.className = `measure-section ${profilo.id}`;
+                measureSection.id = 'drawSection';
+            
+                let imageContainer = document.createElement('div');
+                imageContainer.className = `image-container ${profilo.id}`;
+            
+                let img = document.createElement('img');
+                img.src = profilo.imageUrl;
+                img.alt = profilo.id;
+            
+                imageContainer.appendChild(img);
+            
+                profilo.inputBoxes.forEach(box => {
+                let input = document.createElement('input');
+                input.type = 'number';
+                input.className = `input-lato lato-${profilo.id}`;
+                input.id = box.id;
+                input.style.top = box.top;
+                input.style.left = box.left;
+                input.placeholder = box.placeholder;
+                imageContainer.appendChild(input);
                 });
+          
+            measureSection.appendChild(imageContainer);
+            let container = document.querySelector('#measureSection .flex-container');
+                let dropdownContainer = container.querySelector('.dropdown-container');
+            
+                if (dropdownContainer) {
+                    container.insertBefore(measureSection, dropdownContainer);
+                } else {
+                    container.appendChild(measureSection);
+                }
+          }
 
-                // Mostra la sezione corrispondente
-                var targetSection = document.querySelector('.' + targetClass);
-             
-                if (targetSection) {
-                    targetSection.style.display = 'flex';
-                    document.querySelectorAll('.dropdown-container').forEach(function(element) {
-                        element.style.display = 'flex';
-                    });
+          function addProfileToGrid(profilo) {
+                let profileDiv = document.createElement('div');
+                profileDiv.className = 'profile';
+                profileDiv.style.backgroundImage = `url('${profilo.imageUrl}')`;
+                profileDiv.setAttribute('data-target', profilo.id);
+                
+                // Aggiungi altre proprietà necessarie al profileDiv
+                
+                document.querySelector('.profile-grid').appendChild(profileDiv);
+          }
+          
 
-                    resetScelteVerniciato();
+
+          document.querySelector('.profile-grid').addEventListener('click', function(event) {
+            // Controlla se l'elemento cliccato (o un suo genitore) ha la classe 'profile'
+            let profile = event.target.closest('.profile');
+            if (!profile) return; // ignora i click che non sono sui profili
+            var targetClass = profile.getAttribute('data-target');
+            profiloSelezionato = targetClass;
+            var riferimentoOrdine = document.getElementById('riferimento_ordine');
+            var riferimento = document.getElementById('riferimento');
+
+            riferimento.value = riferimentoOrdine.value;
+
+            if (profiloSelezionato === 'libero') {
+                
+                initializeCanvas();
             }
 
-            
-            targetSection.scrollIntoView();
+            if (profiloSelezionato === 'Scatola') {
+                var elemento = document.getElementById('altezza');
+                elemento.value = '1';        // Imposta il valore a 1
+    
+                elemento.disabled = true;  
+            }
+            // Nascondi tutte le sezioni
+            document.querySelectorAll('.measure-section').forEach(function(section) {
+                section.style.display = 'none';
+            });
 
+            // Mostra la sezione corrispondente
+            var targetSection = document.querySelector('.' + targetClass);
+            
+            if (targetSection) {
+                targetSection.style.display = 'flex';
+                document.querySelectorAll('.dropdown-container').forEach(function(element) {
+                    element.style.display = 'flex';
                 });
+
+                resetScelteVerniciato();
+                targetSection.scrollIntoView();
+        }
+
+            
+            
+
+               
         });
     
         // Gestione click su pulsante Torna Indietro
@@ -902,7 +1125,7 @@
 
     function saveState() {
         const currentCanvasState = canvas.toDataURL();
-        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => ({
+        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.nome_cliente):not(.riferimento_ordine)')).map(input => ({
             id: input.id,
             value: input.value,
             position: { left: input.style.left, top: input.style.top }
@@ -919,7 +1142,7 @@
 
     function SaveInput() {
         
-        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)')).map(input => ({
+        const currentInputsState = Array.from(document.querySelectorAll('input[type="text"]:not(.nome_cliente):not(.riferimento_ordine)')).map(input => ({
             id: input.id,
             value: input.value,
             position: { left: input.style.left, top: input.style.top }
@@ -959,7 +1182,7 @@
     function restoreInputs(inputsState) {
         // Rimuovi tutte le input-box esistenti
       
-        const inputs = document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)');
+        const inputs = document.querySelectorAll('input[type="text"]:not(.nome_cliente):not(.riferimento_ordine)');
         inputs.forEach(input => input.remove());
      
         // Ricrea le input-box salvate
@@ -1118,7 +1341,7 @@
     
 
     function removeDimensions() {
-        const inputs = document.querySelectorAll('input[type="text"]:not(.input1):not(.input2)');
+        const inputs = document.querySelectorAll('input[type="text"]:not(.nome_cliente):not(.riferimento_ordine)');
         inputs.forEach(input => input.remove());
     }
 
@@ -1156,12 +1379,13 @@
             var numPezzi = document.getElementById('numPezzi');
             var altezza = document.getElementById('altezza');
             var tipologiaSelezionata = document.getElementById('tipologia').value;
+            var riferimento = document.getElementById('riferimento');
 
             // Controlla se la tipologia è "Verniciato" e se almeno una delle opzioni è stata selezionata
             if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Mandorlato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B' ) {
                 var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
                 console.log(opzioneSelezionata)
-                if (opzioneSelezionata === null && profiloSelezionato !== "Linea") {
+                if (opzioneSelezionata === null && profiloSelezionato !== "Linea" && profiloSelezionato !== "libero") {
                     alert("Seleziona verso verniciatura.");
                     return; // Interrompe ulteriori azioni di questo evento
                 }
@@ -1231,7 +1455,8 @@
                         materiale: dropdown2.value,
                         tipologia: dropdown3.value,
                         colore: dropdown4.value,
-                        datiMisurazioni: datiMisurazioni
+                        datiMisurazioni: datiMisurazioni,
+                        riferimento: riferimento.value
                     };
             
                     carrello.push(datiCarrello);
@@ -1273,7 +1498,7 @@
                 containerElementi.innerHTML = ''; // Pulisce vecchi contenuti
         
                 carrello.forEach(function(elemento, indice) {
-                img = 'img\\' + elemento.immagineDataUrl
+                img = 'static/img/' + elemento.immagineDataUrl
                 
                 var htmlProfilo = '<div class="elementoCarrello">' +
                     '<img src="'+ elemento.immagineDataUrl + '" alt="Profilo Quotato" class="imgCarrello">';  
@@ -1630,8 +1855,8 @@
     }
     
     document.getElementById('btnSviluppo').addEventListener('click', function() {
-        var nomeCliente = document.querySelector('.input1').value;
-        var riferimentoOrdine = document.querySelector('.input2').value;
+        var nomeCliente = document.getElementById('nome_cliente').value;
+        var riferimentoOrdine = document.getElementById('riferimento_ordine').value;
         var dataOdierna = new Date().toLocaleDateString();
         var elementoContatorePerPagina = 0;
         
@@ -1767,7 +1992,7 @@
             finestraStampa.document.write('<html><head><title>Dettagli Ordine</title><style>');
       
 
-            finestraStampa.document.write('.container { border: 1px solid black; width: 210mm; height: 297mm; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }');
+            finestraStampa.document.write('.container { border: 0px solid black; width: 210mm; height: 294mm; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }');
             finestraStampa.document.write('.elemento { display: flex; flex-direction: column; align-items: center; width: 49%; margin: 1px; border: 1px solid black; }'); // Layout in colonna per .elemento
             finestraStampa.document.write('.content { display: flex; flex-direction: row; width: 100%; }'); // Stile per .content
             finestraStampa.document.write('.dettagli-container { display: flex; flex-direction: column; width: 50%;color: red;  font-weight: bold; text-align: end; margin: 12px;}'); // Stile per .dettagli-container
@@ -1778,7 +2003,7 @@
        
           
             
-            finestraStampa.document.write('.header-info { display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px; }');
+            finestraStampa.document.write('.header-info { display: flex; justify-content: space-between; width: 100%; margin-bottom: 1px; }');
             finestraStampa.document.write('.row { display: flex; width: 100%; justify-content: space-around; flex-wrap: wrap; }');
           
     
@@ -1802,12 +2027,12 @@
            
            for (var pagina = 0; pagina < numeroPagine; pagina++) {    
             
-                    finestraStampa.document.write('<div class="container" style="margin-bottom: 40px;">');
+                    finestraStampa.document.write('<div class="container" style="margin-bottom: 2px;">');
 
-                    finestraStampa.document.write('<div class="header-info" style="font-weight: bold;"><span>Data: ' + dataOdierna + '</span><span>Cliente: ' + nomeCliente + '</span><span>Riferimento Ordine: ' + riferimentoOrdine + '</span></div>');
+                    finestraStampa.document.write('<div class="header-info" style="font-weight: bold;"><span>Data: ' + dataOdierna + '</span><span style="color:red;">Cliente: ' + nomeCliente + '</span><span style="color:blue;">Riferimento Ordine: ' + riferimentoOrdine + '</span></div>');
                 
 
-                
+                    var riferimentoFatto = true;
                     var slotOccupati = 0;        
                     var contatore = 1;
                     var profiliMisurazioniGruppi = materialeGruppi[materiale];
@@ -1882,7 +2107,7 @@
                         
                             
                             
-                         
+                            riferimentoFatto = true;
                             gruppo.elementi.forEach(function(elemento) {
                                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
                                
@@ -1915,14 +2140,30 @@
 
                                 var sommaMisurazioni = Object.values(elemento.datiMisurazioni).reduce((acc, val) => acc + parseFloat(val), 0);
                                 sommaMisurazioni = sommaMisurazioni - varScalatura;
-                            }
+                                }
             
                                 finestraStampa.document.write('<div class="dettagli">');
-                                finestraStampa.document.write('<p>N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
+                      
+                                if (elemento.riferimento !== "" && riferimentoFatto ===true) {
+                                    console.log("riferimento profilo presente: "+elemento.riferimento)
+                                
+                                    finestraStampa.document.write('<p style="margin: 1%; color:blue;">'+elemento.riferimento+'</p>');
+                                     riferimentoFatto = false;
+                                
+                                }
+
+                                if (elemento.profilo === "libero" ) {
+                                    finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + '</p>');
+                            
+                                }
+
+                                finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
                             
                                 finestraStampa.document.write('</div>'); // Chiusura dei div 'dettagli'
                             });
             
+
+                            
                             finestraStampa.document.write('</div>'); // Chiusura di .dettagli-container
                             finestraStampa.document.write('</div>'); // Chiusura di .content
                             finestraStampa.document.write('<div class="info-section">' + infoSectionContent + '</div>');
@@ -2004,9 +2245,17 @@
             finestraStampa.document.close();
             finestraStampa.focus();
  
+
+      
             } else {
                 console.error('Impossibile aprire la finestra di stampa.');
         }
+
+       // Raccogli l'HTML generato
+               
+       var htmlContent = finestraStampa.document.documentElement.outerHTML;
+       generaEInviaPDF(htmlContent);        
+        
     });
 
     document.querySelectorAll('.input-lato').forEach(function(input) {
@@ -2090,17 +2339,41 @@
         });
     });
     
-    document.getElementById('sendEmailButton').addEventListener('click', function() {
-        sendEmail();
-    });
-  
-    function sendEmail() {
-        fetch('http://indirizzo-del-tuo-server-backend/send_email', {
-            method: 'POST', // o GET, a seconda del tuo endpoint
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ /* dati da inviare, se necessari */ })
+   
+    function generaEInviaPDF(elementoDaConvertire) {
+        // Ottieni i valori dai campi di input
+        var nomeCliente = document.getElementById('nome_cliente').value;
+        var riferimentoOrdine = document.getElementById('riferimento_ordine').value;
+    
+        // Ottieni l'elemento HTML che vuoi convertire in PDF
+        
+    
+        // Opzioni per html2pdf
+        var opzioni = {
+            margin:       0,
+            filename:     'ordine.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 0.9 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+    
+        // Utilizza html2pdf per convertire l'elemento
+        html2pdf().from(elementoDaConvertire).set(opzioni).toPdf().get('pdf').then(function (pdfObj) {
+            // Il PDF è stato creato, ora invialo al server insieme agli altri dati
+            inviaDatiAlServer(pdfObj.output('blob'), nomeCliente, riferimentoOrdine);
+        });
+    }
+    
+    function inviaDatiAlServer(pdfBlob, nomeCliente, riferimentoOrdine) {
+        var formData = new FormData();
+        var nomePDF = nomeCliente+ '_'+riferimentoOrdine;
+        formData.append('pdf', pdfBlob, nomePDF);
+        formData.append('nome', nomeCliente);
+        formData.append('riferimento_ordine', riferimentoOrdine);
+    
+        fetch('/send_email', {
+            method: 'POST',
+            body: formData
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -2108,6 +2381,7 @@
     }
     
     
+  
         
 </script>
 

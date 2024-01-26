@@ -1,0 +1,7 @@
+runtime: python311
+env_variables:
+  MAIL_USERNAME: 'monacodaniele1990@live.it'
+  MAIL_PASSWORD: 'Oblivion2024!'
+handlers:
+- url: /.*
+  script: auto
