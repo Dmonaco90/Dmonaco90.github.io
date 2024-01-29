@@ -135,6 +135,16 @@ def save_profile():
                 "url": url
             }
             vern_boxes.append(vern_box)
+            
+        scalature = []
+        scala_values = data['listaSviluppoValues']
+        scalatura = {"id": idProfile}  # Inizia con l'ID del profilo
+        # Aggiungi le coppie chiave-valore per ogni spessore
+        for spessore, valore in scala_values.items():
+            scalatura[spessore] = valore
+
+        # Aggiungi l'oggetto scalatura alla lista delle scalature
+        scalature.append(scalatura)
         
         with open(json_file_path, 'r+') as json_file:
             profili = json.load(json_file)
@@ -143,7 +153,8 @@ def save_profile():
                 "id": idProfile,  # Genera un ID univoco
                 "imageUrl": image_filepath.replace("\\", "/"),  # Sostituisci "\\" con "/"
                 "inputBoxes": input_boxes , # Aggiungi la sezione "inputBoxes"
-                "vernBoxes" :vern_boxes
+                "vernBoxes" :vern_boxes,
+                "Scalature": scalature
             }   
             profili['profili'].append(nuovo_profilo)
             json_file.seek(0)  # Riposiziona all'inizio del file

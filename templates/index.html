@@ -630,7 +630,7 @@
         listaSviluppo.appendChild(heading);
     
         const date = ['8/10', '10/10', '12/10', '15/10', '20/10', '30/10'];
-    
+        
         date.forEach(function(data) {
             const div = document.createElement('div');
     
@@ -774,12 +774,21 @@
             alert("Devi inserire un nome per il profilo per continuare.");
             return; // Interrompi la funzione se non viene fornito un nome
         }
-    
+        
+
+        let spessori = ['8/10', '10/10', '12/10', '15/10', '20/10', '30/10'];
+        let listaSviluppoValues = Array.from(document.getElementById('listaSviluppo').querySelectorAll('input')).map(input => input.value);
+
+        let scala_values = {};
+        listaSviluppoValues.forEach((valore, indice) => {
+            let spessore = spessori[indice];
+            scala_values[spessore] = valore;
+        });
         let profileData = {
             profileName: profileName,
             imageSrc: document.getElementById('imagePreview').src,
             containerInputQuoteValues: Array.from(document.getElementById('containerInputControllo').querySelectorAll('input')).map(input => input.value),
-            listaSviluppoValues: Array.from(document.getElementById('listaSviluppo').querySelectorAll('input')).map(input => input.value),
+            listaSviluppoValues: scala_values,
             containerInputImmaginiValues: Array.from(document.getElementById('containerInputImmagini').querySelectorAll('input')).map(input => input.value)
         };
         console.log(profileData);
@@ -2375,7 +2384,8 @@
                             
                             
                             riferimentoFatto = true;
-                            gruppo.elementi.forEach(function(elemento) {
+                            let ultimoRiferimento = null; 
+                            gruppo.elementi.forEach(function(elemento,indice) {
                                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
                                
                                 if (elemento.profilo === "Scatola") {
@@ -2410,14 +2420,18 @@
                                 }
             
                                 finestraStampa.document.write('<div class="dettagli">');
-                      
-                                if (elemento.riferimento !== "" && riferimentoFatto ===true) {
-                                    console.log("riferimento profilo presente: "+elemento.riferimento)
+                                    console.log ("indice: "+indice)
+                                    console.log ("elemento.riferimento: "+elemento.riferimento)
+                                    console.log ("ultimoRiferimento: "+ultimoRiferimento)
+                                    if (indice === 0 || elemento.riferimento !== ultimoRiferimento) {
+                                       
+                                            console.log("riferimento profilo presente: " + elemento.riferimento);
+                                            finestraStampa.document.write('<p style="margin: 1%; color:blue;">' + elemento.riferimento + '</p>');
+                                            riferimentoFatto = false;
+                                       
+                                    }
                                 
-                                    finestraStampa.document.write('<p style="margin: 1%; color:blue;">'+elemento.riferimento+'</p>');
-                                     riferimentoFatto = false;
-                                
-                                }
+                                    ultimoRiferimento = elemento.riferimento;
 
                                 if (elemento.profilo === "libero" ) {
                                     finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + '</p>');
