@@ -65,7 +65,9 @@
             <div id="containerInputControllo"> <!-- Contenitore per le input di controllo -->
                 <!-- Le input di controllo verranno aggiunte qui -->
             </div>
-
+            <div id="containerInputImmagini">
+                <!-- Gli input di controllo verranno aggiunti qui -->
+            </div>
             <div id="listaSviluppo" style="display: none;"> <!-- Contenitore nascosto inizialmente -->
                 <!-- La lista e le input box verranno generate qui -->
             </div>
@@ -77,11 +79,15 @@
                 <input type="file" id="imageUpload" accept="image/*" style="display: none;">
                 <input type="number" id="numeroQuote" placeholder="N. quote">
                 <button id="datiSviluppoButton">Dati Sviluppo</button> <!-- Pulsante aggiunto qui -->
-    
+                <button id="versoVerniciatura">Versi Verniciatura</button> <!-- Pulsante aggiunto qui -->
+                <button id="saveProfileButton">Salva Profilo</button>
                 <div id="containerInputQuote"> <!-- Contenitore per le input quote -->
                     <!-- Le input quote verranno aggiunte qui -->
                 </div>
-
+                <div class="image-container">
+                  
+                </div>
+                
             </div>
         </div>
    
@@ -458,6 +464,13 @@
 
 <script>
 
+    // Array globale per memorizzare le input box di controllo
+    let imageControlInputs = [];
+    let ArrControlInputs = [];
+    const controlInputsById = {};
+    let isDatiSviluppoCreated = false;
+    let scalatureData = {};
+
     document.getElementById('uploadButton').addEventListener('click', function() {
         document.getElementById('imageUpload').click();
     });
@@ -475,7 +488,10 @@
         const numQuote = this.value;
         const containerInputQuote = document.getElementById('containerInputQuote');
         const containerInputControllo = document.getElementById('containerInputControllo');
-    
+        const containerInputImmagini = document.getElementById('containerInputImmagini');
+        containerInputImmagini.style.display = 'none';
+        const listaSviluppo = document.getElementById('listaSviluppo');
+        listaSviluppo.style.display = 'none';
     
         // Pulisci entrambi i contenitori
         containerInputQuote.innerHTML = '';
@@ -494,42 +510,96 @@
             inputBox.style.cssText = `top: ${percentualeTop}%; left: ${percentualeLeft}%;`;
             inputBox.placeholder = 'x';
             containerInputQuote.appendChild(inputBox);
-            inputBox.addEventListener('click', function() {
-                // Rimuovi eventuali input di controllo esistenti
-                removeControlInputs();
+            
     
-                // Crea input di controllo per 'top' e 'left'
-                createControlInput(this, 'top');
-                createControlInput(this, 'left');
-            });
+            
         }
+        document.getElementById('containerInputQuote').addEventListener('click', function(event) {
+            // Verifica se l'elemento cliccato è un inputBox
+
+            
+
+            if (event.target && event.target.matches('.input-lato.lato-addProfile')) {
+
+                const containerInputControllo = document.getElementById('containerInputControllo');
+                containerInputControllo.style.display = 'block';
+                const elementId = event.target.id;
+        
+                if (controlInputsById[elementId]) {
+
+                    for (let id in controlInputsById) {
+                        if (controlInputsById.hasOwnProperty(id) && id !== elementId) {
+                            controlInputsById[id].forEach(container => {
+                                container.style.display = 'none';
+                            });
+                        }
+                    }
+                    
+                    console.log("if")
+                    // Le input per questo ID sono già state create, quindi mostra quelle esistenti
+                    controlInputsById[elementId].forEach(input => {
+                        input.style.display = 'block';
+                    });
+                } else {
+                    // Primo click su questo elemento, crea le input
+                  //  removeControlInputs();
+                    console.log("else")
+                  
+                    const inputTop = createControlInput(event.target, 'top');
+                    const inputLeft = createControlInput(event.target, 'left');
+        
+                    // Salva le input nel nostro oggetto
+                    controlInputsById[elementId] = [inputTop, inputLeft];
+                    
+                    for (let id in controlInputsById) {
+                        if (controlInputsById.hasOwnProperty(id) && id !== elementId) {
+                            controlInputsById[id].forEach(container => {
+                                container.style.display = 'none';
+                            });
+                        }
+                    }
+                    
+                }
+            }
+        });
+
     });
 
 
    
     function createControlInput(inputBox, type) {
         const containerInputControllo = document.getElementById('containerInputControllo');
-        const label = document.createElement('label');
         
+        // Crea un contenitore div per la label e l'input
+        const inputContainer = document.createElement('div');
+        inputContainer.className = 'input-container';
+    
+        const label = document.createElement('label');
         label.textContent = type === 'top' ? "Coordinata Y quota:" : "Coordinata X quota:";
-        containerInputControllo.appendChild(label);
+        inputContainer.appendChild(label);
     
         const controlInput = document.createElement('input');
         controlInput.type = 'number';
         controlInput.className = `input-controllo-${type}`;
         controlInput.value = type === 'top' ? extractPercentage(inputBox.style.top) : extractPercentage(inputBox.style.left);
-        
+    
         controlInput.addEventListener('input', function() {
             inputBox.style[type] = `${this.value}%`;
         });
     
-        containerInputControllo.appendChild(controlInput);
+        inputContainer.appendChild(controlInput);
+    
+        // Aggiungi il contenitore div al container principale
+        containerInputControllo.appendChild(inputContainer);
+    
+        // Restituisce il contenitore div che contiene sia la label che l'input
+        return inputContainer;
     }
 
     
     function removeControlInputs() {
         const containerInputControllo = document.getElementById('containerInputControllo');
-        containerInputControllo.innerHTML = ''; 
+        containerInputControllo.style.display = 'none';
     }
     
     function extractPercentage(value) {
@@ -543,9 +613,17 @@
         const containerInputControllo = document.getElementById('containerInputControllo');
         containerInputControllo.style.display = 'none';
         const listaSviluppo = document.getElementById('listaSviluppo');
-        listaSviluppo.innerHTML = ''; // Pulisci il contenitore prima di aggiungere nuovi elementi
+      
         listaSviluppo.style.display = 'block'; // Rendi visibile il contenitore
+        const versoVerniciatura = document.getElementById('containerInputImmagini');
+        versoVerniciatura.style.display = 'none';
     
+        // Se le input sono già state create, mostrale soltanto
+            if (isDatiSviluppoCreated) {
+                console.log(isDatiSviluppoCreated)
+                listaSviluppo.style.display = 'block';
+                return;
+            }
         // Aggiungi una intestazione
         const heading = document.createElement('h3');
         heading.textContent = 'Configura scalatura in base allo spessore';
@@ -572,10 +650,151 @@
             div.appendChild(input);
             listaSviluppo.appendChild(div);
         });
+
+        isDatiSviluppoCreated = true;
     });
     
-    
+    document.getElementById('versoVerniciatura').addEventListener('click', function() {
+        const containerInputControllo = document.getElementById('containerInputControllo');
+        containerInputControllo.style.display = 'none';
+        const listaSviluppo = document.getElementById('listaSviluppo');
+        listaSviluppo.style.display = 'none';
 
+
+        // Verifica se le input box sono state create in precedenza
+    if (imageControlInputs.length === 0) {
+            // Creazione delle due immagini
+            const image1 = document.createElement('img');
+            image1.src = 'static/img/freccia_interna.png';
+            image1.className = 'spostabile';
+            
+            image1.style.position = 'absolute';
+            image1.style.margin = '0';
+            image1.style.width = 'auto';
+            image1.style.cursor = 'pointer';
+            image1.style.border = '3px solid transparent';
+            image1.style.top = '30%';
+            image1.style.left = '30%';
+            const image2 = document.createElement('img');
+            image2.src = 'static/img/freccia_esterna.png';
+            image2.className = 'spostabile';
+            image2.style.position = 'absolute';
+            image2.style.margin = '0';
+            image2.style.width = 'auto';
+            image2.style.cursor = 'pointer';
+            image2.style.border = '3px solid transparent';
+            image2.style.top = '35%';
+            image2.style.left = '35%';
+            image1.style.width = "20px";
+            image1.style.height = "20px";
+
+
+            image2.style.width = "20px";
+            image2.style.height = "20px";
+            // Aggiungi le immagini al contenitore
+            const imageContainer = document.querySelector('.image-container');
+            imageContainer.appendChild(image1);
+            imageContainer.appendChild(image2);
+
+            // Crea gli input di controllo per le immagini
+            const inputsForImage1 = createImageControlInputs(image1);
+            const inputsForImage2 = createImageControlInputs(image2);
+            imageControlInputs.push(image1,image2,inputsForImage1,inputsForImage2);
+     
+            console.log(imageControlInputs);
+        } else {
+            // Le input box sono già state create, quindi mostra quelle esistenti
+            console.log('imageControlInputs prima del forEach:', imageControlInputs);
+
+            imageControlInputs.forEach(item => {
+                const containerInputImmagini = document.getElementById('containerInputImmagini');
+                containerInputImmagini.style.display = 'block'; // Assicurati che sia visibil
+                if (Array.isArray(item)) {
+                    // Se l'elemento è un array, scorri ogni elemento input nell'array
+                    item.forEach(input => {
+                        input.style.display = 'block';
+                    });
+                } else {
+                    // Se l'elemento non è un array, gestiscilo direttamente
+                    item.style.display = 'block';
+                }
+            });
+            
+        }
+    });
+
+    function createImageControlInputs(image) {
+        const containerInputImmagini = document.getElementById('containerInputImmagini');
+        
+        const labelVern1 = document.createElement('label');
+        const labelVern2 = document.createElement('label');
+        labelVern1.textContent = "Coordinata Y Verso Interno:";
+        labelVern2.textContent = "Coordinata X Verso Esterno:";
+    
+        containerInputImmagini.appendChild(labelVern1);
+        
+        // Crea gli input di controllo per 'top' e 'left'
+        const inputControlloTop = document.createElement('input');
+        inputControlloTop.type = 'number';
+        inputControlloTop.className = 'input-controllo-top';
+        inputControlloTop.value = 0; // Valore iniziale per 'top'
+        inputControlloTop.min = 0;
+        inputControlloTop.max = 100;
+        inputControlloTop.step = "1";
+      
+    
+        inputControlloTop.addEventListener('input', function() {
+            image.style.top = `${this.value}%`;
+        });
+    
+        const inputControlloLeft = document.createElement('input');
+        inputControlloLeft.type = 'number';
+        inputControlloLeft.className = 'input-controllo-left';
+        inputControlloLeft.value = 0; // Valore iniziale per 'left'
+        inputControlloLeft.min = 0;
+        inputControlloLeft.max = 100;
+        inputControlloLeft.step = "1";
+    
+        inputControlloLeft.addEventListener('input', function() {
+            image.style.left = `${this.value}%`;
+        });
+    
+        // Aggiungi gli input di controllo al contenitore
+        containerInputImmagini.appendChild(inputControlloTop);
+        containerInputImmagini.appendChild(labelVern2);
+        containerInputImmagini.appendChild(inputControlloLeft);
+        return [inputControlloTop, inputControlloLeft];
+    }
+    
+    document.getElementById('saveProfileButton').addEventListener('click', function() {
+        let profileName = prompt("Per favore, inserisci un nome per il profilo:");
+    
+        // Verifica se l'utente ha effettivamente inserito un nome
+        if (profileName === null || profileName.trim() === "") {
+            alert("Devi inserire un nome per il profilo per continuare.");
+            return; // Interrompi la funzione se non viene fornito un nome
+        }
+    
+        let profileData = {
+            profileName: profileName,
+            imageSrc: document.getElementById('imagePreview').src,
+            containerInputQuoteValues: Array.from(document.getElementById('containerInputControllo').querySelectorAll('input')).map(input => input.value),
+            listaSviluppoValues: Array.from(document.getElementById('listaSviluppo').querySelectorAll('input')).map(input => input.value),
+            containerInputImmaginiValues: Array.from(document.getElementById('containerInputImmagini').querySelectorAll('input')).map(input => input.value)
+        };
+        console.log(profileData);
+        // Invia i dati al server
+        fetch('/save_profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(profileData)
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+    });
 
     var materialeDropdown = document.getElementById('materiale');
     var tipologiaDropdown = document.getElementById('tipologia');
@@ -747,18 +966,30 @@
 
     var profiloSelezionato = null;
     document.addEventListener('DOMContentLoaded', function() {
-
+       
         fetch('/data/profili')
         .then(response => response.json())
         .then(data => {
             data.profili.forEach(profilo => {
             addProfileToGrid(profilo);
             addProfileToMeasureSection(profilo);
+            caricaScalature(profilo);
             });
         })
         .catch(error => {
             console.error('Error fetching the JSON:', error);
         });
+
+
+        function caricaScalature(jsonData) {
+             // Estrai i dati di scalatura e popola l'oggetto scalatureData
+            
+             jsonData.Scalature.forEach(scalatura => {
+                    scalatureData[scalatura.id] = scalatura;
+                });
+                console.log(scalatureData)
+           
+        }
 
             function addProfileToMeasureSection(profilo) {
                 console.log("Aggiunta sezione di misura per:", profilo.id);
@@ -784,18 +1015,49 @@
                 input.style.left = box.left;
                 input.placeholder = box.placeholder;
                 imageContainer.appendChild(input);
+
+                addVerniciaturaSection(profilo,imageContainer);
+
                 });
-          
-            measureSection.appendChild(imageContainer);
-            let container = document.querySelector('#measureSection .flex-container');
-                let dropdownContainer = container.querySelector('.dropdown-container');
             
-                if (dropdownContainer) {
-                    container.insertBefore(measureSection, dropdownContainer);
-                } else {
-                    container.appendChild(measureSection);
-                }
-          }
+                measureSection.appendChild(imageContainer);
+                let container = document.querySelector('#measureSection .flex-container');
+                    let dropdownContainer = container.querySelector('.dropdown-container');
+                
+                    if (dropdownContainer) {
+                        container.insertBefore(measureSection, dropdownContainer);
+                    } else {
+                        container.appendChild(measureSection);
+             }
+
+        }
+
+
+        function addVerniciaturaSection(profilo, imageContainer) {
+            console.log("Aggiunta sezione di verniciatura per:", profilo.id);
+            
+            let scelteVerniciato = document.createElement('div');
+            scelteVerniciato.className = 'scelteVerniciato';
+            scelteVerniciato.style.display = 'none';
+        
+            profilo.vernBoxes.forEach(box => {
+                let imgVern = document.createElement('img');
+                imgVern.src = box.url;
+                imgVern.className = 'opzioneVerniciato';
+                imgVern.id = box.id;
+                imgVern.style.position = 'absolute';
+                imgVern.style.margin = '0';
+                imgVern.style.width = '20px';
+                imgVern.style.height = '20px';
+                imgVern.style.top = box.top;
+                imgVern.style.left = box.left;
+        
+                scelteVerniciato.appendChild(imgVern);
+            });
+        
+            imageContainer.appendChild(scelteVerniciato);
+        }
+        
 
           function addProfileToGrid(profilo) {
                 let profileDiv = document.createElement('div');
@@ -1638,12 +1900,17 @@
             document.getElementById('profile-section').style.display = 'block';
             document.getElementById('input-section').style.display = 'block';
             document.getElementById('measureSection').style.display = 'block';
-            // ... altre sezioni da mostrare se necessario ...
+            // ... altre sezioni da mostrare se necessario ...10
         });
         
 
 
     function calcolaVarScalatura(profilo, spessore) {
+
+        if (scalatureData[profilo]) {
+            return parseInt(scalatureData[profilo][spessore]) || 0;
+        }
+
         switch(profilo) {
             case "omega":
                 switch(spessore) {

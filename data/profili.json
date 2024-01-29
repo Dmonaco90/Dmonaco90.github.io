@@ -1,13 +1,48 @@
 {
     "profili": [
-      {
-        "id": "esempio",
-        "imageUrl": "static/img/esempio.png",
-        "inputBoxes": [
-          {"id": "lato1", "top": "10%", "left": "15%", "placeholder": "x"},
-          {"id": "lato2", "top": "20%", "left": "30%", "placeholder": "y"}
-        ]
-      }
+        {
+            "id": "esempio",
+            "imageUrl": "static/img/esempio.png",
+            "inputBoxes": [
+                {
+                    "id": "lato1",
+                    "top": "10%",
+                    "left": "15%",
+                    "placeholder": "x"
+                },
+                {
+                    "id": "lato2",
+                    "top": "20%",
+                    "left": "30%",
+                    "placeholder": "x"
+                }
+            ],
+            "vernBoxes": [
+                {
+                    "id": "scelta1",
+                    "top": "10%",
+                    "left": "15%",
+                    "url": "static/img/freccia_interna.png"
+                },
+                {
+                    "id": "scelta2",
+                    "top": "20%",
+                    "left": "30%",
+                    "url": "static/img/freccia_esterna.png"
+                }
+            ],
+            "Scalature": [
+              {
+                  "id": "esempio",
+                  "6/10": "6",
+                  "8/10": "6",
+                  "10/10": "6",
+                  "12/10": "6",
+                  "15/10": "7",
+                  "20/10": "10",
+                  "30/10": "16"
+              }
+          ]
+        }
     ]
-  }
-  
+}
