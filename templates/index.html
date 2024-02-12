@@ -2543,9 +2543,24 @@
         input.addEventListener('focus', function() {
             // Resetta il valore dell'input quando riceve il focus
             this.value = '';
+            adjustFontSize(this);
+        });
+        input.addEventListener('input', function() {
+            // Aggiusta la dimensione del font in base alla lunghezza del testo
+            adjustFontSize(this);
         });
     });
 
+    function adjustFontSize(input) {
+        if (input.value.length > 3) {
+            // Diminuisce la dimensione del font se il testo supera i 3 caratteri
+            input.style.fontSize = 'smaller'; // o specifica un valore esatto, es. "12px"
+        } else {
+            // Ripristina la dimensione del font originale se il testo è di 3 caratteri o meno
+            input.style.fontSize = '4w'; // Assicurati che questo valore corrisponda a quello originale
+        }
+    }
+    
     function getElementoChiaveCombinazione(elemento) {
         if ((elemento.materiale === "Alluminio" ||elemento.materiale === "PVC" ) && elemento.tipologia === "Verniciato") {
             return `${elemento.materiale} ${elemento.colore}`;

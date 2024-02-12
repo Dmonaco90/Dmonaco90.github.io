@@ -380,9 +380,11 @@ body {
 }
 
 
-.opzioneVerniciato {
+.image-container .scelteVerniciato .opzioneVerniciato {
     cursor: pointer;
     border: 3px solid transparent; /* Bordo trasparente per mantenere lo spazio */
+    width:20px;
+    height: 20px;
 }
 
 
