@@ -61,6 +61,10 @@ def send_email():
 def profili():
     return send_from_directory('data', 'profili.json')
 
+@app.route('/data/colori')
+def colori():
+    return send_from_directory('data', 'colori.json')
+
 
 
 @app.route('/save_profile', methods=['POST'])
@@ -166,6 +170,35 @@ def save_profile():
         return jsonify({'error': 'Si è verificato un errore interno del server'}), 500
     
     
+@app.route('/save_color', methods=['POST'])
+def save_color():
+    data = request.json
+   
+    print(data)  # Aggiungi questa riga per stampare i dati ricevuti
+    materiale = data.get('materiale')
+    nuovo_colore = data.get('colore')
+   # Trasforma "Alluminio" in "Verniciato" se necessario
+    if materiale == 'Alluminio':
+        materiale = 'Verniciato'
+    # Carica il file JSON dei colori
+    with open('data/colori.json', 'r+') as json_file:
+        colori = json.load(json_file)
+        
+        # Aggiungi il nuovo colore alla categoria corretta
+        if materiale in colori:
+            if nuovo_colore not in colori[materiale]:
+                colori[materiale].append(nuovo_colore)
+            else:
+                return jsonify({'error': 'Colore già esistente'}), 400
+        else:
+            return jsonify({'error': 'Materiale non valido'}), 400
+
+        # Riporta il cursore all'inizio del file e sovrascrivilo con i nuovi dati
+        json_file.seek(0)
+        json.dump(colori, json_file, indent=4)
+        json_file.truncate()  # Rimuovi il contenuto residuo del file
+
+    return jsonify({'message': 'Colore aggiunto con successo'})
 
 
 if __name__ == '__main__':

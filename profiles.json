@@ -1,0 +1,966 @@
+[
+    {
+        "id": "zeta",
+        "imageUrl": "static/img/zeta2.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-zeta",
+                "top": "8%",
+                "left": "10%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-zeta",
+                "top": "82%",
+                "left": "69%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-zeta",
+                "top": "47%",
+                "left": "52%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta1",
+                "top": "63%",
+                "left": "50%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta2",
+                "top": "27%",
+                "left": "37%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 3,
+            "8/10": 3,
+            "10/10": 3,
+            "12/10": 3,
+            "15/10": 3,
+            "20/10": 4,
+            "30/10": 6
+        }
+    },
+    {
+        "id": "u",
+        "imageUrl": "static/img/u.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-u",
+                "top": "45%",
+                "left": "12%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-u",
+                "top": "65%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-u",
+                "top": "45%",
+                "left": "1%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "47%",
+                "left": "30%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "58%",
+                "left": "18%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 4,
+            "8/10": 4,
+            "10/10": 4,
+            "12/10": 4,
+            "15/10": 5,
+            "20/10": 7,
+            "30/10": 11
+        }
+    },
+    {
+        "id": "omega5",
+        "imageUrl": "static/img/omega5.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-Omega5",
+                "top": "25%",
+                "left": "25%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato1-Omega5",
+                "top": "25%",
+                "left": "13%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-Omega5",
+                "top": "75%",
+                "left": "47%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "59%",
+                "left": "10%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "59%",
+                "left": "10%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "64%",
+                "left": "23%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "64%",
+                "left": "20%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "40%",
+                "left": "-1%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Omega5",
+                "top": "40%",
+                "left": "-1%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "22%",
+                "left": "83%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "35%",
+                "left": "69%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 12,
+            "8/10": 12,
+            "10/10": 12,
+            "12/10": 12,
+            "15/10": 14,
+            "20/10": 20,
+            "30/10": 31
+        }
+    },
+    {
+        "id": "LineaAngolare",
+        "imageUrl": "static/img/LineaAngolare.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-LineaAngolare",
+                "top": "43%",
+                "left": "29%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-LineaAngolare",
+                "top": "48%",
+                "left": "42%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "41%",
+                "left": "25%",
+                "url": "static/img/freccia_interna2.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "59%",
+                "left": "58%",
+                "url": "static/img/freccia_esterna2.png"
+            }
+        ]
+    },
+    {
+        "id": "OmegaAsi2",
+        "imageUrl": "static/img/OmegaAsi2.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-OmegaAsi2",
+                "top": "32%",
+                "left": "8%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-OmegaAsi2",
+                "top": "43%",
+                "left": "22%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaAsi2",
+                "top": "69%",
+                "left": "0%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato1-OmegaAsi2",
+                "top": "68%",
+                "left": "9%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-OmegaAsi2",
+                "top": "83%",
+                "left": "47%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaAsi2",
+                "top": "55%",
+                "left": "18%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaAsi2",
+                "top": "18%",
+                "left": "9%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "65%",
+                "left": "25%",
+                "url": "static/img/freccia_interna2.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "81%",
+                "left": "58%",
+                "url": "static/img/freccia_esterna2.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 8,
+            "8/10": 8,
+            "10/10": 8,
+            "12/10": 8,
+            "15/10": 8,
+            "20/10": 11,
+            "30/10": 19
+        }
+    },
+    {
+        "id": "L",
+        "imageUrl": "static/img/L.png",
+        "inputBoxes": [
+            {
+                "id": "lato2-L",
+                "top": "50%",
+                "left": "6%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-L",
+                "top": "75%",
+                "left": "35%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta111",
+                "top": "46%",
+                "left": "31%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta222",
+                "top": "57%",
+                "left": "19%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 2,
+            "8/10": 2,
+            "10/10": 2,
+            "12/10": 2,
+            "15/10": 2,
+            "20/10": 3,
+            "30/10": 5
+        }
+    },
+    {
+        "id": "Linea",
+        "imageUrl": "static/img/Linea.png",
+        "inputBoxes": [
+            {
+                "id": "lato2-Linea",
+                "top": "40%",
+                "left": "50%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": []
+    },
+    {
+        "id": "omega",
+        "imageUrl": "static/img/omega.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-omega",
+                "top": "20%",
+                "left": "10%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-omega",
+                "top": "75%",
+                "left": "52%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-omega",
+                "top": "20%",
+                "left": "5%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-omega",
+                "top": "50%",
+                "left": "7%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-omega",
+                "top": "50%",
+                "left": "22%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "52%",
+                "left": "35%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "64%",
+                "left": "22%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 6,
+            "8/10": 6,
+            "10/10": 6,
+            "12/10": 6,
+            "15/10": 7,
+            "20/10": 10,
+            "30/10": 16
+        }
+    },
+    {
+        "id": "OmegaAsi",
+        "imageUrl": "static/img/OmegaAsi.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-OmegaAsi",
+                "top": "12%",
+                "left": "38%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-OmegaAsi",
+                "top": "80%",
+                "left": "38%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaAsi",
+                "top": "61%",
+                "left": "1%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-OmegaAsi",
+                "top": "47%",
+                "left": "15%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-OmegaAsi",
+                "top": "61%",
+                "left": "54%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato6-OmegaAsi",
+                "top": "30%",
+                "left": "30%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "56%",
+                "left": "38%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "68%",
+                "left": "26%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 8,
+            "8/10": 8,
+            "10/10": 8,
+            "12/10": 8,
+            "15/10": 12,
+            "20/10": 16,
+            "30/10": 20
+        }
+    },
+    {
+        "id": "OmegaInt",
+        "imageUrl": "static/img/OmegaInt.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-OmegaInt",
+                "top": "25%",
+                "left": "20%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-OmegaInt",
+                "top": "80%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaInt",
+                "top": "25%",
+                "left": "15%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-OmegaInt",
+                "top": "50%",
+                "left": "-1%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-OmegaInt",
+                "top": "50%",
+                "left": "3%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "56%",
+                "left": "27%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "67%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 8,
+            "8/10": 8,
+            "10/10": 8,
+            "12/10": 8,
+            "15/10": 10,
+            "20/10": 14,
+            "30/10": 21
+        }
+    },
+    {
+        "id": "OmegaIntAsi",
+        "imageUrl": "static/img/OmegaIntAsi.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-OmegaIntAsi",
+                "top": "17%",
+                "left": "35%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-OmegaIntAsi",
+                "top": "80%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-OmegaIntAsi",
+                "top": "34%",
+                "left": "15%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-OmegaIntAsi",
+                "top": "50%",
+                "left": "-1%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-OmegaIntAsi",
+                "top": "50%",
+                "left": "3%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "56%",
+                "left": "27%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "67%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 8,
+            "8/10": 8,
+            "10/10": 8,
+            "12/10": 8,
+            "15/10": 10,
+            "20/10": 14,
+            "30/10": 21
+        }
+    },
+    {
+        "id": "Scatola",
+        "imageUrl": "static/img/Scatola.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-Scatola",
+                "top": "63%",
+                "left": "5%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-Scatola",
+                "top": "81%",
+                "left": "34%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Scatola",
+                "top": "69%",
+                "left": "67%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-Scatola",
+                "top": "56%",
+                "left": "3%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-Scatola",
+                "top": "24%",
+                "left": "-6%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato5-Scatola",
+                "top": "24%",
+                "left": "23%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "72%",
+                "left": "27%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "81%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 4,
+            "8/10": 4,
+            "10/10": 4,
+            "12/10": 4,
+            "15/10": 5,
+            "20/10": 7,
+            "30/10": 11
+        }
+    },
+    {
+        "id": "Amo",
+        "imageUrl": "static/img/Amo.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-Amo",
+                "top": "32%",
+                "left": "15%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-Amo",
+                "top": "65%",
+                "left": "50%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "44%",
+                "left": "34%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "55%",
+                "left": "24%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 1,
+            "8/10": 1,
+            "10/10": 1,
+            "12/10": 1,
+            "15/10": 1,
+            "20/10": 0,
+            "30/10": 3
+        }
+    },
+    {
+        "id": "Ami",
+        "imageUrl": "static/img/Ami.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-Ami",
+                "top": "32%",
+                "left": "22%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-Ami",
+                "top": "60%",
+                "left": "48%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Ami",
+                "top": "32%",
+                "left": "18%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "41%",
+                "left": "36%",
+                "url": "static/img/freccia_interna2.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "57%",
+                "left": "51%",
+                "url": "static/img/freccia_esterna2.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 3,
+            "8/10": 3,
+            "10/10": 3,
+            "12/10": 3,
+            "15/10": 6,
+            "20/10": 5,
+            "30/10": 8
+        }
+    },
+    {
+        "id": "gancio",
+        "imageUrl": "static/img/gancio.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-gancio",
+                "top": "28%",
+                "left": "30%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-gancio",
+                "top": "70%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-gancio",
+                "top": "50%",
+                "left": "15%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "46%",
+                "left": "32%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "58%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 4,
+            "8/10": 4,
+            "10/10": 4,
+            "12/10": 4,
+            "15/10": 5,
+            "20/10": 7,
+            "30/10": 11
+        }
+    },
+    {
+        "id": "P_rovescia",
+        "imageUrl": "static/img/P_rovescia.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-P_rovescia",
+                "top": "32%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-P_rovescia",
+                "top": "69%",
+                "left": "61%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-P_rovescia",
+                "top": "43%",
+                "left": "25%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato4-P_rovescia",
+                "top": "50%",
+                "left": "70%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "31%",
+                "left": "68%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "43%",
+                "left": "55%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 6,
+            "8/10": 6,
+            "10/10": 6,
+            "12/10": 6,
+            "15/10": 7,
+            "20/10": 10,
+            "30/10": 16
+        }
+    },
+    {
+        "id": "P",
+        "imageUrl": "static/img/P.png",
+        "inputBoxes": [
+            {
+                "id": "lato1-P",
+                "top": "25%",
+                "left": "37%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato2-P",
+                "top": "61%",
+                "left": "45%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-P",
+                "top": "43%",
+                "left": "24%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-P",
+                "top": "34%",
+                "left": "47%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "46%",
+                "left": "32%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "58%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 6,
+            "8/10": 6,
+            "10/10": 6,
+            "12/10": 6,
+            "15/10": 7,
+            "20/10": 10,
+            "30/10": 16
+        }
+    },
+    {
+        "id": "Freccia",
+        "imageUrl": "static/img/Freccia.png",
+        "inputBoxes": [
+            {
+                "id": "lato2-Freccia",
+                "top": "62%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Freccia",
+                "top": "44%",
+                "left": "20%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "46%",
+                "left": "32%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "58%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 2,
+            "8/10": 2,
+            "10/10": 2,
+            "12/10": 2,
+            "15/10": 2,
+            "20/10": 3,
+            "30/10": 5
+        }
+    },
+    {
+        "id": "L45",
+        "imageUrl": "static/img/L45.png",
+        "inputBoxes": [
+            {
+                "id": "lato2-Freccia",
+                "top": "62%",
+                "left": "50%",
+                "placeholder": "x"
+            },
+            {
+                "id": "lato3-Freccia",
+                "top": "44%",
+                "left": "20%",
+                "placeholder": "x"
+            }
+        ],
+        "vernBoxes": [
+            {
+                "id": "scelta11",
+                "top": "46%",
+                "left": "32%",
+                "url": "static/img/freccia_interna.png"
+            },
+            {
+                "id": "scelta21",
+                "top": "58%",
+                "left": "16%",
+                "url": "static/img/freccia_esterna.png"
+            }
+        ],
+        "scalature": {
+            "6/10": 2,
+            "8/10": 2,
+            "10/10": 2,
+            "12/10": 2,
+            "15/10": 2,
+            "20/10": 3,
+            "30/10": 5
+        }
+    }
+]

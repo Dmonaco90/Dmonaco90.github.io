@@ -99,6 +99,53 @@ body {
         align-items: center; /* Centra gli elementi verticalmente */
         height: 32vh;
     }
+    .main-container {
+        display: flex;
+        flex-direction: row; /* Allinea i figli in orizzontale */
+    }
+    
+    .admin-panel {
+        width: 250px;
+        display: none;
+        background-color: #f4f4f4;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .admin-panel h2 {
+        margin-top: 0;
+        color: #333;
+    }
+    
+    .admin-functions {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .admin-functions li {
+        margin-bottom: 10px;
+    }
+    
+    .admin-functions button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .admin-functions button:hover {
+        background-color: #0056b3;
+    }
+    
+    
+    .content {
+        flex-grow: 1; /* Il contenuto principale occupa lo spazio rimanente */
+        /* Aggiungi qui margin, padding o altri stili se necessario */
+    }
+    
 }
 
 
@@ -454,3 +501,5 @@ footer a {
         font-size: 10px; /* Ancora più piccolo su schermi stretti */
     }
 }
+
+

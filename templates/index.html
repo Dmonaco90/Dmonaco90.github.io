@@ -15,452 +15,170 @@
 
 <body>
 
-
-<button id="btnMostraCarrello">
-    <i class="fa fa-shopping-cart"></i>
-    <span id="conteggioCarrello" class="badge">0</span>
-</button>
-
-<div class="input-container">
-    <input type="text" id="nome_cliente" placeholder="Nome Cliente">
-    <input type="text" id="riferimento_ordine" placeholder="Riferimento Ordine">
-  
-</div>
-
-
-<div class="profile-section" id="profile-section">
-    <h2>Scegli Profilo</h2>
-    <div class="profile-grid">
-        <!-- Ripeti questo blocco per 30 volte, cambia l'URL dell'immagine di sfondo per ciascun quadrato -->
-        <div class="profile" style="background-image: url('static/img/zeta2.png');" data-target="zeta"></div>
-        <div class="profile" style="background-image: url('static/img/omega.png');"data-target="omega"></div>
-        <div class="profile" style="background-image: url('static/img/Ami.png');"data-target="Ami"></div>
-        <div class="profile" style="background-image: url('static/img/Amo.png');"data-target="Amo"></div>
-        <div class="profile" style="background-image: url('static/img/gancio.png');"data-target="gancio"></div>
-        <div class="profile" style="background-image: url('static/img/L.png');"data-target="L"></div>
-        <div class="profile" style="background-image: url('static/img/OmegaAsi.png');" data-target="OmegaAsi"></div>
-        <div class="profile" style="background-image: url('static/img/OmegaInt.png');"data-target="OmegaInt"></div>
-        <div class="profile" style="background-image: url('static/img/OmegaIntAsi.png');"data-target="OmegaIntAsi"></div>
-        <div class="profile" style="background-image: url('static/img/u.png');"data-target="u"></div>
-        <div class="profile" style="background-image: url('static/img/Linea.png');"data-target="Linea"></div>
-        <div class="profile" style="background-image: url('static/img/OmegaAsi2.png');" data-target="OmegaAsi2"></div>
-        <div class="profile" style="background-image: url('static/img/LineaAngolare.png');"data-target="LineaAngolare"></div>
-        <div class="profile" style="background-image: url('static/img/omega5.png');"data-target="omega5"></div>
-        <div class="profile" style="background-image: url('static/img/L45.png');"data-target="L45"></div>
-        <div class="profile" style="background-image: url('static/img/Freccia.png');"data-target="Freccia"></div>
-        <div class="profile" style="background-image: url('static/img/P.png');"data-target="P"></div>
-        <div class="profile" style="background-image: url('static/img/P_rovescia.png');"data-target="P_rovescia"></div>
-        <div class="profile" style="background-image: url('static/img/Scatola.png');"data-target="Scatola"></div>
-        <div class="profile" id="libero"style="background-image: url('static/img/libero.png');"data-target="libero"></div>
-        <div class="profile" id="addProfile"style="background-image: url('static/img/addProfile.png');"data-target="addProfile"></div>
-    </div>
-</div>
-
-
-<div class="measure-section2" id="measureSection">
-    <div class="flex-container flex-container-addProfile">
-        
-        <div class="measure-section addProfile" id="drawSection">
-          
-            <div id="containerInputControllo"> <!-- Contenitore per le input di controllo -->
-                <!-- Le input di controllo verranno aggiunte qui -->
-            </div>
-            <div id="containerInputImmagini">
-                <!-- Gli input di controllo verranno aggiunti qui -->
-            </div>
-            <div id="listaSviluppo" style="display: none;"> <!-- Contenitore nascosto inizialmente -->
-                <!-- La lista e le input box verranno generate qui -->
-            </div>
-
-
-            <div class="image-container addProfile">
-                <img id="imagePreview" src="static/img/addProfile2.png" alt="addProfile">
-                <button id="uploadButton">Carica Profilo</button>
-                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-                <input type="number" id="numeroQuote" placeholder="N. quote">
-                <button id="datiSviluppoButton">Dati Sviluppo</button> <!-- Pulsante aggiunto qui -->
-                <button id="versoVerniciatura">Versi Verniciatura</button> <!-- Pulsante aggiunto qui -->
-                <button id="saveProfileButton">Salva Profilo</button>
-                <div id="containerInputQuote"> <!-- Contenitore per le input quote -->
-                    <!-- Le input quote verranno aggiunte qui -->
-                </div>
-                <div class="image-container">
-                  
-                </div>
-                
-            </div>
-        </div>
-   
-
-        <div class="measure-section zeta" id="drawSection">
-            <div class="image-container zeta">
-                <img src="static/img/zeta2.png" alt="zeta">
-                <input type="number" class="input-lato lato-zeta" id="lato1-zeta" style="top: 8%; left: 10%;   " placeholder="x">
-                <input type="number" class="input-lato lato-zeta" id="lato2-zeta" style="top: 82%; left: 69%;  " placeholder="x">
-                <input type="number" class="input-lato lato-zeta" id="lato3-zeta" style="top: 47%; right: 52%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta1" style="position: absolute;  margin: 0; width: auto; top: 63%; left: 50%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta2" style="position: absolute;  margin: 0; width: auto; top: 27%; left: 37%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section u" id="drawSection">
-            <div class="image-container u">
-                <img src="static/img/u.png" alt="u">
-                <input type="number" class="input-lato lato-u" id="lato1-u" style="top: 45%; left: 12%;  " placeholder="x">
-                <input type="number" class="input-lato lato-u" id="lato2-u" style="top: 65%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-u" id="lato3-u" style="top: 45%; right: 1%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 47%; left: 30%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 18%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section omega5" id="drawSection">
-            <div class="image-container omega5">
-                <img src="static/img/omega5.png" alt="u">
-                <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; left: 25%;  " placeholder="x">
-                <input type="number" class="input-lato lato-omega5" id="lato1-Omega5" style="top: 25%; right: 13%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato2-Omega5" style="top: 75%; left: 47%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 59%; right: 10%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 59%; left: 10%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 64%; right: 23%;   text-align:center;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 64%; left: 20%;  text-align:right;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; left: -1%;  text-align:right;" placeholder="x">
-                <input type="number" class="input-lato lato-Omega5" id="lato3-Omega5" style="top: 40%; right: -1%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 22%; left: 83%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 35%; left: 69%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section LineaAngolare" id="drawSection">
-            <div class="image-container LineaAngolare">
-                <img src="static/img/LineaAngolare.png" alt="u">
-                <input type="number" class="input-lato lato-LineaAngolare" id="lato1-LineaAngolare" style="top: 43%; right: 29%;  " placeholder="x">
-                <input type="number" class="input-lato lato-LineaAngolare" id="lato2-LineaAngolare" style="top: 48%; left: 42%;  " placeholder="x">
-                 <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                 <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 25%;">
-                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 59%; left: 58%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section OmegaAsi2" id="drawSection">
-            <div class="image-container OmegaAsi2">
-                <img src="static/img/OmegaAsi2.png" alt="u">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 32%; right: 8%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 43%; right: 22%;  text-align: right;" placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 69%; right: 0%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato1-OmegaAsi2" style="top: 68%; left: 9%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato2-OmegaAsi2" style="top: 83%; left: 47%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 55%; right: 18%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi2" id="lato3-OmegaAsi2" style="top: 18%; right: 9%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 65%; left: 25%;">
-                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 58%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section L" id="drawSection">
-            <div class="image-container L">
-                <img src="static/img/L.png" alt="L">
-
-                <input type="number" class="input-lato lato-L" id="lato2-L" style="top: 50%; left: 6%;  " placeholder="x">
-                <input type="number" class="input-lato lato-L" id="lato3-L" style="top: 75%; right: 35%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta111" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 31%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta222" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 19%;">
-                 </div>
-
-            </div>
-        </div>
-
-        <div class="measure-section Linea" id="drawSection">
-            <div class="image-container Linea">
-                <img src="static/img/Linea.png" alt="Linea">
-
-                <input type="number" class="input-lato lato-Linea" id="lato2-Linea" style="top: 40%; left: 50%;  " placeholder="x">
-
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section omega" id="drawSection">
-            <div class="image-container omega">
-                <img src="static/img/omega.png" alt="omega">
-                <input type="number" class="input-lato lato-omega" id="lato1-omega" style="top: 20%; left: 10%;  " placeholder="x">
-                <input type="number" class="input-lato lato-omega" id="lato2-omega" style="top: 75%; left: 52%;  " placeholder="x">
-                <input type="number" class="input-lato lato-omega" id="lato3-omega" style="top: 20%; right: 5%;  " placeholder="x">
-                <input type="number" class="input-lato lato-omega" id="lato4-omega" style="top: 50%; right: 7%;  " placeholder="x">
-                <input type="number" class="input-lato lato-omega" id="lato5-omega" style="top: 50%; left: 22%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 52%; left: 35%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 64%; left: 22%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section OmegaAsi" id="drawSection">
-            <div class="image-container OmegaAsi">
-                <img src="static/img/OmegaAsi.png" alt="u">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato1-OmegaAsi" style="top: 12%; left: 38%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato2-OmegaAsi" style="top: 80%; left: 38%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato3-OmegaAsi" style="top: 61%; right: 1%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato4-OmegaAsi" style="top: 47%; left: 15%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato5-OmegaAsi" style="top: 61%; left: 54%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaAsi" id="lato6-OmegaAsi" style="top: 30%; right: 30%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 38%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 68%; left: 26%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section OmegaInt" id="drawSection">
-            <div class="image-container OmegaInt">
-                <img src="static/img/OmegaInt.png" alt="OmegaInt">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato1-OmegaInt" style="top: 25%; left: 20%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato2-OmegaInt" style="top: 80%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato3-OmegaInt" style="top: 25%; right: 15%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato4-OmegaInt" style="top: 50%; right: -1%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaInt" id="lato5-OmegaInt" style="top: 50%; left: 3%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section OmegaIntAsi" id="drawSection">
-            <div class="image-container OmegaIntAsi">
-                <img src="static/img/OmegaIntAsi.png" alt="OmegaIntAsi">
-                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato1-OmegaIntAsi" style="top: 17%; left: 35%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato2-OmegaIntAsi" style="top: 80%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato3-OmegaIntAsi" style="top: 34%; right: 15%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato4-OmegaIntAsi" style="top: 50%; right: -1%;  " placeholder="x">
-                <input type="number" class="input-lato lato-OmegaIntAsi" id="lato5-OmegaIntAsi" style="top: 50%; left: 3%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 56%; left: 27%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 67%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section Scatola" id="drawSection">
-            <div class="image-container Scatola">
-                <img src="static/img/Scatola.png" alt="Scatola">
-                <input type="number" class="input-lato lato-Scatola" id="lato1-Scatola" style="top: 63%; left: 5%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Scatola" id="lato2-Scatola" style="top: 81%; left: 34%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Scatola" id="lato3-Scatola" style="top: 69%; left: 67%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Scatola" id="lato4-Scatola" style="top: 56%; right: 3%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Scatola" id="lato5-Scatola" style="top: 24%; right: -6%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Scatola" id="lato5-Scatola" style="top: 24%; left: 23%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 72%; left: 27%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 81%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section Amo" id="drawSection">
-            <div class="image-container Amo">
-                <img src="static/img/Amo.png" alt="Amo">
-                <input type="number" class="input-lato lato-Amo" id="lato1-Amo" style="top: 32%; left: 15%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Amo" id="lato2-Amo" style="top: 65%; left: 50%;  " placeholder="x">
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 44%; left: 34%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 55%; left: 24%;">
-                 </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-            </div>
-        </div>
-
-        <div class="measure-section Ami" id="drawSection">
-            <div class="image-container Ami">
-                <img src="static/img/Ami.png" alt="Ami">
-                <input type="number" class="input-lato lato-Ami" id="lato1-Ami" style="top: 32%; left: 22%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Ami" id="lato2-Ami" style="top: 60%; left: 48%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Ami" id="lato3-Ami" style="top: 32%; right: 18%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna2.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 41%; left: 36%;">
-                    <img src="static/img/freccia_esterna2.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 57%; left: 51%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section gancio" id="drawSection">
-            <div class="image-container gancio">
-                <img src="static/img/gancio.png" alt="gancio">
-                <input type="number" class="input-lato lato-gancio" id="lato1-gancio" style="top: 28%; left: 30%;  " placeholder="x">
-                <input type="number" class="input-lato lato-gancio" id="lato2-gancio" style="top: 70%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-gancio" id="lato3-gancio" style="top: 50%; left: 15%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section P_rovescia" id="drawSection">
-            <div class="image-container P_rovescia">
-                <img src="static/img/P_rovescia.png" alt="P_rovescia">
-                <input type="number" class="input-lato lato-P_rovescia" id="lato1-P_rovescia" style="top: 32%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P_rovescia" id="lato2-P_rovescia" style="top: 69%; left: 61%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P_rovescia" id="lato3-P_rovescia" style="top: 43%; left: 25%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P_rovescia" id="lato4-P_rovescia" style="top: 50%; left: 70%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 31%; left: 68%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 43%; left: 55%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section P" id="drawSection">
-            <div class="image-container P">
-                <img src="static/img/P.png" alt="P">
-                <input type="number" class="input-lato lato-P" id="lato1-P" style="top: 25%; left: 37%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P" id="lato2-P" style="top: 61%; left: 45%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P" id="lato3-P" style="top: 43%; left: 24%;  " placeholder="x">
-                <input type="number" class="input-lato lato-P" id="lato3-P" style="top: 34%; left: 47%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section Freccia" id="drawSection">
-            <div class="image-container Freccia">
-                <img src="static/img/Freccia.png" alt="Freccia">
-
-                <input type="number" class="input-lato lato-Freccia" id="lato2-Freccia" style="top: 62%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Freccia" id="lato3-Freccia" style="top: 44%; left: 20%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section L45" id="drawSection">
-            <div class="image-container L45">
-                <img src="static/img/L45.png" alt="L45">
-             
-                <input type="number" class="input-lato lato-Freccia" id="lato2-Freccia" style="top: 62%; left: 50%;  " placeholder="x">
-                <input type="number" class="input-lato lato-Freccia" id="lato3-Freccia" style="top: 44%; left: 20%;  " placeholder="x">
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                <div class="scelteVerniciato" style="display: none;">
-                    <img src="static/img/freccia_interna.png" class="opzioneVerniciato" id="scelta11" style="position: absolute;  margin: 0; width: auto; top: 46%; left: 32%;">
-                    <img src="static/img/freccia_esterna.png" class="opzioneVerniciato" id="scelta21" style="position: absolute;  margin: 0; width: auto; top: 58%; left: 16%;">
-                 </div>
-            </div>
-        </div>
-
-        <div class="measure-section libero" id="drawSection">
-            <div class="image-container libero" id="drawSection-libero">
-                
-                <div id="toolbar">
-                    <button id="pencil"><i class="fa fa-pencil-alt"></i></button>
-                    <button id="eraser"><i class="fa fa-trash"></i></button>
-                    <button id="dimension">Quota</button>
-                    <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
-                    <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
-                    <button id="refresh" title="refresh"><i class="fa fa-save" aria-hidden="true"></i></button>
-                
-                </div>
-                <div id="drawingCanvasParent" style="position: relative;">
-                    <canvas id="drawingCanvas" ></canvas>
-                </div>
-                <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
-                
-            </div>
-        </div>
-        
-        
-        <div class="dropdown-container">
-            <input type="text"  class="riferimento" id="riferimento"  placeholder="Riferimento">
-            <div class="dropdown-menus">
-                <select id="materiale" class="dropdown">
-                    <option value="" disabled selected hidden>Materiale</option>
-                    <option value="Alluminio">Alluminio</option>
-                    <option value="Ferro">Ferro</option>
-                    <option value="Acciaio">Acciaio</option>
-                    <option value="PVC">PVC</option>
-                </select>
-            </div>
-            <div class="dropdown-menus">
-                <select id="tipologia" class="dropdown" disabled>
-                    <option value="" disabled selected hidden>Tipologia</option>
-                </select>
-            </div>
-            <div class="dropdown-menus">
-                <select id="spessore" class="dropdown" disabled>
-                    <option value="" disabled selected hidden>Spessore</option>
-                </select>
-            </div>
-            <div class="dropdown-menus">
-                <select id="colore" class="dropdown" disabled>
-                    <option value="" disabled selected hidden>Colore</option>
-                </select>
-            </div>
-        </div>
+<div class="main-container">
+    <button id="toggleAdminPanel" class="toggle-button">
+        <i class="fas fa-cog"></i> <!-- Icona ingranaggio -->
+    </button>
+    <div class="admin-panel">
+        <h2>Pannello Admin</h2>
+        <ul class="admin-functions">
+            <li><button onclick="gestisciSelezioneProfilo('addProfile')" id="addProfile" data-target="addProfile">Aggiungi Profilo</button></li>
+            <li><button  id="verificaProfiloBtn" >Verifica Profilo</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="modificaProfilo()">Modifica Profilo</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaProfilo()">Elimina Profilo</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="modificaColori()">Modifica Colori</button></li>
+            <li><button onclick="aggiungiColori()">Aggiungi Colori</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaColori()">Elimina Colori</button></li>
+        </ul>
     </div>
     
+    
+    <div class="content">
 
+        <button id="btnMostraCarrello">
+            <i class="fa fa-shopping-cart"></i>
+            <span id="conteggioCarrello" class="badge">0</span>
+        </button>
 
-    <div class="input-section" id="input-section">
+        <div class="input-container">
+            <input type="text" id="nome_cliente" placeholder="Nome Cliente">
+            <input type="text" id="riferimento_ordine" placeholder="Riferimento Ordine">
         
-            <input type="number"  class="input-section2" id="numPezzi"  placeholder="N. Pezzi">
-            <input type="number"  class="input-section2" id="altezza"  placeholder="Altezza">
-            <button id="btnAggiungiCarrello" class="input-section2">Aggiungi al Carrello</button>
-           
-     
-    </div>
+        </div>
+
+
+        <div class="profile-section" id="profile-section">
+            <h2>Scegli Profilo</h2>
+            <div class="profile-grid">
+                <!-- Ripeti questo blocco per 30 volte, cambia l'URL dell'immagine di sfondo per ciascun quadrato -->
+                <!-- I profili vengono caricati dinamicamente dal json -->
+                <div class="profile" id="libero"style="background-image: url('static/img/libero.png');"data-target="libero"></div>
+                
+            </div>
+        </div>
+
+
+        <div class="measure-section2" id="measureSection">
+            <div class="flex-container flex-container-addProfile">
+                
+                <div class="measure-section addProfile" id="drawSection">
+                
+                    <div id="containerInputControllo"> <!-- Contenitore per le input di controllo -->
+                        <!-- Le input di controllo verranno aggiunte qui -->
+                    </div>
+                    <div id="containerInputImmagini">
+                        <!-- Gli input di controllo verranno aggiunti qui -->
+                    </div>
+                    <div id="listaSviluppo" style="display: none;"> <!-- Contenitore nascosto inizialmente -->
+                        <!-- La lista e le input box verranno generate qui -->
+                    </div>
+
+
+                    <div class="image-container addProfile">
+                        <img id="imagePreview" src="static/img/addProfile2.png" alt="addProfile">
+                        <button id="uploadButton">Carica Profilo</button>
+                        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                        <input type="number" id="numeroQuote" placeholder="N. quote">
+                        <button id="datiSviluppoButton">Dati Sviluppo</button> <!-- Pulsante aggiunto qui -->
+                        <button id="versoVerniciatura">Versi Verniciatura</button> <!-- Pulsante aggiunto qui -->
+                        <button id="saveProfileButton">Salva Profilo</button>
+                        <div id="containerInputQuote"> <!-- Contenitore per le input quote -->
+                            <!-- Le input quote verranno aggiunte qui -->
+                        </div>
+                        <div class="image-container">
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+        
+
+                 <!-- I profili vengono caricati dinamicamente dal json -->
+
+                <div class="measure-section libero" id="drawSection">
+                    <div class="image-container libero" id="drawSection-libero">
+                        
+                        <div id="toolbar">
+                            <button id="pencil"><i class="fa fa-pencil-alt"></i></button>
+                            <button id="eraser"><i class="fa fa-trash"></i></button>
+                            <button id="dimension">Quota</button>
+                            <!--<button id="deleteDimensions"><i class="fa fa-trash"></i></button>-->
+                            <button id="eraserTool" title="Undo"><i class="fa fa-undo"></i></button>
+                            <button id="refresh" title="refresh"><i class="fa fa-save" aria-hidden="true"></i></button>
+                        
+                        </div>
+                        <div id="drawingCanvasParent" style="position: relative;">
+                            <canvas id="drawingCanvas" ></canvas>
+                        </div>
+                        <!-- Aggiungi altri input box come necessario, posizionandoli con lo stile inline -->
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="dropdown-container">
+                    <input type="text"  class="riferimento" id="riferimento"  placeholder="Riferimento">
+                    <div class="dropdown-menus">
+                        <select id="materiale" class="dropdown">
+                            <option value="" disabled selected hidden>Materiale</option>
+                            <option value="Alluminio">Alluminio</option>
+                            <option value="Ferro">Ferro</option>
+                            <option value="Acciaio">Acciaio</option>
+                            <option value="PVC">PVC</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-menus">
+                        <select id="tipologia" class="dropdown" disabled>
+                            <option value="" disabled selected hidden>Tipologia</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-menus">
+                        <select id="spessore" class="dropdown" disabled>
+                            <option value="" disabled selected hidden>Spessore</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-menus">
+                        <select id="colore" class="dropdown" disabled>
+                            <option value="" disabled selected hidden>Colore</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+
+
+            <div class="input-section" id="input-section">
+                
+                    <input type="number"  class="input-section2" id="numPezzi"  placeholder="N. Pezzi">
+                    <input type="number"  class="input-section2" id="altezza"  placeholder="Altezza">
+                    <button id="btnAggiungiCarrello" class="input-section2">Aggiungi al Carrello</button>
+                
+            
+            </div>
+        </div>
+        <div class="risultatiSviluppo" id="risultatiSviluppo" style="display: none;">
+        
+            <button id="btnTornaIndietro">Torna Indietro</button>
+            <button id="btnProsegui">Prosegui</button>
+        </div>
+
+        <div id="dettagliCarrello" style="display: none;">
+            <h2>Contenuto del Carrello</h2>
+            <div id="elementiCarrello">
+                <!-- Dettagli degli elementi del carrello qui -->
+            </div>
+            <button id="btnAggiungiElementi">Aggiungi Altro</button>
+            <!--  <button id="downloadButton">Scarica Ordine</button>-->
+            <button id="sendEmailButton">Invia Ordine</button>
+            <button id="btnSviluppo">Sviluppo</button> 
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Daniele Monaco</p>
+            <p><a href="/templates/termini-di-servizio.html" target="_blank">Termini di Servizio</a></p>
+        </footer>
+    </div> 
 </div>
-<div class="risultatiSviluppo" id="risultatiSviluppo" style="display: none;">
-  
-    <button id="btnTornaIndietro">Torna Indietro</button>
-    <button id="btnProsegui">Prosegui</button>
-</div>
-
-<div id="dettagliCarrello" style="display: none;">
-    <h2>Contenuto del Carrello</h2>
-    <div id="elementiCarrello">
-        <!-- Dettagli degli elementi del carrello qui -->
-    </div>
-    <button id="btnAggiungiElementi">Aggiungi Altro</button>
-      <!--  <button id="downloadButton">Scarica Ordine</button>-->
-    <button id="sendEmailButton">Invia Ordine</button>
-    <button id="btnSviluppo">Sviluppo</button> 
-</div>
-
-<footer>
-    <p>&copy; 2024 Daniele Monaco</p>
-    <p><a href="/templates/termini-di-servizio.html" target="_blank">Termini di Servizio</a></p>
-</footer>
-
-
 
 <script>
 
@@ -470,6 +188,219 @@
     const controlInputsById = {};
     let isDatiSviluppoCreated = false;
     let scalatureData = {};
+    var profiloSelezionato = null;
+    var opzioniColoreData;
+
+
+    function gestisciSelezioneProfilo(targetClass) {
+        console.log("profilo: "+targetClass)
+        profiloSelezionato = targetClass;
+        var riferimentoOrdine = document.getElementById('riferimento_ordine');
+        var riferimento = document.getElementById('riferimento');
+    
+        riferimento.value = riferimentoOrdine.value;
+    
+        if (profiloSelezionato === 'libero') {
+            initializeCanvas();
+        }
+    
+        if (profiloSelezionato === 'Scatola') {
+            var elemento = document.getElementById('altezza');
+            elemento.value = '1';
+            elemento.disabled = true;
+        }
+    
+        // Nascondi tutte le sezioni
+        document.querySelectorAll('.measure-section').forEach(function(section) {
+            section.style.display = 'none';
+        });
+    
+        // Mostra la sezione corrispondente
+        var targetSection = document.querySelector('.' + targetClass);
+        if (targetSection) {
+            targetSection.style.display = 'flex';
+            document.querySelectorAll('.dropdown-container').forEach(function(element) {
+                element.style.display = 'flex';
+            });
+    
+            resetScelteVerniciato();
+            targetSection.scrollIntoView();
+        }
+    }
+
+    function aggiungiColori() {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+    
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-colori');
+        if (vecchiaSezione) { 
+            vecchiaSezione.remove();
+        }
+    
+        // Crea una nuova sezione per gli attributi del profilo
+        const sezioneAttributi = document.createElement('div');
+        sezioneAttributi.id = 'sezione-colori'; // Assegna un ID univoco
+        sezioneAttributi.style.display = 'block'; // Assicura che la sezione sia visibile
+        sezioneAttributi.style.textAlign = 'center'; // Centra il testo
+        // Aggiunge il titolo del profilo
+        let profiloTitle = document.createElement('h2');
+        profiloTitle.textContent = `Colori:`;
+        sezioneAttributi.appendChild(profiloTitle);
+     
+        Object.entries(opzioniColoreData).forEach(([materiale, colori]) => {
+            let paragrafo = document.createElement('p');
+            paragrafo.textContent = `${materiale}: ${colori.join(', ')}`;
+            sezioneAttributi.appendChild(paragrafo);
+        });
+       
+        let aggiungiColoreBtn = document.createElement('button');
+        aggiungiColoreBtn.textContent = 'Aggiungi Colore';
+        aggiungiColoreBtn.addEventListener('click', function() {
+            mostraOpzioniAggiuntaColore(); // Assicurati che questa funzione sia definita e implementata correttamente
+        });
+    
+        sezioneAttributi.appendChild(aggiungiColoreBtn);
+        document.body.appendChild(sezioneAttributi);
+    }
+
+    
+    function creaContainerColori() {
+        // Verifica se il container esiste già, per evitare di ricrearlo
+        let containerEsistente = document.getElementById('containerColori');
+        if (containerEsistente) {
+            // Se esiste, lo rimuovi per poterne creare uno nuovo (o potresti semplicemente vuotarlo o aggiornarlo)
+            containerEsistente.remove();
+        }
+    
+        // Crea il container per i colori
+        const containerColori = document.createElement('div');
+        containerColori.id = 'containerColori';
+        containerColori.style.padding = '20px'; // Aggiunge un po' di padding per l'estetica
+        containerColori.style.marginTop = '20px'; // Aggiunge un margine superiore
+        containerColori.style.border = '1px solid #ccc'; // Aggiunge un bordo per differenziare la sezione
+        containerColori.style.borderRadius = '5px'; // Arrotonda gli angoli del bordo
+        containerColori.style.backgroundColor = '#f9f9f9'; // Sfondo leggermente grigio per distinguerlo
+        containerColori.style.textAlign = 'center'; // Centra il contenuto
+        containerColori.style.display = 'block'; // Inizialmente nascosto, mostralo quando necessario
+    
+        // Aggiunge il container appena creato al body della pagina o ad un elemento specifico
+        document.body.appendChild(containerColori);
+        // Ora puoi utilizzare 'containerColori' per aggiungere ulteriori elementi o controlli dinamicamente
+    }
+    
+    function mostraOpzioniAggiuntaColore() {
+        creaContainerColori();
+        const containerElemento = document.getElementById('containerColori');
+        containerElemento.innerHTML = ''; // Pulisce eventuali elementi precedenti
+    
+        // Qui viene inserito il codice per creare e aggiungere le dropdown, l'input box, e il pulsante
+        // Crea la dropdown per il materiale
+        let dropdownMateriale = document.createElement('select');
+        let opzioniMateriale = ['Alluminio', 'PVC']; // Aggiungi qui altre opzioni se necessario
+        opzioniMateriale.forEach(materiale => {
+            let opzione = document.createElement('option');
+            opzione.value = materiale;
+            opzione.textContent = materiale;
+            dropdownMateriale.appendChild(opzione);
+        });
+        // Applica stili in linea alle dropdown
+        dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; font-size: 16px;';
+        
+
+    
+        // Crea l'input box per il nuovo colore
+        let inputColore = document.createElement('input');
+        inputColore.type = 'text';
+        inputColore.placeholder = 'Nuovo Colore';
+        inputColore.style.cssText = 'width: 200px; height: 26px; padding: 5px 10px; font-size: 16px;';
+        // Crea il pulsante per salvare il nuovo colore
+        let pulsanteSalva = document.createElement('button');
+        pulsanteSalva.textContent = 'Salva Colore';
+        pulsanteSalva.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white;';
+
+        pulsanteSalva.addEventListener('click', function() {
+            let datiColore = {
+                materiale: dropdownMateriale.value,
+                colore: inputColore.value.trim()
+            };
+        
+            if (datiColore.colore === "") {
+                alert("Per favore, inserisci un nome valido per il colore.");
+                return;
+            }
+        
+            fetch('/save_color', { // Modifica con l'URL esatto del tuo server Flask
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datiColore)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Colore salvato con successo!");
+            })
+            .catch((error) => {
+                alert("Si è verificato un errore nel salvataggio del colore.");
+                console.error('Error:', error);
+            });
+        });
+        
+        
+        // Aggiungi qui l'event listener per pulsanteSalva che gestirà il salvataggio del nuovo colore
+    
+        // Aggiungi gli elementi creati al containerElemento
+        containerElemento.appendChild(dropdownMateriale);
+        containerElemento.appendChild(inputColore);
+        containerElemento.appendChild(pulsanteSalva);
+    
+        // Aggiungi qui ulteriori logiche necessarie
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/data/profili')
+        .then(response => response.json())
+        .then(data => {
+            // Assicurati di accedere all'array 'profili' dentro l'oggetto 'data'
+            data.profili.forEach(profilo => {
+                addProfileToGrid(profilo);
+                addProfileToMeasureSection(profilo);
+                caricaScalature(profilo);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the JSON:', error);
+        });
+
+        fetch('/data/colori') // Modifica il percorso se necessario
+        .then(response => response.json())
+        .then(data => {
+            opzioniColoreData = data; // Salva i dati del JSON nella variabile
+            console.log('Dati colori caricati:', opzioniColoreData);
+            // Qui puoi anche inizializzare o aggiornare qualsiasi interfaccia utente in base ai dati appena caricati
+        })
+        .catch(error => {
+            console.error('Error fetching the colori.json:', error);
+        });
+
+
+       
+
+
+    document.getElementById('verificaProfiloBtn').addEventListener('click', function() {
+        isAdminModeActive = !isAdminModeActive; // Cambia lo stato della modalità admin
+        // Cambia il colore del pulsante a seconda della modalità
+        if (isAdminModeActive) {
+            this.style.backgroundColor = "#FF0000"; // Rosso per la modalità admin
+            this.style.color = "#FFFFFF"; // Testo bianco per maggiore leggibilità
+        } else {
+            this.style.backgroundColor = "#FFFFFF"; // Bianco per la modalità normale
+            this.style.color = "#000000"; // Testo nero
+            ResetAdmin()
+        }
+    });
+    
 
     document.getElementById('uploadButton').addEventListener('click', function() {
         document.getElementById('imageUpload').click();
@@ -805,6 +736,9 @@
         .catch((error) => console.error('Error:', error));
     });
 
+    
+    
+
     var materialeDropdown = document.getElementById('materiale');
     var tipologiaDropdown = document.getElementById('tipologia');
     var spessoreDropdown = document.getElementById('spessore');
@@ -885,14 +819,16 @@
     
     function aggiornaSpessoreColore(materiale, tipologia) {
         var opzioniSpessore, opzioniColore;
+        // Carica i dati dal JSON
         
-        if (materiale === 'Alluminio' ) {
+
+        if (materiale === 'Alluminio') {
             if (tipologia === 'Verniciato') {
-                  // Resetta il colore dopo il cambio di materiale
-                  opzioniSpessore = ['12/10'];
-                  opzioniColore = ['Bianco', 'Nero', 'Avorio', 'Bianco Opaco', 'Grigio Scuro', 'Grigio Chiaro', 'Grigio Raf.', 'Verde Raf.', 'Verde', 'Bronzo', 'Argento ox', 'Argento Verniciato','Marrone','Marrone Raf.'];
-                  aggiornaDropdown(coloreDropdown, opzioniColore);
-                  coloreDropdown.disabled = false;
+                opzioniSpessore = ['12/10']; // Assumendo che tu abbia dei valori predefiniti per spessore
+                console.log(opzioniColoreData['Verniciato'])
+                opzioniColore = opzioniColoreData['Verniciato'];
+                aggiornaDropdown(coloreDropdown, opzioniColore);
+                coloreDropdown.disabled = false;
                 
             } 
             
@@ -933,7 +869,7 @@
         } else if (materiale === 'PVC') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['12/10'];
-            opzioniColore = ['Golden OAK', 'Noce', 'Bianco Venato', 'Rovere Sbiancato'];
+            opzioniColore = opzioniColoreData['PVC'];
             aggiornaDropdown(coloreDropdown, opzioniColore);
             coloreDropdown.disabled = false;
         }
@@ -973,30 +909,121 @@
 
     
 
-    var profiloSelezionato = null;
-    document.addEventListener('DOMContentLoaded', function() {
-       
-        fetch('/data/profili')
-        .then(response => response.json())
-        .then(data => {
-            data.profili.forEach(profilo => {
-            addProfileToGrid(profilo);
-            addProfileToMeasureSection(profilo);
-            caricaScalature(profilo);
+    
+
+    let isAdminModeActive = false;
+    function mostraAttributiProfilo(profilo) {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+    
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-attributi-profilo');
+        if (vecchiaSezione) {
+            vecchiaSezione.remove();
+        }
+    
+        // Crea una nuova sezione per gli attributi del profilo
+        const sezioneAttributi = document.createElement('div');
+        sezioneAttributi.id = 'sezione-attributi-profilo'; // Assegna un ID univoco
+        sezioneAttributi.style.display = 'block'; // Assicura che la sezione sia visibile
+        sezioneAttributi.style.textAlign = 'center'; // Centra il testo
+        // Aggiunge il titolo del profilo
+        let profiloTitle = document.createElement('h2');
+        profiloTitle.textContent = `Profilo: ${profilo.id}`;
+        sezioneAttributi.appendChild(profiloTitle);
+    
+        // Aggiunge informazioni sulle scalature, se presenti
+        if (profilo.scalature) {
+            let scalatureTitle = document.createElement('h3');
+            scalatureTitle.textContent = 'Scalature';
+            sezioneAttributi.appendChild(scalatureTitle);
+    
+            Object.entries(profilo.scalature).forEach(([spessore, valore]) => {
+                let scalaturaItem = document.createElement('p');
+                scalaturaItem.textContent = `${spessore}: ${valore}`;
+                sezioneAttributi.appendChild(scalaturaItem);
             });
-        })
-        .catch(error => {
-            console.error('Error fetching the JSON:', error);
+        }
+    
+        // Aggiunge la nuova sezione al DOM, ad esempio nel body o in un contenitore specifico
+        document.body.appendChild(sezioneAttributi); // o un altro elemento di contenimento appropriato
+    }
+    
+    
+
+    function aggiungiColori() {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+    
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-colori');
+        if (vecchiaSezione) { 
+            vecchiaSezione.remove();
+        }
+    
+        // Crea una nuova sezione per gli attributi del profilo
+        const sezioneAttributi = document.createElement('div');
+        sezioneAttributi.id = 'sezione-colori'; // Assegna un ID univoco
+        sezioneAttributi.style.display = 'block'; // Assicura che la sezione sia visibile
+        sezioneAttributi.style.textAlign = 'center'; // Centra il testo
+        // Aggiunge il titolo del profilo
+        let profiloTitle = document.createElement('h2');
+        profiloTitle.textContent = `Colori:`;
+        sezioneAttributi.appendChild(profiloTitle);
+     
+        Object.entries(opzioniColoreData).forEach(([materiale, colori]) => {
+            let paragrafo = document.createElement('p');
+            paragrafo.textContent = `${materiale}: ${colori.join(', ')}`;
+            sezioneAttributi.appendChild(paragrafo);
         });
+       
+        let aggiungiColoreBtn = document.createElement('button');
+        aggiungiColoreBtn.textContent = 'Aggiungi Colore';
+        // aggiungiColoreBtn.addEventListener('click', mostraOpzioniAggiuntaColore); // Assicurati che questa funzione sia definita
+    
+        sezioneAttributi.appendChild(aggiungiColoreBtn);
+        document.body.appendChild(sezioneAttributi);
+    }
 
+    
 
+    function ResetAdmin() {
+        // Nascondi le sezioni non necessarie
+        document.querySelectorAll('.flex-container, .input-section').forEach(element => {
+            element.style.display = '';
+            
+        });
+        document.querySelector('.measure-section2').style.display = '';
+        document.getElementById('sezione-attributi-profilo').style.display = 'none';
+    }
+
+    function preparaAmbientePerProfilo() {
+        // Nascondi le sezioni non necessarie
+        document.querySelectorAll('.flex-container, .input-section').forEach(element => {
+            element.style.display = 'none';
+        });
+    
+        // Prepara la sezione per le nuove informazioni
+        let section = document.querySelector('.measure-section2');
+        section.style.display = 'none'; // Assicurati che la sezione sia visibile
+        section.style.textAlign = 'center'; // Centra il testo
+    
+        // Potresti voler aggiustare il layout o lo stile qui
+        // Ad esempio, centra la sezione nella pagina, se necessario
+    }
+    
+    
+    
+   
+    
+
+        
+        
         function caricaScalature(jsonData) {
              // Estrai i dati di scalatura e popola l'oggetto scalatureData
             
-             jsonData.Scalature.forEach(scalatura => {
-                    scalatureData[scalatura.id] = scalatura;
-                });
-                console.log(scalatureData)
+             scalatureData[jsonData.id] = jsonData.Scalature;
+             console.log(scalatureData)
            
         }
 
@@ -1080,53 +1107,53 @@
           }
           
 
-
+          
+        
+        
           document.querySelector('.profile-grid').addEventListener('click', function(event) {
             // Controlla se l'elemento cliccato (o un suo genitore) ha la classe 'profile'
             let profile = event.target.closest('.profile');
             if (!profile) return; // ignora i click che non sono sui profili
             var targetClass = profile.getAttribute('data-target');
             profiloSelezionato = targetClass;
-            var riferimentoOrdine = document.getElementById('riferimento_ordine');
-            var riferimento = document.getElementById('riferimento');
 
-            riferimento.value = riferimentoOrdine.value;
-
-            if (profiloSelezionato === 'libero') {
-                
-                initializeCanvas();
-            }
-
-            if (profiloSelezionato === 'Scatola') {
-                var elemento = document.getElementById('altezza');
-                elemento.value = '1';        // Imposta il valore a 1
-    
-                elemento.disabled = true;  
-            }
-            // Nascondi tutte le sezioni
-            document.querySelectorAll('.measure-section').forEach(function(section) {
-                section.style.display = 'none';
-            });
-
-            // Mostra la sezione corrispondente
-            var targetSection = document.querySelector('.' + targetClass);
-            
-            if (targetSection) {
-                targetSection.style.display = 'flex';
-                document.querySelectorAll('.dropdown-container').forEach(function(element) {
-                    element.style.display = 'flex';
+            if (isAdminModeActive) {
+                // Modalità Admin attiva: Mostra attributi del profilo in 'measure-section2'
+                var profileId = profile.getAttribute('data-target');
+                fetch('/data/profili')
+                .then(response => response.json())
+                .then(data => {
+                    var profilo = data.profili.find(p => p.id === profileId);
+                    if (profilo) {
+                        // Implementa la logica per mostrare gli attributi del profilo
+                        // per esempio:
+                        mostraAttributiProfilo(profilo);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the JSON:', error);
                 });
+            } else {
+                gestisciSelezioneProfilo(targetClass);
+            }
+        });
 
-                resetScelteVerniciato();
-                targetSection.scrollIntoView();
-        }
+        const toggleButton = document.getElementById('toggleAdminPanel');
+        const adminPanel = document.querySelector('.admin-panel');
 
-            
-            
-
-               
+        toggleButton.addEventListener('click', function() {
+            // Cambia la condizione per controllare se il pannello non è visibile
+            if (adminPanel.style.display !== 'block') {
+                adminPanel.style.display = 'block';
+            } else {
+                adminPanel.style.display = 'none';
+            }
         });
     
+
+      
+          
+      
         // Gestione click su pulsante Torna Indietro
         document.getElementById('btnTornaIndietro').addEventListener('click', function() {
             // Nasconde la sezione dei risultati
@@ -1918,216 +1945,10 @@
 
         if (scalatureData[profilo]) {
             return parseInt(scalatureData[profilo][spessore]) || 0;
-        }
-
-        switch(profilo) {
-            case "omega":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 6;
-                    case "15/10": return 7;
-                    case "20/10": return 10;
-                    case "30/10": return 16;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-                break;
-            // Aggiungi altri casi per diversi profili qui
-            case "zeta":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10":
-                    case "15/10": return 3;
-                    case "20/10": return 4;
-                    case "30/10": return 6;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-                break;
-            case "Ami":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 3;
-                    case "15/10": return 6;
-                    case "20/10": return 5;
-                    case "30/10": return 8;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;   
-            case "OmegaInt":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 8;
-                    case "15/10": return 10;
-                    case "20/10": return 14;
-                    case "30/10": return 21;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break; 
-            case "OmegaIntAsi":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 8;
-                    case "15/10": return 10;
-                    case "20/10": return 14;
-                    case "30/10": return 21;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break; 
-            case "L":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": 
-                    case "15/10": return 2;
-                    case "20/10": return 3;
-                    case "30/10": return 5;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "omega5":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 12;
-                    case "15/10": return 14;
-                    case "20/10": return 20;
-                    case "30/10": return 31;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "OmegaAsi":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 8;
-                    case "15/10": return 12;
-                    case "20/10": return 16;
-                    case "30/10": return 20;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "OmegaAsi2":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10":
-                    case "15/10": return 8;
-                    case "20/10": return 11;
-                    case "30/10": return 19;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "Amo":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10":
-                    case "15/10": return 1;
-                    case "20/10": return 0;
-                    case "30/10": return 3;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "gancio":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 4;
-                    case "15/10": return 5;
-                    case "20/10": return 7;
-                    case "30/10": return 11;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-            case "u":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 4;
-                    case "15/10": return 5;
-                    case "20/10": return 7;
-                    case "30/10": return 11;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-                case "Scatola":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 4;
-                    case "15/10": return 5;
-                    case "20/10": return 7;
-                    case "30/10": return 11;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-                case "Freccia":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": 
-                    case "15/10": return 2;
-                    case "20/10": return 3;
-                    case "30/10": return 5;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-                case "L45":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": 
-                    case "15/10": return 2;
-                    case "20/10": return 3;
-                    case "30/10": return 5;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-                case "P":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 6;
-                    case "15/10": return 7;
-                    case "20/10": return 10;
-                    case "30/10": return 16;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-                case "P_rovescia":
-                switch(spessore) {
-                    case "6/10":
-                    case "8/10":
-                    case "10/10":
-                    case "12/10": return 6;
-                    case "15/10": return 7;
-                    case "20/10": return 10;
-                    case "30/10": return 16;
-                    // Aggiungi altri casi per "zeta" qui
-                }
-            break;
-        }
-        return 0; // Restituisci 0 se non viene trovata alcuna corrispondenza
+        
+        } else {
+            return 0; // Restituisci 0 se non viene trovata alcuna corrispondenza
+        }    
     }
     
     document.getElementById('btnSviluppo').addEventListener('click', function() {
@@ -2554,13 +2375,14 @@
     function adjustFontSize(input) {
         if (input.value.length > 3) {
             // Diminuisce la dimensione del font se il testo supera i 3 caratteri
+            console.log("smaller")
             input.style.fontSize = 'smaller'; // o specifica un valore esatto, es. "12px"
         } else {
             // Ripristina la dimensione del font originale se il testo è di 3 caratteri o meno
             input.style.fontSize = '4w'; // Assicurati che questo valore corrisponda a quello originale
         }
     }
-    
+
     function getElementoChiaveCombinazione(elemento) {
         if ((elemento.materiale === "Alluminio" ||elemento.materiale === "PVC" ) && elemento.tipologia === "Verniciato") {
             return `${elemento.materiale} ${elemento.colore}`;
