@@ -88,6 +88,14 @@ body {
         height: 20vh;
         
     }
+    .admin-panel {
+        display: none !important;
+        
+    }
+    .toggle-button {
+        display: none !important;
+        
+    }
 }
 
 @media (min-width: 601px) {

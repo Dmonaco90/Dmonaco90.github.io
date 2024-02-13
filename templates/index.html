@@ -250,7 +250,13 @@
      
         Object.entries(opzioniColoreData).forEach(([materiale, colori]) => {
             let paragrafo = document.createElement('p');
-            paragrafo.textContent = `${materiale}: ${colori.join(', ')}`;
+            if (materiale === "Verniciato") {
+                console.log ("verniciato..")
+                materiale2 = "Alluminio";
+            }else {
+                materiale2 = materiale;
+            }
+            paragrafo.textContent = `${materiale2}: ${colori.join(', ')}`;
             sezioneAttributi.appendChild(paragrafo);
         });
        
