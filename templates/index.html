@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     
     
 </head>
@@ -59,7 +60,7 @@
 
 
         <div class="measure-section2" id="measureSection">
-            <div class="flex-container flex-container-addProfile">
+            <div class="flex-container flex-container-addProfile" id="flex-container">
                 
                 <div class="measure-section addProfile" id="drawSection">
                 
@@ -193,7 +194,7 @@
 
 
     function gestisciSelezioneProfilo(targetClass) {
-        console.log("profilo: "+targetClass)
+
         profiloSelezionato = targetClass;
         var riferimentoOrdine = document.getElementById('riferimento_ordine');
         var riferimento = document.getElementById('riferimento');
@@ -251,7 +252,7 @@
         Object.entries(opzioniColoreData).forEach(([materiale, colori]) => {
             let paragrafo = document.createElement('p');
             if (materiale === "Verniciato") {
-                console.log ("verniciato..")
+
                 materiale2 = "Alluminio";
             }else {
                 materiale2 = materiale;
@@ -383,7 +384,7 @@
         .then(response => response.json())
         .then(data => {
             opzioniColoreData = data; // Salva i dati del JSON nella variabile
-            console.log('Dati colori caricati:', opzioniColoreData);
+            
             // Qui puoi anche inizializzare o aggiornare qualsiasi interfaccia utente in base ai dati appena caricati
         })
         .catch(error => {
@@ -391,7 +392,46 @@
         });
 
 
-       
+            //logica scelta verniciato
+        const contenitoreGenerale = document.getElementById('measureSection');    
+        contenitoreGenerale.addEventListener('click', function(event) {
+            const imgVerniciato = event.target.closest('.opzioneVerniciato');
+            if (!imgVerniciato) {
+
+                return; // Se non abbiamo cliccato su un'opzioneVerniciato, non fare nulla
+            }
+    
+            const contenitoreScelte = imgVerniciato.closest('.scelteVerniciato');
+            const tutteLeImmagini = contenitoreScelte.querySelectorAll('.opzioneVerniciato');
+    
+            // Se l'elemento cliccato è già selezionato, mostriamo tutte le opzioni
+            if (imgVerniciato.classList.contains('selezionata')) {
+
+                tutteLeImmagini.forEach(img => {
+                    img.classList.remove('selezionata');
+                    img.style.display = 'block'; // Mostra tutte le immagini
+                });
+            } else {
+                // Altrimenti, selezioniamo l'elemento cliccato e nascondiamo gli altri
+
+                tutteLeImmagini.forEach(img => {
+
+
+                    if (img === imgVerniciato) {
+
+                        img.classList.add('selezionata');
+                        img.style.display = 'block'; // Assicura che l'immagine selezionata sia visibile
+
+                    } else {
+
+                        img.classList.remove('selezionata');
+                        img.style.display = 'none'; // Nasconde le altre immagini
+ 
+                    }
+                });
+
+            }
+        });
 
 
     document.getElementById('verificaProfiloBtn').addEventListener('click', function() {
@@ -472,7 +512,7 @@
                         }
                     }
                     
-                    console.log("if")
+
                     // Le input per questo ID sono già state create, quindi mostra quelle esistenti
                     controlInputsById[elementId].forEach(input => {
                         input.style.display = 'block';
@@ -480,7 +520,7 @@
                 } else {
                     // Primo click su questo elemento, crea le input
                   //  removeControlInputs();
-                    console.log("else")
+    
                   
                     const inputTop = createControlInput(event.target, 'top');
                     const inputLeft = createControlInput(event.target, 'left');
@@ -557,7 +597,7 @@
     
         // Se le input sono già state create, mostrale soltanto
             if (isDatiSviluppoCreated) {
-                console.log(isDatiSviluppoCreated)
+  
                 listaSviluppo.style.display = 'block';
                 return;
             }
@@ -638,10 +678,9 @@
             const inputsForImage2 = createImageControlInputs(image2);
             imageControlInputs.push(image1,image2,inputsForImage1,inputsForImage2);
      
-            console.log(imageControlInputs);
+
         } else {
             // Le input box sono già state create, quindi mostra quelle esistenti
-            console.log('imageControlInputs prima del forEach:', imageControlInputs);
 
             imageControlInputs.forEach(item => {
                 const containerInputImmagini = document.getElementById('containerInputImmagini');
@@ -831,7 +870,7 @@
         if (materiale === 'Alluminio') {
             if (tipologia === 'Verniciato') {
                 opzioniSpessore = ['12/10']; // Assumendo che tu abbia dei valori predefiniti per spessore
-                console.log(opzioniColoreData['Verniciato'])
+        
                 opzioniColore = opzioniColoreData['Verniciato'];
                 aggiornaDropdown(coloreDropdown, opzioniColore);
                 coloreDropdown.disabled = false;
@@ -1029,12 +1068,12 @@
              // Estrai i dati di scalatura e popola l'oggetto scalatureData
             
              scalatureData[jsonData.id] = jsonData.Scalature;
-             console.log(scalatureData)
+            
            
         }
 
             function addProfileToMeasureSection(profilo) {
-                console.log("Aggiunta sezione di misura per:", profilo.id);
+       
                 let measureSection = document.createElement('div');
                 measureSection.className = `measure-section ${profilo.id}`;
                 measureSection.id = 'drawSection';
@@ -1058,10 +1097,12 @@
                 input.placeholder = box.placeholder;
                 imageContainer.appendChild(input);
 
-                addVerniciaturaSection(profilo,imageContainer);
+                
 
                 });
-            
+                addVerniciaturaSection(profilo,imageContainer);
+                
+
                 measureSection.appendChild(imageContainer);
                 let container = document.querySelector('#measureSection .flex-container');
                     let dropdownContainer = container.querySelector('.dropdown-container');
@@ -1076,7 +1117,7 @@
 
 
         function addVerniciaturaSection(profilo, imageContainer) {
-            console.log("Aggiunta sezione di verniciatura per:", profilo.id);
+  
             
             let scelteVerniciato = document.createElement('div');
             scelteVerniciato.className = 'scelteVerniciato';
@@ -1439,7 +1480,7 @@
 
         if (!lastState || lastState.canvasState !== currentCanvasState || JSON.stringify(lastState.inputsState) !== JSON.stringify(currentInputsState)) {
             undoStack.push({ canvasState: currentCanvasState, inputsState: currentInputsState });
-            console.log('Stato salvato. Contenuto attuale di undoStack:', undoStack);
+
         }
 
     }
@@ -1688,7 +1729,7 @@
             // Controlla se la tipologia è "Verniciato" e se almeno una delle opzioni è stata selezionata
             if (tipologiaSelezionata === 'Verniciato' || tipologiaSelezionata === 'Satinato'  || tipologiaSelezionata === 'Mandorlato'  || tipologiaSelezionata === 'Lucido'  || tipologiaSelezionata === 'S.B' ) {
                 var opzioneSelezionata = document.querySelector('.opzioneVerniciato.selezionata');
-                console.log(opzioneSelezionata)
+
                 if (opzioneSelezionata === null && profiloSelezionato !== "Linea" && profiloSelezionato !== "libero") {
                     alert("Seleziona verso verniciatura.");
                     return; // Interrompe ulteriori azioni di questo evento
@@ -1868,7 +1909,7 @@
                         document.getElementById('profile-section').style.display = 'block';
                         document.getElementById('input-section').style.display = 'block';
                         document.getElementById('measureSection').style.display = 'block';
-                        console.log('Contenuto del carrello:', carrello);
+       
                         // Imposta i valori nei campi di input e dropdown
 
                           // Resettare tutti gli input a null quando si entra nella modalità di modifica
@@ -2003,7 +2044,7 @@
                 }
 
                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
-                console.log(elemento)
+
 
                 if (elemento.profilo === "Scatola") {
 
@@ -2023,10 +2064,7 @@
                     var sommaMisurazioni = sommaPrimiTreLati * sommaPrimiSecondiLati
                    
                     combinazioniUniche[chiaveCombinazione].somma += elemento.pezzi * sommaPrimiSecondiLati * sommaPrimiTreLati;
-                    console.log("elemento.pezzi:" +elemento.pezzi)
-                    console.log("sommaPrimiSecondiLati" +sommaPrimiSecondiLati)
-                    console.log("sommaPrimiTreLati:" +sommaPrimiTreLati)
-                    console.log(combinazioniUniche[chiaveCombinazione].somma)
+
                 }
             
                 else {
@@ -2066,7 +2104,7 @@
             }
             
             pesiTotaliPerCombinazione[chiaveCombinazione] += calcolaPesoTeorico(elemento.materiale, elemento.spessore);
-            console.log("peso: "+pesiTotaliPerCombinazione[chiaveCombinazione])
+  
 
             if (!materialeGruppi[materialeFittizio]) {
                 materialeGruppi[materialeFittizio] = {};
@@ -2216,7 +2254,7 @@
                                 var varScalatura = calcolaVarScalatura(elemento.profilo, elemento.spessore);
                                
                                 if (elemento.profilo === "Scatola") {
-                                    console.log("entro scatola")
+                        
                                     var sommaPrimiTreLati = parseFloat(elemento.datiMisurazioni.Lato1) 
                                         + parseFloat(elemento.datiMisurazioni.Lato2) 
                                         + parseFloat(elemento.datiMisurazioni.Lato3);
@@ -2234,10 +2272,6 @@
                                     
                                     elemento.altezza = sommaPrimiSecondiLati;
                     
-                                    console.log("elemento.altezza. "+elemento.altezza)
-                                    console.log("sommaPrimiTreLati "+sommaPrimiTreLati)
-                                    console.log("sommaPrimiSecondiLati "+sommaPrimiSecondiLati)
-                                    console.log("varScalatura "+varScalatura)
                                     }
 
                                 else {
@@ -2247,12 +2281,10 @@
                                 }
             
                                 finestraStampa.document.write('<div class="dettagli">');
-                                    console.log ("indice: "+indice)
-                                    console.log ("elemento.riferimento: "+elemento.riferimento)
-                                    console.log ("ultimoRiferimento: "+ultimoRiferimento)
+                        
                                     if (indice === 0 || elemento.riferimento !== ultimoRiferimento) {
                                        
-                                            console.log("riferimento profilo presente: " + elemento.riferimento);
+               
                                             finestraStampa.document.write('<p style="margin: 1%; color:blue;">' + elemento.riferimento + '</p>');
                                             riferimentoFatto = false;
                                        
@@ -2381,7 +2413,7 @@
     function adjustFontSize(input) {
         if (input.value.length > 3) {
             // Diminuisce la dimensione del font se il testo supera i 3 caratteri
-            console.log("smaller")
+
             input.style.fontSize = 'smaller'; // o specifica un valore esatto, es. "12px"
         } else {
             // Ripristina la dimensione del font originale se il testo è di 3 caratteri o meno
@@ -2417,12 +2449,7 @@
     
     
     
-    function resetScelteVerniciato() {
-        document.querySelectorAll('.scelteVerniciato .opzioneVerniciato').forEach(function(img) {
-            img.style.display = 'block'; // Mostra l'immagine
-            img.classList.remove('selezionata'); // Rimuovi la selezione
-        });
-    }
+    
 
     document.getElementById('tipologia').addEventListener('change', function() {
         var tipologiaSelezionata = this.value;
@@ -2437,32 +2464,7 @@
         });
     });
     
-    document.querySelectorAll('.scelteVerniciato').forEach(function(contenitoreScelte) {
-        contenitoreScelte.querySelectorAll('.opzioneVerniciato').forEach(function(img) {
-            img.addEventListener('click', function() {
-                // Controlla se l'immagine corrente è già selezionata
-                var giaSelezionata = this.classList.contains('selezionata');
-    
-                // Deseleziona e nascondi tutte le immagini nello stesso contenitore
-                contenitoreScelte.querySelectorAll('.opzioneVerniciato').forEach(function(i) {
-                    i.style.display = 'none'; // Nascondi l'immagine
-                    i.classList.remove('selezionata'); // Rimuovi la selezione
-                });
-    
-                if (!giaSelezionata) {
-                    // Se l'immagine corrente non era già selezionata, mostrala e selezionala
-                    this.style.display = 'block';
-                    this.classList.add('selezionata');
-                } else {
-                    // Se l'immagine corrente era già selezionata, mostra entrambe le opzioni
-                    contenitoreScelte.querySelectorAll('.opzioneVerniciato').forEach(function(i) {
-                        i.style.display = 'block'; // Mostra l'immagine
-                    });
-                }
-            });
-        });
-    });
-    
+  
    
     function generaEInviaPDF(elementoDaConvertire) {
         // Ottieni i valori dai campi di input
