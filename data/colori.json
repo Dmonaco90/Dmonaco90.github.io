@@ -1,7 +1,5 @@
 {
     "Verniciato": [
-        "Bianco",
-        "Nero",
         "Avorio",
         "Bianco Opaco",
         "Grigio Scuro",
@@ -13,7 +11,9 @@
         "Argento ox",
         "Argento Verniciato",
         "Marrone",
-        "Marrone Raf."
+        "Marrone Raf.",
+        "Nero",
+        "Bianco"
     ],
     "PVC": [
         "Golden OAK",
