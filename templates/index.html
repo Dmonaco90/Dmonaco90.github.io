@@ -29,7 +29,7 @@
             <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaProfilo()">Elimina Profilo</button></li>
             <li><button onclick="modificaColori()">Modifica Colori</button></li>
             <li><button onclick="aggiungiColori()">Aggiungi Colori</button></li>
-            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaColori()">Elimina Colori</button></li>
+            <li><button onclick="eliminaColori()">Elimina Colori</button></li>
         </ul>
     </div>
     
@@ -228,7 +228,35 @@
             targetSection.scrollIntoView();
         }
     }
-
+    function eliminaColori() {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+    
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-colori');
+        if (vecchiaSezione) { 
+            vecchiaSezione.remove();
+        }
+    
+        // Crea una nuova sezione per la selezione del colore da eliminare
+        const sezioneAttributi = document.createElement('div');
+        sezioneAttributi.id = 'sezione-colori';
+        sezioneAttributi.style.display = 'block';
+        sezioneAttributi.style.textAlign = 'center';
+        document.body.appendChild(sezioneAttributi);
+    
+        // Aggiunge il titolo
+        let titolo = document.createElement('h2');
+        titolo.textContent = 'Elimina Colore';
+        
+        sezioneAttributi.appendChild(titolo);
+        // Mostra la dropdown per selezionare il materiale e poi il colore
+        mostraOpzioniAggiuntaColore(true, true); // Passa un secondo parametro per indicare la modalità eliminazione
+        
+        // Nota: dovrai modificare la funzione mostraOpzioniAggiuntaColore() 
+        // per gestire questa nuova modalità "eliminazione" e cambiare il comportamento di alcuni elementi
+    }
+    
     function aggiungiColori() {
         // Nasconde la sezione 'measure-section2'
         document.querySelector('.measure-section2').style.display = 'none';
@@ -295,13 +323,29 @@
         document.body.appendChild(containerColori);
         // Ora puoi utilizzare 'containerColori' per aggiungere ulteriori elementi o controlli dinamicamente
     }
+    function ricaricaColoriEAggiornaDropdown() {
+        fetch('/data/colori') // Assicurati che il percorso sia corretto
+            .then(response => response.json())
+            .then(data => {
+                opzioniColoreData = data;
+                console.log('Colori aggiornati:', opzioniColoreData);
     
-    function mostraOpzioniAggiuntaColore(isModifica = false) {
+                // Assumendo che 'dropdownMateriale' sia accessibile qui,
+                // altrimenti ottienilo con document.getElementById o simili
+                const dropdownMateriale= document.getElementById('DropMateriale');
+                const eventChange = new Event('change');
+                dropdownMateriale.dispatchEvent(eventChange);
+            })
+            .catch(error => {
+                console.error('Errore nel ricaricare i colori:', error);
+            });
+    }
+
+    function mostraOpzioniAggiuntaColore(isModifica = false, isEliminazione = false) {
         creaContainerColori();
         const containerElemento = document.getElementById('containerColori');
         containerElemento.innerHTML = ''; // Pulisce eventuali elementi precedenti
     
-        // Crea la dropdown per il materiale
         let dropdownMateriale = document.createElement('select');
         let opzioniMateriale = ['Alluminio', 'PVC'];
         opzioniMateriale.forEach(materiale => {
@@ -311,23 +355,20 @@
             dropdownMateriale.appendChild(opzione);
         });
         dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; font-size: 16px;';
+        dropdownMateriale.id = 'DropMateriale';
         containerElemento.appendChild(dropdownMateriale);
         
          // Logica per gestire il cambio di materiale e l'aggiornamento della dropdown dei colori
          dropdownMateriale.addEventListener('change', function() {
-            if (isModifica) {
-                const materialeSelezionato = this.value;
-                // Esegue il remapping da "Alluminio" a "Verniciato" prima di recuperare i colori
-                const materialeEffettivo = materialeSelezionato === 'Alluminio' ? 'Verniciato' : materialeSelezionato;
-                const coloriDisponibili = opzioniColoreData[materialeEffettivo] || [];
-                aggiornaDropdownColore(dropdownColore, coloriDisponibili);
-            }
+            const materialeSelezionato = this.value;
+            const materialeEffettivo = materialeSelezionato === 'Alluminio' ? 'Verniciato' : materialeSelezionato;
+            const coloriDisponibili = opzioniColoreData[materialeEffettivo] || [];
+            aggiornaDropdownColore(dropdownColore, coloriDisponibili);
         });
         
 
         let dropdownColore;
-        if (isModifica) {
-            console.log("entro modifica colore");
+        if (isModifica || isEliminazione) {
             dropdownColore = document.createElement('select');
             dropdownColore.id = 'dropdownColore';
             dropdownColore.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
@@ -336,11 +377,12 @@
             opzioneVuota.textContent = "Seleziona un colore...";
             dropdownColore.appendChild(opzioneVuota);
             containerElemento.appendChild(dropdownColore);
-            console.log("DropdownColore aggiunto al container, numero di opzioni:", dropdownColore.options.length); // Aggiungi dropdownColore al container
-            dropdownColore.selectedIndex = 0; // Imposta l'opzione vuota come selezionata di default
+            console.log("creato dropbox")
         }
+
+
         let coloreVecchioSelezionato = null
-        console.log ("null")
+       
         if (isModifica) {
             dropdownColore.addEventListener('change', function() {
                 coloreVecchioSelezionato = this.value;
@@ -348,38 +390,52 @@
                 console.log("Colore vecchio selezionato:", coloreVecchioSelezionato);
             });
         }
-        // Crea l'input box per il nuovo colore o il colore modificato
-        let inputColore = document.createElement('input');
-        inputColore.type = 'text';
-        inputColore.placeholder = isModifica ? 'Modifica Colore' : 'Nuovo Colore';
-        inputColore.style.cssText = 'width: 200px; height: 26px; padding: 5px 10px; font-size: 16px; margin-top: 10px;';
-    
-        // Crea il pulsante per salvare il nuovo colore o le modifiche
-        let pulsanteSalva = document.createElement('button');
-        pulsanteSalva.textContent = isModifica ? 'Salva Modifiche' : 'Salva Colore';
-        pulsanteSalva.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
-    
-       
-  
-     
-      
+        /// Se in modalità di eliminazione, non creare l'input box per il nuovo colore
+        let inputColore;
+        if (!isEliminazione) {
+            inputColore = document.createElement('input');
+            inputColore.type = 'text';
+            inputColore.placeholder = isModifica ? 'Modifica Colore' : 'Nuovo Colore';
+            inputColore.style.cssText = 'width: 200px; height: 26px; padding: 5px 10px; font-size: 16px; margin-top: 10px;';
+        }
+
+        let pulsanteAzione = document.createElement('button');
+        pulsanteAzione.textContent = isEliminazione ? 'Elimina Colore' : (isModifica ? 'Salva Modifiche' : 'Salva Colore');
+        pulsanteAzione.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
+        containerElemento.appendChild(pulsanteAzione);
+        console.log("creato pulsante azione")
 
 
-        pulsanteSalva.addEventListener('click', function() {
+         // Assegna comportamento al pulsante in base alla modalità
+        pulsanteAzione.addEventListener('click', function() {
             let materialeRemapped = dropdownMateriale.value === 'Alluminio' ? 'Verniciato' : dropdownMateriale.value;
+            let coloreDaInviare = null;
+            if (!isEliminazione) {
+                console.log("inserimento o modifica")
+                coloreDaInviare =  inputColore.value.trim();
+            }else{
+                console.log("eliminazione")
+                coloreDaInviare =  dropdownColore.value.trim();
+                console.log(coloreDaInviare)
+            }
+
+            
             let datiColore = {
                 materiale: materialeRemapped,
-                coloreNuovo: inputColore.value.trim(),
-                coloreVecchio: coloreVecchioSelezionato 
+                colore: coloreDaInviare
             };
         
-            if (datiColore.colore === "") {
+            // Se è una modifica, includi anche il colore vecchio
+            if (isModifica) {
+                datiColore.coloreVecchio = coloreVecchioSelezionato;
+            }
+        
+            if (!datiColore.colore) {
                 alert("Per favore, inserisci un nome valido per il colore.");
                 return;
             }
-            let urlEndpoint = isModifica ? '/modify_color' : '/save_color'; // Sceglie l'endpoint in base alla modalità
-            console.log(datiColore)
-            fetch(urlEndpoint, { // Modifica con l'URL esatto del tuo server Flask
+            let urlEndpoint = isEliminazione ? '/delete_color' : (isModifica ? '/modify_color' : '/save_color');
+            fetch(urlEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -388,10 +444,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert("Colore salvato con successo!");
+                alert(isEliminazione ? "Colore eliminato con successo!" : "Colore salvato con successo!");
+                ricaricaColoriEAggiornaDropdown();
             })
             .catch((error) => {
-                alert("Si è verificato un errore nel salvataggio del colore.");
+                alert("Si è verificato un errore.");
                 console.error('Error:', error);
             });
         });
@@ -402,12 +459,13 @@
         // Aggiungi gli elementi creati al containerElemento
         containerElemento.appendChild(dropdownMateriale);
         if (isModifica) containerElemento.appendChild(dropdownColore); // Solo se in modalità modifica
-        containerElemento.appendChild(inputColore);
-        containerElemento.appendChild(pulsanteSalva);
+        if (!isEliminazione) containerElemento.appendChild(inputColore);
+        containerElemento.appendChild(pulsanteAzione);
 
-        // Assicurati di chiamare la funzione per aggiornare la dropdown dei colori al caricamento
-        if (isModifica) {
-            dropdownMateriale.dispatchEvent(new Event('change')); // Simula il cambio di valore per popolare i colori
+
+        // Se in modalità modifica o eliminazione, innesca l'aggiornamento iniziale della dropdown dei colori
+        if (isModifica || isEliminazione) {
+            dropdownMateriale.dispatchEvent(new Event('change'));
         }
     }
     // Funzione per aggiornare la dropdown dei colori

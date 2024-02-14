@@ -209,7 +209,7 @@ def modify_color():
     print(data)  # Stampa per debug
     materiale = data['materiale']
     coloreVecchio = data['coloreVecchio']
-    coloreNuovo = data['coloreNuovo']
+    colore = data['colore']
     
     try:
         with open('data/colori.json', 'r+') as file:
@@ -217,11 +217,34 @@ def modify_color():
             if coloreVecchio in colori[materiale]:
                 # Rimuove il vecchio colore e aggiunge il nuovo
                 colori[materiale].remove(coloreVecchio)
-                colori[materiale].append(coloreNuovo)
+                colori[materiale].append(colore)
                 file.seek(0) # Riporta il cursore all'inizio del file
                 json.dump(colori, file, indent=4)
                 file.truncate() # Rimuove il contenuto residuo del file
                 return jsonify({'message': 'Colore modificato con successo'}), 200
+            else:
+                return jsonify({'error': 'Colore non trovato'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/delete_color', methods=['POST'])
+def delete_color():
+    data = request.json
+    print(data)  # Stampa per debug
+    materiale = data['materiale']
+    colore = data['colore']
+    
+    try:
+        with open('data/colori.json', 'r+') as file:
+            colori = json.load(file)
+            if colore in colori[materiale]:
+                # Rimuove il vecchio colore e aggiunge il nuovo
+                colori[materiale].remove(colore)
+                file.seek(0) # Riporta il cursore all'inizio del file
+                json.dump(colori, file, indent=4)
+                file.truncate() # Rimuove il contenuto residuo del file
+                return jsonify({'message': 'Colore eliminato con successo'}), 200
             else:
                 return jsonify({'error': 'Colore non trovato'}), 404
     except Exception as e:
