@@ -7,10 +7,62 @@ from werkzeug.utils import secure_filename
 import base64
 import os
 import json
+import logging
+from google.cloud import logging as cloud_logging
+from google.cloud import storage
+
+# Configura il client di logging di Google Cloud
+client = cloud_logging.Client()
+client.setup_logging()
 
 app = Flask(__name__)
 CORS(app)
 
+# Configura il livello di logging di Flask
+logging.basicConfig(level=logging.INFO)
+
+
+def init_storage_client():
+    # Inizializza il client di Google Cloud Storage
+    return storage.Client()
+
+def save_color_to_storage(data):
+    print("entro save")
+    bucket_name='sitolamiere.appspot.com'
+    filename='colori.json'
+    storage_client = init_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(filename)
+     # Aggiunto il blocco try-except per il debug della serializzazione JSON
+    try:
+        json_string = json.dumps(data)
+        print("Dati serializzati con successo:", json_string)  # Stampa per debug
+    except TypeError as e:
+        print("Errore nella serializzazione dei dati:", e)
+        # Qui puoi decidere come gestire l'errore, ad esempio ritornare un errore al client
+        return {"error": f"Impossibile serializzare i dati: {e}"}
+
+    # Procede con il caricamento dei dati serializzati su Google Cloud Storage
+    blob.upload_from_string(json_string, content_type='application/json')
+    print("colori salvati")
+
+def load_color_from_storage(bucket_name='sitolamiere.appspot.com', filename='colori.json'):
+    print("entro load")
+    storage_client = init_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(filename)
+    json_data = json.loads(blob.download_as_string(client=None))
+    print("colori caricati")
+    return json_data
+
+def load_profile_from_storage(bucket_name='sitolamiere.appspot.com', filename='profili.json'):
+    print("entro load profili")
+    storage_client = init_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(filename)
+    json_data = json.loads(blob.download_as_string(client=None))
+    print("profili caricati")
+    return json_data
 
 @app.route('/')
 def homepage():
@@ -62,11 +114,12 @@ def send_email():
 
 @app.route('/data/profili')
 def profili():
-    return send_from_directory('data', 'profili.json')
+    #return send_from_directory('data', 'profili.json')
+    return jsonify(load_profile_from_storage())
 
 @app.route('/data/colori')
 def colori():
-    return send_from_directory('data', 'colori.json')
+    return jsonify(load_color_from_storage())
 
 
 
@@ -175,33 +228,37 @@ def save_profile():
     
 @app.route('/save_color', methods=['POST'])
 def save_color():
-    data = request.json
+    bucket_name = 'sitolamiere.appspot.com'
+    filename = 'colori.json'  # Nome del file JSON da modificare
+
+    # Carica i dati esistenti da Google Cloud Storage
+    data = load_color_from_storage(bucket_name=bucket_name, filename=filename)
    
-    print(data)  # Aggiungi questa riga per stampare i dati ricevuti
-    materiale = data.get('materiale')
-    nuovo_colore = data.get('colore')
-   # Trasforma "Alluminio" in "Verniciato" se necessario
+    print(data)  # Stampa i dati per debugging
+
+    # Supponendo che la richiesta POST invii i dati in JSON nel corpo della richiesta
+    request_data = request.get_json()
+    materiale = request_data.get('materiale')
+    nuovo_colore = request_data.get('colore')
+    
+    # Trasforma "Alluminio" in "Verniciato" se necessario
     if materiale == 'Alluminio':
         materiale = 'Verniciato'
-    # Carica il file JSON dei colori
-    with open('data/colori.json', 'r+') as json_file:
-        colori = json.load(json_file)
-        
-        # Aggiungi il nuovo colore alla categoria corretta
-        if materiale in colori:
-            if nuovo_colore not in colori[materiale]:
-                colori[materiale].append(nuovo_colore)
-            else:
-                return jsonify({'error': 'Colore già esistente'}), 400
-        else:
-            return jsonify({'error': 'Materiale non valido'}), 400
 
-        # Riporta il cursore all'inizio del file e sovrascrivilo con i nuovi dati
-        json_file.seek(0)
-        json.dump(colori, json_file, indent=4)
-        json_file.truncate()  # Rimuovi il contenuto residuo del file
+    # Aggiungi il nuovo colore alla categoria corretta
+    if materiale in data:
+        if nuovo_colore not in data[materiale]:
+            data[materiale].append(nuovo_colore)
+        else:
+            return jsonify({'error': 'Colore già esistente'}), 400
+    else:
+        return jsonify({'error': 'Materiale non valido'}), 400
+
+    # Salva i dati modificati su Google Cloud Storage
+    save_color_to_storage(data)
 
     return jsonify({'message': 'Colore aggiunto con successo'})
+
 
 @app.route('/modify_color', methods=['POST'])
 def modify_color():
@@ -212,21 +269,21 @@ def modify_color():
     colore = data['colore']
     
     try:
-        with open('data/colori.json', 'r+') as file:
-            colori = json.load(file)
-            if coloreVecchio in colori[materiale]:
-                # Rimuove il vecchio colore e aggiunge il nuovo
-                colori[materiale].remove(coloreVecchio)
-                colori[materiale].append(colore)
-                file.seek(0) # Riporta il cursore all'inizio del file
-                json.dump(colori, file, indent=4)
-                file.truncate() # Rimuove il contenuto residuo del file
-                return jsonify({'message': 'Colore modificato con successo'}), 200
-            else:
-                return jsonify({'error': 'Colore non trovato'}), 404
+        # Carica il file JSON esistente da Google Cloud Storage
+        colori = load_color_from_storage()
+        
+        if coloreVecchio in colori[materiale]:
+            # Rimuove il vecchio colore e aggiunge il nuovo
+            colori[materiale].remove(coloreVecchio)
+            colori[materiale].append(colore)
+            
+            # Salva il file JSON modificato su Google Cloud Storage
+            save_color_to_storage(colori)
+            return jsonify({'message': 'Colore modificato con successo'}), 200
+        else:
+            return jsonify({'error': 'Colore non trovato'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
 
 @app.route('/delete_color', methods=['POST'])
 def delete_color():
@@ -236,20 +293,48 @@ def delete_color():
     colore = data['colore']
     
     try:
-        with open('data/colori.json', 'r+') as file:
-            colori = json.load(file)
-            if colore in colori[materiale]:
-                # Rimuove il vecchio colore e aggiunge il nuovo
-                colori[materiale].remove(colore)
-                file.seek(0) # Riporta il cursore all'inizio del file
-                json.dump(colori, file, indent=4)
-                file.truncate() # Rimuove il contenuto residuo del file
-                return jsonify({'message': 'Colore eliminato con successo'}), 200
-            else:
-                return jsonify({'error': 'Colore non trovato'}), 404
+        # Carica il file JSON esistente da Google Cloud Storage
+        colori = load_color_from_storage()
+        
+        if colore in colori[materiale]:
+            # Rimuove il colore
+            colori[materiale].remove(colore)
+            
+            # Salva il file JSON modificato su Google Cloud Storage
+            save_color_to_storage(colori)
+            return jsonify({'message': 'Colore eliminato con successo'}), 200
+        else:
+            return jsonify({'error': 'Colore non trovato'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+@app.route('/modify_profile', methods=['POST'])
+def modify_profile():
+    data = request.json
+    profile_id = data['id']
+    new_scalatures = data['scalature']
+
+    # Percorso al file JSON dei profili
+    json_file_path = 'data/profili.json'
+
+    # Carica il JSON dei profili
+    with open(json_file_path, 'r+') as file:
+        data = json.load(file)  # Carica il contenuto del file JSON in un dizionario
+        profili = data.get('profili', [])  # Ottieni la lista dei profili, se esiste, altrimenti usa una lista vuota
+
+        # Trova il profilo da modificare e aggiorna le scalature
+        for profilo in profili:
+            if profilo['id'] == profile_id:
+                profilo['scalature'] = new_scalatures
+                break
+
+        # Riporta il cursore all'inizio del file e sovrascrivi con i nuovi dati
+        file.seek(0)
+        json.dump(data, file, indent=4)  # Assicurati di scrivere l'oggetto 'data' completo, non solo 'profili'
+        file.truncate()
+
+    return jsonify({'message': f'Scalature per il profilo {profile_id} modificate con successo!'})
 
 if __name__ == '__main__':
     app.run(debug=True)

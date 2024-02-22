@@ -25,10 +25,10 @@
         <ul class="admin-functions">
             <li><button onclick="gestisciSelezioneProfilo('addProfile')" id="addProfile" data-target="addProfile">Aggiungi Profilo</button></li>
             <li><button  id="verificaProfiloBtn" >Verifica Profilo</button></li>
-            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="modificaProfilo()">Modifica Profilo</button></li>
+            <li><button id="modificaProfiloBtn">Modifica Profilo</button></li>
             <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaProfilo()">Elimina Profilo</button></li>
-            <li><button onclick="modificaColori()">Modifica Colori</button></li>
             <li><button onclick="aggiungiColori()">Aggiungi Colori</button></li>
+            <li><button onclick="modificaColori()">Modifica Colori</button></li>
             <li><button onclick="eliminaColori()">Elimina Colori</button></li>
         </ul>
     </div>
@@ -545,8 +545,10 @@
         .then(data => {
             // Assicurati di accedere all'array 'profili' dentro l'oggetto 'data'
             data.profili.forEach(profilo => {
+                console.log(profilo)
                 addProfileToGrid(profilo);
                 addProfileToMeasureSection(profilo);
+                
                 caricaScalature(profilo);
             });
         })
@@ -612,6 +614,19 @@
         isAdminModeActive = !isAdminModeActive; // Cambia lo stato della modalità admin
         // Cambia il colore del pulsante a seconda della modalità
         if (isAdminModeActive) {
+            this.style.backgroundColor = "#FF0000"; // Rosso per la modalità admin
+            this.style.color = "#FFFFFF"; // Testo bianco per maggiore leggibilità
+        } else {
+            this.style.backgroundColor = "#FFFFFF"; // Bianco per la modalità normale
+            this.style.color = "#000000"; // Testo nero
+            ResetAdmin()
+        }
+    });
+
+    document.getElementById('modificaProfiloBtn').addEventListener('click', function() {
+        isAdminModifyModeActive  = !isAdminModifyModeActive ; // Cambia lo stato della modalità admin
+        // Cambia il colore del pulsante a seconda della modalità
+        if (isAdminModifyModeActive ) {
             this.style.backgroundColor = "#FF0000"; // Rosso per la modalità admin
             this.style.color = "#FFFFFF"; // Testo bianco per maggiore leggibilità
         } else {
@@ -1131,6 +1146,10 @@
     
 
     let isAdminModeActive = false;
+    let isAdminModifyModeActive = false; // Modalità Admin per modificare gli attributi
+
+   
+
     function mostraAttributiProfilo(profilo) {
         // Nasconde la sezione 'measure-section2'
         document.querySelector('.measure-section2').style.display = 'none';
@@ -1166,6 +1185,110 @@
     
         // Aggiunge la nuova sezione al DOM, ad esempio nel body o in un contenitore specifico
         document.body.appendChild(sezioneAttributi); // o un altro elemento di contenimento appropriato
+    }
+    
+    function modificaAttributiProfilo(profilo) {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+    
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-modifica-profilo');
+        if (vecchiaSezione) {
+            vecchiaSezione.remove();
+        }
+    
+        // Crea una nuova sezione per la modifica degli attributi del profilo
+        const sezioneModifica = document.createElement('div');
+        sezioneModifica.id = 'sezione-modifica-profilo'; // Assegna un ID univoco
+        sezioneModifica.style.display = 'block'; // Assicura che la sezione sia visibile
+        sezioneModifica.style.textAlign = 'center'; // Centra il testo
+    
+        // Aggiunge il titolo del profilo
+        let profiloTitle = document.createElement('h2');
+        profiloTitle.textContent = `Modifica Profilo: ${profilo.id}`;
+        sezioneModifica.appendChild(profiloTitle);
+    
+        // Aggiunge input box per le scalature, se presenti
+        if (profilo.scalature) {
+            let scalatureTitle = document.createElement('h3');
+            scalatureTitle.textContent = 'Scalature';
+            sezioneModifica.appendChild(scalatureTitle);
+        
+            Object.entries(profilo.scalature).forEach(([spessore, valore]) => {
+                // Crea un container div per ogni coppia di label e input
+                let container = document.createElement('div');
+                container.style.marginBottom = '10px'; // Aggiunge spazio tra i campi
+        
+                let label = document.createElement('label');
+                if (spessore === '8/10' || spessore === '6/10') {
+                    label.textContent = '\u2000' + `${spessore}: `;
+                } else {
+                        label.textContent = `${spessore}: `;
+                }
+                label.style.fontSize = '26px'; // Font più grande per la label
+                label.for = spessore; // Assicura che l'etichetta sia associata all'input
+        
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.id = spessore; // Associa l'input alla label
+                input.style.width = '5%'; // Rende l'input più largo
+                input.style.padding = '10px'; // Più spazio all'interno dell'input
+                input.style.fontSize = '20px'; // Font più grande
+                input.style.textAlign = 'center'; // Allinea il testo al centro
+                input.value = valore;
+                input.name = spessore;
+        
+                // Aggiunge label e input al container div
+                container.appendChild(label);
+                container.appendChild(input);
+        
+                // Aggiunge il container div alla sezione di modifica
+                sezioneModifica.appendChild(container);
+            });
+        }
+        
+    
+        // Crea il pulsante per salvare le modifiche
+        let salvaModificheBtn = document.createElement('button');
+        salvaModificheBtn.textContent = 'Salva Modifiche';
+        salvaModificheBtn.style.width = '10%';
+        salvaModificheBtn.style.fontSize = '20px';
+        salvaModificheBtn.style.padding = '10px';
+        salvaModificheBtn.addEventListener('click', function() {
+            // Qui inserisci la logica per la raccolta dei dati modificati e l'invio al backend
+            console.log('Salvataggio modifiche...');
+            // Esempio: raccolta dati
+            let datiModificati = {
+                id: profilo.id,
+                scalature: {}
+            };
+            sezioneModifica.querySelectorAll('input').forEach(input => {
+                datiModificati.scalature[input.name] = input.value;
+            });
+            // Esempio: invio dati al backend
+            console.log(datiModificati);
+            let urlEndpoint = 'modify_profile';
+            fetch(urlEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datiModificati)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Scalature profilo - " +datiModificati.id+" - modificate con successo!");
+                
+            })
+            .catch((error) => {
+                alert("Si è verificato un errore.");
+                console.error('Error:', error);
+            });
+        });
+        sezioneModifica.appendChild(salvaModificheBtn);
+    
+        // Aggiunge la nuova sezione al DOM, ad esempio nel body o in un contenitore specifico
+        document.body.appendChild(sezioneModifica); // o un altro elemento di contenimento appropriato
     }
     
     
@@ -1241,9 +1364,8 @@
         function caricaScalature(jsonData) {
              // Estrai i dati di scalatura e popola l'oggetto scalatureData
             
-             scalatureData[jsonData.id] = jsonData.Scalature;
-            
-           
+             scalatureData[jsonData.id] = jsonData.scalature;
+           console.log( scalatureData)
         }
 
             function addProfileToMeasureSection(profilo) {
@@ -1338,7 +1460,22 @@
             var targetClass = profile.getAttribute('data-target');
             profiloSelezionato = targetClass;
 
-            if (isAdminModeActive) {
+            if (isAdminModifyModeActive) {
+                // Modalità Admin Modifica attiva: Mostra input per modifica attributi del profilo in 'measure-section2'
+                var profileId = profile.getAttribute('data-target');
+                fetch('/data/profili')
+                .then(response => response.json())
+                .then(data => {
+                    var profilo = data.profili.find(p => p.id === profileId);
+                    if (profilo) {
+                        // Implementa la logica per modificare gli attributi del profilo
+                        modificaAttributiProfilo(profilo);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the JSON:', error);
+                });
+            } else if (isAdminModeActive) {
                 // Modalità Admin attiva: Mostra attributi del profilo in 'measure-section2'
                 var profileId = profile.getAttribute('data-target');
                 fetch('/data/profili')
@@ -2163,10 +2300,12 @@
 
 
     function calcolaVarScalatura(profilo, spessore) {
-
+        console.log("scalatureData profilo:"+scalatureData[profilo])
+        console.log("profilo:"+profilo)
+        console.log("profilo:"+spessore)
         if (scalatureData[profilo]) {
             return parseInt(scalatureData[profilo][spessore]) || 0;
-        
+            console.log("calcolaVarScalatura: "+parseInt(scalatureData[profilo][spessore]) || 0)
         } else {
             return 0; // Restituisci 0 se non viene trovata alcuna corrispondenza
         }    

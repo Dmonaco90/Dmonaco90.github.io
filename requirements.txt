@@ -1,3 +1,5 @@
 Flask==2.3.2
 Flask-Mail==0.9.1
 flask_cors== 4.0.0
+google-cloud-logging==2.7.0
+google-cloud-storage
