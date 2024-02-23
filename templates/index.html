@@ -15,7 +15,11 @@
 
 
 <body>
-
+<div id="loadingScreen" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:white; font-size:24px;">
+        Salvataggio in corso...
+    </div>
+</div>
 <div class="main-container">
     <button id="toggleAdminPanel" class="toggle-button">
         <i class="fas fa-cog"></i> <!-- Icona ingranaggio -->
@@ -26,13 +30,17 @@
             <li><button onclick="gestisciSelezioneProfilo('addProfile')" id="addProfile" data-target="addProfile">Aggiungi Profilo</button></li>
             <li><button  id="verificaProfiloBtn" >Verifica Profilo</button></li>
             <li><button id="modificaProfiloBtn">Modifica Profilo</button></li>
-            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaProfilo()">Elimina Profilo</button></li>
+            <li><button id="eliminaProfiloBtn">Elimina Profilo</button></li>
             <li><button onclick="aggiungiColori()">Aggiungi Colori</button></li>
             <li><button onclick="modificaColori()">Modifica Colori</button></li>
             <li><button onclick="eliminaColori()">Elimina Colori</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="aggiungiMateriale()">Aggiungi Materiale</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="modificaMateriale()">Modifica Materiale</button></li>
+            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaMateriale()">Elimina Materiale</button></li>
         </ul>
     </div>
-    
+
+
     
     <div class="content">
 
@@ -122,10 +130,6 @@
                     <div class="dropdown-menus">
                         <select id="materiale" class="dropdown">
                             <option value="" disabled selected hidden>Materiale</option>
-                            <option value="Alluminio">Alluminio</option>
-                            <option value="Ferro">Ferro</option>
-                            <option value="Acciaio">Acciaio</option>
-                            <option value="PVC">PVC</option>
                         </select>
                     </div>
                     <div class="dropdown-menus">
@@ -191,7 +195,13 @@
     let scalatureData = {};
     var profiloSelezionato = null;
     var opzioniColoreData;
+   
 
+
+    function aggiornaBadgeCarrello() {
+        var conteggio = carrello.length;
+        document.getElementById('conteggioCarrello').textContent = conteggio;
+    }
 
     function gestisciSelezioneProfilo(targetClass) {
 
@@ -260,7 +270,10 @@
     function aggiungiColori() {
         // Nasconde la sezione 'measure-section2'
         document.querySelector('.measure-section2').style.display = 'none';
-    
+        const altreSezioni = document.getElementById('containerColori');
+        if (altreSezioni) {
+            altreSezioni.innerHTML = ''; // Svuota il contenuto della sezione
+        }
         // Rimuove la sezione precedente se già esiste
         const vecchiaSezione = document.getElementById('sezione-colori');
         if (vecchiaSezione) { 
@@ -291,6 +304,9 @@
        
         let aggiungiColoreBtn = document.createElement('button');
         aggiungiColoreBtn.textContent = 'Aggiungi Colore';
+        aggiungiColoreBtn.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
+      
+        
         aggiungiColoreBtn.addEventListener('click', function() {
             mostraOpzioniAggiuntaColore(); // Assicurati che questa funzione sia definita e implementata correttamente
         });
@@ -299,7 +315,51 @@
         document.body.appendChild(sezioneAttributi);
     }
 
+    function aggiungiMateriale() {
+        // Nasconde la sezione 'measure-section2'
+        document.querySelector('.measure-section2').style.display = 'none';
+        const altreSezioni = document.getElementById('containerColori');
+        if (altreSezioni) {
+            altreSezioni.innerHTML = ''; // Svuota il contenuto della sezione
+        }
+        // Rimuove la sezione precedente se già esiste
+        const vecchiaSezione = document.getElementById('sezione-colori');
+        if (vecchiaSezione) { 
+            vecchiaSezione.remove();
+        }
     
+        // Crea una nuova sezione per gli attributi del profilo
+        const sezioneAttributi = document.createElement('div');
+        sezioneAttributi.id = 'sezione-colori'; // Assegna un ID univoco
+        sezioneAttributi.style.display = 'block'; // Assicura che la sezione sia visibile
+        sezioneAttributi.style.textAlign = 'center'; // Centra il testo
+        // Aggiunge il titolo del profilo
+        let profiloTitle = document.createElement('h2');
+        profiloTitle.textContent = `Materiali:`;
+        sezioneAttributi.appendChild(profiloTitle);
+     
+
+        
+        Object.keys(datiPesiMateriali).forEach(materiale => {
+            let paragrafo = document.createElement('p');
+            let materialeVisualizzato = materiale;
+            paragrafo.textContent = materialeVisualizzato;
+            sezioneAttributi.appendChild(paragrafo);
+        });
+       
+        let aggiungiMaterialeBtn = document.createElement('button');
+        aggiungiMaterialeBtn.textContent = 'Aggiungi Materiale';
+        aggiungiMaterialeBtn.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
+      
+        
+        aggiungiMaterialeBtn.addEventListener('click', function() {
+            mostraOpzioniAggiuntaMateriale(); // Assicurati che questa funzione sia definita e implementata correttamente
+        });
+    
+        sezioneAttributi.appendChild(aggiungiMaterialeBtn);
+        document.body.appendChild(sezioneAttributi);
+    }
+
     function creaContainerColori() {
         // Verifica se il container esiste già, per evitare di ricrearlo
         let containerEsistente = document.getElementById('containerColori');
@@ -339,6 +399,174 @@
             .catch(error => {
                 console.error('Errore nel ricaricare i colori:', error);
             });
+    }
+    
+
+    function mostraOpzioniAggiuntaMateriale(isModifica = false, isEliminazione = false) {
+        creaContainerColori();
+        const containerElemento = document.getElementById('containerColori');
+        containerElemento.innerHTML = ''; // Pulisce eventuali elementi precedenti
+    
+        if (isModifica || isEliminazione) {
+            let dropdownMateriale = document.createElement('select');
+            
+            Object.keys(datiPesiMateriali).forEach(materiale => {
+                let opzione = document.createElement('option');
+                opzione.value = materiale;
+                opzione.textContent = materiale;
+                dropdownMateriale.appendChild(opzione);
+                dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; font-size: 16px;';
+                dropdownMateriale.id = 'DropMateriale';
+                containerElemento.appendChild(dropdownMateriale);
+                
+                // Logica per gestire il cambio di materiale e l'aggiornamento della dropdown dei colori
+                dropdownMateriale.addEventListener('change', function() {
+                    const materialeSelezionato = this.value;
+                    const materialeEffettivo = materialeSelezionato === 'Alluminio' ? 'Verniciato' : materialeSelezionato;
+                    const coloriDisponibili = opzioniColoreData[materialeEffettivo] || [];
+                    aggiornaDropdownColore(dropdownColore, coloriDisponibili);
+                });
+            });
+        }     
+        
+
+        let dropdownTipologia;
+        if (isModifica || isEliminazione) {
+            dropdownMateriale = document.createElement('select');
+            dropdownMateriale.id = 'dropdownMateriale';
+            dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
+            let opzioneVuota = document.createElement('option');
+            opzioneVuota.value = "";
+            opzioneVuota.textContent = "Seleziona un materiale...";
+            dropdownMateriale.appendChild(opzioneVuota);
+            containerElemento.appendChild(dropdownMateriale);
+            console.log("creato dropbox")
+        }
+
+        let materialeVecchioSelezionato = null
+       
+        if (isModifica) {
+            dropdownMateriale.addEventListener('change', function() {
+                materialeVecchioSelezionato = this.value;
+                // Qui puoi anche fare il remapping se necessario
+                console.log("Materiale vecchio selezionato:", materialeVecchioSelezionato);
+            });
+        }
+        /// Se in modalità di eliminazione, non creare l'input box per il nuovo colore
+        let inputTipologia;
+        if (!isEliminazione) {
+
+
+            let inputMateriale = document.createElement('input');
+            console.log("entro else materiale")
+            inputMateriale.type = 'text';
+            inputMateriale.placeholder = 'Nuovo Materiale';
+            inputMateriale.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
+            inputMateriale.id = 'inputMateriale';
+            containerElemento.appendChild(inputMateriale);
+           
+            inputTipologia = document.createElement('input');
+            inputTipologia.type = 'text';
+            inputTipologia.placeholder = isModifica ? 'Modifica Tipologia' : 'Nuova Tipologia';
+            inputTipologia.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
+            containerElemento.appendChild(inputTipologia);
+            inputPeso = document.createElement('input');
+            inputPeso.type = 'text';
+            inputPeso.placeholder = isModifica ? 'Modifica Peso al mq' : 'Peso al mq';
+            inputPeso.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
+            containerElemento.appendChild(inputPeso);
+            inputSpessore = document.createElement('input');
+            inputSpessore.type = 'text';
+            inputSpessore.placeholder = isModifica ? 'Modifica Spessore' : 'Spessore';
+            inputSpessore.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
+            containerElemento.appendChild(inputSpessore);
+        }
+
+        let pulsanteAzione = document.createElement('button');
+        pulsanteAzione.textContent = isEliminazione ? 'Elimina Colore' : (isModifica ? 'Salva Modifiche' : 'Salva Tipologia');
+        pulsanteAzione.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
+        containerElemento.appendChild(pulsanteAzione);
+        console.log("creato pulsante azione")
+
+
+         // Assegna comportamento al pulsante in base alla modalità
+        pulsanteAzione.addEventListener('click', function() {
+            console.log("entro listener azione")
+            console.log(inputMateriale.value.trim())
+            let materialeDaInviare = null;
+            let tipologiaDaInviare = null;
+            let pesoDaInviare = null;
+            if (isModifica) {
+                console.log("modifica")
+                materialeDaInviare =  dropdownMateriale.value;
+                pesoDaInviare =  inputPeso.value.trim();
+            }else if(isEliminazione){
+                console.log("eliminazione")
+                materialeDaInviare =  dropdownColore.value.trim();
+                console.log(materialeDaInviare)
+            }else{
+                materialeDaInviare =  inputMateriale.value.trim();
+                tipologiaDaInviare =  inputTipologia.value.trim();
+                pesoDaInviare =  inputPeso.value.trim();
+                spessoreDaInviare = inputSpessore.value.trim();
+            }
+
+            
+            let datiMats = {
+                materiale: materialeDaInviare,
+                peso: pesoDaInviare,
+                tipologia: tipologiaDaInviare,
+                spessore: spessoreDaInviare
+                
+            };
+        
+            // Se è una modifica, includi anche il colore vecchio
+            if (isModifica) {
+                datiMats.tipologia = materialeVecchioSelezionato;
+            }
+        
+            if (!datiMats.tipologia) {
+                alert("Per favore, inserisci un nome valido per il materiale.");
+                return;
+            }
+            let urlEndpoint = isEliminazione ? '/delete_mats' : (isModifica ? '/modify_mats' : '/save_mats');
+            document.getElementById('loadingScreen').style.display = 'block';
+            fetch(urlEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datiMats)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                alert(isEliminazione ? "Materiale eliminato con successo!" : "Materiale salvato con successo!");
+                ricaricaColoriEAggiornaDropdown();
+            })
+            .catch((error) => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                alert("Si è verificato un errore.");
+                console.error('Error:', error);
+            });
+        });
+        
+        
+        // Aggiungi qui l'event listener per pulsanteSalva che gestirà il salvataggio del nuovo colore
+    
+        // Aggiungi gli elementi creati al containerElemento
+        if (!isModifica)containerElemento.appendChild(inputMateriale);
+        if (isModifica) containerElemento.appendChild(dropdownMateriale);
+        if (isModifica) containerElemento.appendChild(dropdownTipologia); // Solo se in modalità modifica
+        if (!isEliminazione) containerElemento.appendChild(inputTipologia);
+        if (!isEliminazione) containerElemento.appendChild(inputPeso);
+        containerElemento.appendChild(pulsanteAzione);
+
+
+        // Se in modalità modifica o eliminazione, innesca l'aggiornamento iniziale della dropdown dei colori
+        if (isModifica || isEliminazione) {
+            dropdownMateriale.dispatchEvent(new Event('change'));
+        }
     }
 
     function mostraOpzioniAggiuntaColore(isModifica = false, isEliminazione = false) {
@@ -396,7 +624,7 @@
             inputColore = document.createElement('input');
             inputColore.type = 'text';
             inputColore.placeholder = isModifica ? 'Modifica Colore' : 'Nuovo Colore';
-            inputColore.style.cssText = 'width: 200px; height: 26px; padding: 5px 10px; font-size: 16px; margin-top: 10px;';
+           
         }
 
         let pulsanteAzione = document.createElement('button');
@@ -435,6 +663,7 @@
                 return;
             }
             let urlEndpoint = isEliminazione ? '/delete_color' : (isModifica ? '/modify_color' : '/save_color');
+            document.getElementById('loadingScreen').style.display = 'block';
             fetch(urlEndpoint, {
                 method: 'POST',
                 headers: {
@@ -444,10 +673,12 @@
             })
             .then(response => response.json())
             .then(data => {
+                document.getElementById('loadingScreen').style.display = 'none';
                 alert(isEliminazione ? "Colore eliminato con successo!" : "Colore salvato con successo!");
                 ricaricaColoriEAggiornaDropdown();
             })
             .catch((error) => {
+                document.getElementById('loadingScreen').style.display = 'none';
                 alert("Si è verificato un errore.");
                 console.error('Error:', error);
             });
@@ -498,6 +729,10 @@
         // Nasconde la sezione 'measure-section2'
         document.querySelector('.measure-section2').style.display = 'none';
     
+        const altreSezioni = document.getElementById('containerColori');
+        if (altreSezioni) {
+            altreSezioni.innerHTML = ''; // Svuota il contenuto della sezione
+        }
         // Rimuove la sezione precedente se già esiste
         const vecchiaSezione = document.getElementById('sezione-colori');
         if (vecchiaSezione) { 
@@ -528,6 +763,7 @@
         let modificaColoreBtn = document.createElement('button');
         
         modificaColoreBtn.textContent = 'Modifica Colore';
+        modificaColoreBtn.style.cssText = 'width: 210px; height: 40px; padding: 5px 10px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-top: 10px;';
         modificaColoreBtn.addEventListener('click', function() {
             
             mostraOpzioniAggiuntaColore(true); // Funzione da definire per gestire la modifica
@@ -540,6 +776,11 @@
   
     
     document.addEventListener('DOMContentLoaded', function() {
+
+
+        let datiPesiMateriali = null; // Variabile globale per memorizzare i dati
+        caricaDatiPesiMateriali();
+
         fetch('/data/profili')
         .then(response => response.json())
         .then(data => {
@@ -636,6 +877,18 @@
         }
     });
     
+    document.getElementById('eliminaProfiloBtn').addEventListener('click', function() {
+        isAdminDeleteModeActive  = !isAdminDeleteModeActive ; // Cambia lo stato della modalità admin
+        // Cambia il colore del pulsante a seconda della modalità
+        if (isAdminDeleteModeActive ) {
+            this.style.backgroundColor = "#FF0000"; // Rosso per la modalità admin
+            this.style.color = "#FFFFFF"; // Testo bianco per maggiore leggibilità
+        } else {
+            this.style.backgroundColor = "#FFFFFF"; // Bianco per la modalità normale
+            this.style.color = "#000000"; // Testo nero
+            ResetAdmin()
+        }
+    });
 
     document.getElementById('uploadButton').addEventListener('click', function() {
         document.getElementById('imageUpload').click();
@@ -957,7 +1210,12 @@
             containerInputImmaginiValues: Array.from(document.getElementById('containerInputImmagini').querySelectorAll('input')).map(input => input.value)
         };
         console.log(profileData);
+
+        document.getElementById('loadingScreen').style.display = 'block';
+        
+
         // Invia i dati al server
+         // Invia i dati al server
         fetch('/save_profile', {
             method: 'POST',
             headers: {
@@ -965,9 +1223,31 @@
             },
             body: JSON.stringify(profileData)
         })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch((error) => console.error('Error:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            
+            // Nascondi la schermata di caricamento
+            document.getElementById('loadingScreen').style.display = 'none';
+            
+            // Mostra un popup di conferma
+            alert('Profilo salvato con successo!');
+            location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            
+            // Nascondi la schermata di caricamento
+            document.getElementById('loadingScreen').style.display = 'none';
+            
+            // Mostra un popup di errore
+            alert('Si è verificato un errore durante il salvataggio del profilo.');
+        });
     });
 
     
@@ -1019,10 +1299,7 @@
     }
     
 
-    function aggiornaBadgeCarrello() {
-        var conteggio = carrello.length;
-        document.getElementById('conteggioCarrello').textContent = conteggio;
-    }
+    
 
     function resetColoreDropdown() {
         // Resetta la dropdown del colore al suo stato iniziale
@@ -1037,19 +1314,7 @@
         coloreDropdown.disabled = true;
     }
 
-    function aggiornaTipologia(materiale) {
-        var opzioniTipologia;
-        if (materiale === 'Alluminio') {
-            opzioniTipologia = ['Grezzo', 'Verniciato','Mandorlato'];
-        } else if (materiale === 'Ferro') {
-            opzioniTipologia = ['Zincata','Zincata Bugnata','Zincata Striata', 'SPO', 'Nera','Nera Bugnata','Nera Striata'];
-        } else if (materiale === 'Acciaio') {
-            opzioniTipologia = ['Satinato', 'Lucido', 'S.B', 'Grezzo'];
-        } else if (materiale === 'PVC') {
-            opzioniTipologia = ['Verniciato'];
-        }
-        aggiornaDropdown(tipologiaDropdown, opzioniTipologia);
-    }
+   
     
     function aggiornaSpessoreColore(materiale, tipologia) {
         var opzioniSpessore, opzioniColore;
@@ -1103,42 +1368,22 @@
         } else if (materiale === 'PVC') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
             opzioniSpessore = ['12/10'];
-            opzioniColore = opzioniColoreData['PVC'];
+            opzioniColore = opzioniColoreData[materiale];
+            aggiornaDropdown(coloreDropdown, opzioniColore);
+            coloreDropdown.disabled = false;
+        }else {
+            resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
+            
+            console.log(datiPesiMateriali[materiale])
+            opzioniSpessore = datiPesiMateriali[materiale][0].spessore;
+            opzioniColore = opzioniColoreData[materiale];
             aggiornaDropdown(coloreDropdown, opzioniColore);
             coloreDropdown.disabled = false;
         }
-    
         aggiornaDropdown(spessoreDropdown, opzioniSpessore);
     }
     
-    function aggiornaDropdown(dropdown, opzioni) {
-        dropdown.innerHTML = '';
-        var opzioneVuota = document.createElement('option');
-        opzioneVuota.value = "";
-        opzioneVuota.disabled = true;
-        opzioneVuota.selected = true;
-        opzioneVuota.hidden = true;
     
-        // Imposta il testo del placeholder in base all'ID del dropdown
-        if (dropdown.id === 'tipologia') {
-            opzioneVuota.textContent = "Tipologia";
-        } else if (dropdown.id === 'spessore') {
-            opzioneVuota.textContent = "Spessore";
-        } else if (dropdown.id === 'colore') {
-            opzioneVuota.textContent = "Colore";
-        }
-    
-        dropdown.appendChild(opzioneVuota);
-    
-        opzioni.forEach(function(opzione) {
-            var elemento = document.createElement('option');
-            elemento.textContent = opzione;
-            elemento.value = opzione;
-            dropdown.appendChild(elemento);
-        });
-    
-        dropdown.disabled = false;
-    }
     
 
     
@@ -1147,6 +1392,7 @@
 
     let isAdminModeActive = false;
     let isAdminModifyModeActive = false; // Modalità Admin per modificare gli attributi
+    let isAdminDeleteModeActive = false;
 
    
 
@@ -1247,6 +1493,7 @@
             });
         }
         
+        
     
         // Crea il pulsante per salvare le modifiche
         let salvaModificheBtn = document.createElement('button');
@@ -1268,6 +1515,7 @@
             // Esempio: invio dati al backend
             console.log(datiModificati);
             let urlEndpoint = 'modify_profile';
+            document.getElementById('loadingScreen').style.display = 'block';
             fetch(urlEndpoint, {
                 method: 'POST',
                 headers: {
@@ -1277,10 +1525,13 @@
             })
             .then(response => response.json())
             .then(data => {
+                document.getElementById('loadingScreen').style.display = 'none';
                 alert("Scalature profilo - " +datiModificati.id+" - modificate con successo!");
+                location.reload();
                 
             })
             .catch((error) => {
+                document.getElementById('loadingScreen').style.display = 'none';
                 alert("Si è verificato un errore.");
                 console.error('Error:', error);
             });
@@ -1293,40 +1544,7 @@
     
     
 
-    function aggiungiColori() {
-        // Nasconde la sezione 'measure-section2'
-        document.querySelector('.measure-section2').style.display = 'none';
     
-        // Rimuove la sezione precedente se già esiste
-        const vecchiaSezione = document.getElementById('sezione-colori');
-        if (vecchiaSezione) { 
-            vecchiaSezione.remove();
-        }
-    
-        // Crea una nuova sezione per gli attributi del profilo
-        const sezioneAttributi = document.createElement('div');
-        sezioneAttributi.id = 'sezione-colori'; // Assegna un ID univoco
-        sezioneAttributi.style.display = 'block'; // Assicura che la sezione sia visibile
-        sezioneAttributi.style.textAlign = 'center'; // Centra il testo
-        // Aggiunge il titolo del profilo
-        let profiloTitle = document.createElement('h2');
-        profiloTitle.textContent = `Colori:`;
-        sezioneAttributi.appendChild(profiloTitle);
-     
-        Object.entries(opzioniColoreData).forEach(([materiale, colori]) => {
-            let paragrafo = document.createElement('p');
-            paragrafo.textContent = `${materiale}: ${colori.join(', ')}`;
-            sezioneAttributi.appendChild(paragrafo);
-        });
-       
-        let aggiungiColoreBtn = document.createElement('button');
-        aggiungiColoreBtn.textContent = 'Aggiungi Colore';
-        // aggiungiColoreBtn.addEventListener('click', mostraOpzioniAggiuntaColore); // Assicurati che questa funzione sia definita
-    
-        sezioneAttributi.appendChild(aggiungiColoreBtn);
-        document.body.appendChild(sezioneAttributi);
-    }
-
     
 
     function ResetAdmin() {
@@ -1364,8 +1582,9 @@
         function caricaScalature(jsonData) {
              // Estrai i dati di scalatura e popola l'oggetto scalatureData
             
-             scalatureData[jsonData.id] = jsonData.scalature;
-           console.log( scalatureData)
+            scalatureData[jsonData.id] = jsonData.scalature;
+            console.log ("carico scalature")
+            console.log(scalatureData)
         }
 
             function addProfileToMeasureSection(profilo) {
@@ -1475,23 +1694,47 @@
                 .catch(error => {
                     console.error('Error fetching the JSON:', error);
                 });
-            } else if (isAdminModeActive) {
-                // Modalità Admin attiva: Mostra attributi del profilo in 'measure-section2'
-                var profileId = profile.getAttribute('data-target');
-                fetch('/data/profili')
-                .then(response => response.json())
-                .then(data => {
-                    var profilo = data.profili.find(p => p.id === profileId);
-                    if (profilo) {
-                        // Implementa la logica per mostrare gli attributi del profilo
-                        // per esempio:
-                        mostraAttributiProfilo(profilo);
+                } else if (isAdminModeActive) {
+                    // Modalità Admin attiva: Mostra attributi del profilo in 'measure-section2'
+                    var profileId = profile.getAttribute('data-target');
+                    fetch('/data/profili')
+                    .then(response => response.json())
+                    .then(data => {
+                        var profilo = data.profili.find(p => p.id === profileId);
+                        if (profilo) {
+                            // Implementa la logica per mostrare gli attributi del profilo
+                            // per esempio:
+                            mostraAttributiProfilo(profilo);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching the JSON:', error);
+                    });
+                } else if (isAdminDeleteModeActive) {
+                    let urlEndpoint = 'delete_profile';
+                    var profileId = profile.getAttribute('data-target');
+                    if (confirm("Confermi la rimozione del profilo: "+profileId + "?")) {
+                        document.getElementById('loadingScreen').style.display = 'block';
+                        fetch(urlEndpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({id: profileId})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            alert("Profilo " +profileId +" - eliminato con successo!");
+                            location.reload();
+                        })
+                        .catch((error) => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            alert("Si è verificato un errore.");
+                            console.error('Error:', error);
+                        });
                     }
-                })
-                .catch(error => {
-                    console.error('Error fetching the JSON:', error);
-                });
-            } else {
+            }else {
                 gestisciSelezioneProfilo(targetClass);
             }
         });
@@ -2091,7 +2334,7 @@
                 var elemento = document.querySelector('.image-container.' + profiloSelezionato);
             }
             
-            domtoimage.toPng(elemento)
+            domtoimage.toPng(elemento, { cacheBust: true })
                 .then(function (dataUrl) {
                     var immagineDataUrl = dataUrl;
                     canvasElement.style.transform = '';
@@ -2666,7 +2909,7 @@
              
                             var pesoFinale = (pesoPerMetroQuadro * sommaMisurazioni)/ 1000000; // Calcola il peso finale
                             pesoFinale = pesoFinale.toFixed(2);
-                        
+                            //print("stampo qui: "+pesoPerMetroQuadro)
                             finestraStampa.document.write('<div class="footer-cell">' + chiaveCombinazione + ' - Peso teorico: ' + pesoFinale + ' kg</div>');
                         });
                         
@@ -2741,24 +2984,99 @@
             return `${elemento.spessore} ${elemento.materiale} ${elemento.tipologia} ${elemento.colore}`;
         }
     }
+    // Funzione per caricare i dati dei pesi dei materiali dal backend
+    async function caricaDatiPesiMateriali() {
+        try {
+            const response = await fetch('/carica_pesi_materiali'); // Assumi che questa sia l'URL del tuo endpoint
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            datiPesiMateriali = await response.json();
+            console.log('Dati pesi materiali caricati', datiPesiMateriali);
+            popolaMenuMateriali(datiPesiMateriali);
+        } catch (error) {
+            console.error('Errore nel caricamento dei dati dei pesi materiali:', error);
+        }
+    }
+    
+    function popolaMenuMateriali(datiMateriali) {
+        const menuMateriali = document.getElementById('materiale');
+        // Pulisce le opzioni esistenti, mantenendo l'opzione predefinita
+        Array.from(menuMateriali.options).forEach((option, index) => {
+            if (index !== 0) { // Salta l'opzione predefinita
+                menuMateriali.remove(index);
+            }
+        });
+    
+        // Aggiunge le nuove opzioni basate sui dati dei materiali
+        Object.keys(datiMateriali).forEach(materiale => {
+            const opzione = document.createElement('option');
+            opzione.value = materiale;
+            opzione.textContent = materiale;
+            menuMateriali.appendChild(opzione);
+        });
+    }
+
+    function aggiornaTipologia(materiale) {
+        var opzioniTipologia = [];
+        // Verifica se il materiale selezionato esiste nei dati caricati
+        console.log("aggiorna tipologia")
+        console.log(datiPesiMateriali)
+        if (datiPesiMateriali[materiale] && datiPesiMateriali[materiale].length > 0) {
+            opzioniTipologia = datiPesiMateriali[materiale][0].tipologia;
+        }
+        tipologiaDropdown = document.getElementById('tipologia');
+        // Aggiorna il dropdown della tipologia con le nuove opzioni
+        aggiornaDropdown(tipologiaDropdown, opzioniTipologia);
+    }
+
+
+    function aggiornaDropdown(dropdown, opzioni) {
+        dropdown.innerHTML = '';
+        var opzioneVuota = document.createElement('option');
+        opzioneVuota.value = "";
+        opzioneVuota.disabled = true;
+        opzioneVuota.selected = true;
+        opzioneVuota.hidden = true;
+    
+        // Imposta il testo del placeholder in base all'ID del dropdown
+        if (dropdown.id === 'tipologia') {
+            opzioneVuota.textContent = "Tipologia";
+        } else if (dropdown.id === 'spessore') {
+            opzioneVuota.textContent = "Spessore";
+        } else if (dropdown.id === 'colore') {
+            opzioneVuota.textContent = "Colore";
+        }
+    
+        dropdown.appendChild(opzioneVuota);
+        console.log(opzioni)
+        opzioni.forEach(function(opzione) {
+            var elemento = document.createElement('option');
+            elemento.textContent = opzione;
+            elemento.value = opzione;
+            dropdown.appendChild(elemento);
+        });
+    
+        dropdown.disabled = false;
+    }
 
     function calcolaPesoTeorico(materiale, spessore) {
-        let pesoPerMetroQuadro;
+        if (!datiPesiMateriali || !datiPesiMateriali[materiale]) {
+            console.error('Dati pesi materiali non disponibili o materiale non trovato');
+            return null;
+        }
     
-        if (materiale === "Ferro" || materiale === "Acciaio") {
-            pesoPerMetroQuadro = 8; // peso in kg per metro quadro
-        } else if (materiale === "Alluminio") {
-            pesoPerMetroQuadro = 2.834; // peso in kg per metro quadro
-        } 
-        else if (materiale === "PVC") {
-            pesoPerMetroQuadro = 2.97; // peso in kg per metro quadro
-        }else {
-            return 0; // Valore predefinito per altri materiali
+        const datiMateriale = datiPesiMateriali[materiale].find(d => d.spessore.includes(spessore));
+        if (!datiMateriale) {
+            console.error('Spessore per il materiale specificato non trovato');
+            return null;
         }
     
         let spessoreInMillimetri = parseInt(spessore.split("/")[0]) / 10;
-        return pesoPerMetroQuadro * spessoreInMillimetri; // peso in kg per cm²
+        //print("nuovo calcolo peso teorico: "+datiMateriale.peso * spessoreInMillimetri)
+        return datiMateriale.peso * spessoreInMillimetri; // peso in kg per cm²
     }
+    
     
     
     

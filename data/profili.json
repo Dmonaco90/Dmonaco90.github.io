@@ -2,7 +2,7 @@
     "profili": [
         {
             "id": "zeta",
-            "imageUrl": "static/img/zeta2.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/zeta2.png",
             "inputBoxes": [
                 {
                     "id": "lato1-zeta",
@@ -28,13 +28,13 @@
                     "id": "scelta1",
                     "top": "63%",
                     "left": "50%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta2",
                     "top": "27%",
                     "left": "37%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -49,7 +49,7 @@
         },
         {
             "id": "u",
-            "imageUrl": "static/img/u.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/u.png",
             "inputBoxes": [
                 {
                     "id": "lato1-u",
@@ -75,28 +75,28 @@
                     "id": "scelta11",
                     "top": "47%",
                     "left": "30%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "58%",
                     "left": "18%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
-                "6/10": "4",
-                "8/10": "4",
-                "10/10": "4",
-                "12/10": "4",
-                "15/10": "5",
-                "20/10": "7",
-                "30/10": "11"
+                "6/10": 4,
+                "8/10": 4,
+                "10/10": 4,
+                "12/10": 4,
+                "15/10": 5,
+                "20/10": 7,
+                "30/10": 11
             }
         },
         {
             "id": "omega5",
-            "imageUrl": "static/img/omega5.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/omega5.png",
             "inputBoxes": [
                 {
                     "id": "lato1-Omega5",
@@ -158,13 +158,13 @@
                     "id": "scelta11",
                     "top": "22%",
                     "left": "83%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "35%",
                     "left": "69%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -179,7 +179,7 @@
         },
         {
             "id": "LineaAngolare",
-            "imageUrl": "static/img/LineaAngolare.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/LineaAngolare.png",
             "inputBoxes": [
                 {
                     "id": "lato1-LineaAngolare",
@@ -199,19 +199,19 @@
                     "id": "scelta11",
                     "top": "41%",
                     "left": "25%",
-                    "url": "static/img/freccia_interna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna2.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "59%",
                     "left": "58%",
-                    "url": "static/img/freccia_esterna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna2.png"
                 }
             ]
         },
         {
             "id": "OmegaAsi2",
-            "imageUrl": "static/img/OmegaAsi2.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/OmegaAsi2.png",
             "inputBoxes": [
                 {
                     "id": "lato1-OmegaAsi2",
@@ -261,13 +261,13 @@
                     "id": "scelta11",
                     "top": "65%",
                     "left": "25%",
-                    "url": "static/img/freccia_interna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna2.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "81%",
                     "left": "58%",
-                    "url": "static/img/freccia_esterna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna2.png"
                 }
             ],
             "scalature": {
@@ -282,7 +282,7 @@
         },
         {
             "id": "L",
-            "imageUrl": "static/img/L.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/L.png",
             "inputBoxes": [
                 {
                     "id": "lato2-L",
@@ -302,13 +302,13 @@
                     "id": "scelta111",
                     "top": "46%",
                     "left": "31%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta222",
                     "top": "57%",
                     "left": "19%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -323,7 +323,7 @@
         },
         {
             "id": "Linea",
-            "imageUrl": "static/img/Linea.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/Linea.png",
             "inputBoxes": [
                 {
                     "id": "lato2-Linea",
@@ -336,7 +336,7 @@
         },
         {
             "id": "omega",
-            "imageUrl": "static/img/omega.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/omega.png",
             "inputBoxes": [
                 {
                     "id": "lato1-omega",
@@ -374,13 +374,13 @@
                     "id": "scelta11",
                     "top": "52%",
                     "left": "35%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "64%",
                     "left": "22%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -395,7 +395,7 @@
         },
         {
             "id": "OmegaAsi",
-            "imageUrl": "static/img/OmegaAsi.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/OmegaAsi.png",
             "inputBoxes": [
                 {
                     "id": "lato1-OmegaAsi",
@@ -439,13 +439,13 @@
                     "id": "scelta11",
                     "top": "56%",
                     "left": "38%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "68%",
                     "left": "26%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -460,7 +460,7 @@
         },
         {
             "id": "OmegaInt",
-            "imageUrl": "static/img/OmegaInt.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/OmegaInt.png",
             "inputBoxes": [
                 {
                     "id": "lato1-OmegaInt",
@@ -498,13 +498,13 @@
                     "id": "scelta11",
                     "top": "56%",
                     "left": "27%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "67%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -519,7 +519,7 @@
         },
         {
             "id": "OmegaIntAsi",
-            "imageUrl": "static/img/OmegaIntAsi.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/OmegaIntAsi.png",
             "inputBoxes": [
                 {
                     "id": "lato1-OmegaIntAsi",
@@ -557,13 +557,13 @@
                     "id": "scelta11",
                     "top": "56%",
                     "left": "27%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "67%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -578,7 +578,7 @@
         },
         {
             "id": "Scatola",
-            "imageUrl": "static/img/Scatola.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/Scatola.png",
             "inputBoxes": [
                 {
                     "id": "lato1-Scatola",
@@ -622,13 +622,13 @@
                     "id": "scelta11",
                     "top": "72%",
                     "left": "27%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "81%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -643,7 +643,7 @@
         },
         {
             "id": "Amo",
-            "imageUrl": "static/img/Amo.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/Amo.png",
             "inputBoxes": [
                 {
                     "id": "lato1-Amo",
@@ -663,13 +663,13 @@
                     "id": "scelta11",
                     "top": "44%",
                     "left": "34%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "55%",
                     "left": "24%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -684,7 +684,7 @@
         },
         {
             "id": "Ami",
-            "imageUrl": "static/img/Ami.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/Ami.png",
             "inputBoxes": [
                 {
                     "id": "lato1-Ami",
@@ -710,13 +710,13 @@
                     "id": "scelta11",
                     "top": "41%",
                     "left": "36%",
-                    "url": "static/img/freccia_interna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna2.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "57%",
                     "left": "51%",
-                    "url": "static/img/freccia_esterna2.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna2.png"
                 }
             ],
             "scalature": {
@@ -731,7 +731,7 @@
         },
         {
             "id": "gancio",
-            "imageUrl": "static/img/gancio.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/gancio.png",
             "inputBoxes": [
                 {
                     "id": "lato1-gancio",
@@ -757,13 +757,13 @@
                     "id": "scelta11",
                     "top": "46%",
                     "left": "32%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "58%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -778,7 +778,7 @@
         },
         {
             "id": "P_rovescia",
-            "imageUrl": "static/img/P_rovescia.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/P_rovescia.png",
             "inputBoxes": [
                 {
                     "id": "lato1-P_rovescia",
@@ -810,13 +810,13 @@
                     "id": "scelta11",
                     "top": "31%",
                     "left": "68%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "43%",
                     "left": "55%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -831,7 +831,7 @@
         },
         {
             "id": "P",
-            "imageUrl": "static/img/P.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/P.png",
             "inputBoxes": [
                 {
                     "id": "lato1-P",
@@ -863,13 +863,13 @@
                     "id": "scelta11",
                     "top": "46%",
                     "left": "32%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "58%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -884,7 +884,7 @@
         },
         {
             "id": "Freccia",
-            "imageUrl": "static/img/Freccia.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/Freccia.png",
             "inputBoxes": [
                 {
                     "id": "lato2-Freccia",
@@ -904,13 +904,13 @@
                     "id": "scelta11",
                     "top": "46%",
                     "left": "32%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "58%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -925,7 +925,7 @@
         },
         {
             "id": "L45",
-            "imageUrl": "static/img/L45.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/L45.png",
             "inputBoxes": [
                 {
                     "id": "lato2-Freccia",
@@ -945,13 +945,13 @@
                     "id": "scelta11",
                     "top": "46%",
                     "left": "32%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta21",
                     "top": "58%",
                     "left": "16%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "scalature": {
@@ -966,7 +966,7 @@
         },
         {
             "id": "cerchio_new",
-            "imageUrl": "static/img/cerchio.png",
+            "imageUrl": "https://storage.googleapis.com/sitolamiere.appspot.com/img/cerchio.png",
             "inputBoxes": [
                 {
                     "id": "lato1",
@@ -980,13 +980,13 @@
                     "id": "scelta1",
                     "top": "0%",
                     "left": "0%",
-                    "url": "static/img/freccia_interna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_interna.png"
                 },
                 {
                     "id": "scelta2",
                     "top": "0%",
                     "left": "0%",
-                    "url": "static/img/freccia_esterna.png"
+                    "url": "https://storage.googleapis.com/sitolamiere.appspot.com/img/freccia_esterna.png"
                 }
             ],
             "Scalature": [

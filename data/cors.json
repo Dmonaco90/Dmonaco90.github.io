@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://localhost:5000", "https://sitolamiere.ew.r.appspot.com"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD"],
+      "maxAgeSeconds": 3600
+    }
+]

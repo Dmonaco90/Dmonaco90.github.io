@@ -1,0 +1,89 @@
+{
+    "Alluminio": [
+        {
+            "peso": 2.834,
+            "spessore": [                
+                "6/10",
+                "8/10",
+                "10/10",
+                "12/10",
+                "15/10",
+                "20/10",
+                "25/10",
+                "30/10"
+            ],
+            "tipologia":
+            [                
+                "Grezzo",
+                "Verniciato",
+                "Mandorlato"
+            ]
+        }
+    ],
+    "PVC": [
+        {
+            "peso": 2.97,
+            "spessore": [
+                "6/10",
+                "8/10",
+                "10/10",
+                "12/10",
+                "15/10",
+                "20/10",
+                "25/10",
+                "30/10"
+            ],
+            "tipologia":
+            [                
+                "Verniciato"
+            ]
+        }
+    ],
+    "Ferro": [
+        {
+            "peso": 8,
+            "spessore": [
+                "6/10",
+                "8/10",
+                "10/10",
+                "12/10",
+                "15/10",
+                "20/10",
+                "25/10",
+                "30/10"
+            ],
+            "tipologia":
+            [                
+                "Zincata",
+                "Zincata Bugnata",
+                "Zincata Striata",
+                "SPO",
+                "Nera",
+                "Nera Bugnata",
+                "Nera Striata"
+            ]
+        }
+    ],
+    "Acciaio": [
+        {
+            "peso": 8,
+            "spessore": [
+                "6/10",
+                "8/10",
+                "10/10",
+                "12/10",
+                "15/10",
+                "20/10",
+                "25/10",
+                "30/10"
+            ],
+            "tipologia":
+            [                
+                "Satinato",
+                "Lucido",
+                "S.B",
+                "Grezzo"
+            ]
+        }
+    ]
+}
