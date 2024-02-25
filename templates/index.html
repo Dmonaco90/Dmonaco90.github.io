@@ -34,7 +34,7 @@
             <li><button onclick="aggiungiColori()">Aggiungi Colori</button></li>
             <li><button onclick="modificaColori()">Modifica Colori</button></li>
             <li><button onclick="eliminaColori()">Elimina Colori</button></li>
-            <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="aggiungiMateriale()">Aggiungi Materiale</button></li>
+            <li><button onclick="aggiungiMateriale()">Aggiungi Materiale</button></li>
             <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="modificaMateriale()">Modifica Materiale</button></li>
             <li><button disabled style="opacity: 0.5; cursor: not-allowed;" onclick="eliminaMateriale()">Elimina Materiale</button></li>
         </ul>
@@ -401,47 +401,196 @@
             });
     }
     
+    function aggiornaTipologiaAdmin(materialeSelezionato, datiPesiMateriali) {
+        console.log('Materiale selezionato:', materialeSelezionato); // Debug
+        console.log('Dati disponibili:', datiPesiMateriali); // Debug
+    
+        let dropdownTipologia = document.getElementById('tipologia2');
+        dropdownTipologia.innerHTML = '';
+        dropdownTipologia.disabled = false;
+    
+        if (materialeSelezionato === 'Nuovo Materiale') {
+            // Logica per "Nuovo Materiale"
+        } else {
+            let opzioniTipologia = datiPesiMateriali[materialeSelezionato][0]?.tipologia;
+            console.log('Opzioni Tipologia:', opzioniTipologia); // Debug
+            
+            if (!opzioniTipologia) {
+                console.error('Nessuna tipologia trovata per il materiale selezionato');
+                dropdownTipologia.disabled = true; // Opzionale: Disabilita se nessuna tipologia è disponibile
+                return;
+            }
+    
+            opzioniTipologia.forEach(tipologia => {
+                let opzione = document.createElement('option');
+                opzione.value = tipologia;
+                opzione.textContent = tipologia;
+                dropdownTipologia.appendChild(opzione);
+            });
+        }
+    }
+    function handleNuovoMaterialeSelection(datiPesiMateriali) {
+    const dropdownMateriale = document.getElementById('materiale'); // Assumi che questo sia l'ID della tua dropdown dei materiali
+
+    dropdownMateriale.addEventListener('change', function() {
+        const selectedOption = this.value;
+
+        if (selectedOption === 'Nuovo Materiale') {
+            // Mostra input box per nuovo materiale
+            const inputNuovoMateriale = document.createElement('input');
+            inputNuovoMateriale.placeholder = 'Nuovo Materiale';
+            inputNuovoMateriale.id = 'inputNuovoMateriale';
+            document.body.appendChild(inputNuovoMateriale); // Cambia questo con il selettore del posto dove vuoi inserire l'input
+
+            // Popola la dropdown di tipologia con tutti i valori di tipologia
+            const dropdownTipologia = document.getElementById('tipologia');
+            dropdownTipologia.innerHTML = ''; // Pulisce le opzioni esistenti
+
+            // Estrai tutte le tipologie dai dati e rimuovi i duplicati
+            const tutteTipologie = [];
+            Object.values(datiPesiMateriali).forEach(materiale => {
+                materiale.forEach(item => {
+                    tutteTipologie.push(...item.tipologia);
+                });
+            });
+            const tipologieUniche = [...new Set(tutteTipologie)];
+
+            // Aggiungi le tipologie uniche alla dropdown
+            tipologieUniche.forEach(tipologia => {
+                const opzione = document.createElement('option');
+                opzione.value = tipologia;
+                opzione.textContent = tipologia;
+                dropdownTipologia.appendChild(opzione);
+            });
+
+            // Aggiungi l'opzione "Nuova Tipologia" in coda
+            const opzioneNuovaTipologia = document.createElement('option');
+            opzioneNuovaTipologia.value = 'Nuova Tipologia';
+            opzioneNuovaTipologia.textContent = 'Nuova Tipologia';
+            dropdownTipologia.appendChild(opzioneNuovaTipologia);
+            
+            // Abilita la dropdown di tipologia se era disabilitata
+            dropdownTipologia.disabled = false;
+
+        } else {
+            // Nascondi l'input box per nuovo materiale se esiste
+            const inputEsistente = document.getElementById('inputNuovoMateriale');
+            if (inputEsistente) {
+                inputEsistente.remove();
+            }
+            // Aggiorna la dropdown di tipologia in base al materiale selezionato
+            aggiornaTipologia(selectedOption, datiPesiMateriali);
+        }
+    });
+}
 
     function mostraOpzioniAggiuntaMateriale(isModifica = false, isEliminazione = false) {
         creaContainerColori();
         const containerElemento = document.getElementById('containerColori');
         containerElemento.innerHTML = ''; // Pulisce eventuali elementi precedenti
-    
-        if (isModifica || isEliminazione) {
-            let dropdownMateriale = document.createElement('select');
+        let isNuovoMateriale = false; 
+        let isNuovaTipologia = false;
+        let tipologieMateriale = [];
+        //rimettere if modifico o elimina
+        let dropdownMateriale = document.createElement('select');
+        dropdownMateriale.id = 'dropdownMateriale';
+        dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
+        let opzioneVuota = document.createElement('option');
+        opzioneVuota.textContent = "Seleziona un materiale";
+        opzioneVuota.disabled = true;
+        opzioneVuota.selected = true;
+        dropdownMateriale.appendChild(opzioneVuota);
+        
+        // Popola la dropdown con i materiali
+        Object.keys(datiPesiMateriali).forEach(materiale => {
+            let opzione = document.createElement('option');
+            opzione.value = materiale;
+            opzione.textContent = materiale;
+            dropdownMateriale.appendChild(opzione);
+        });
+        
+        // Aggiungi l'opzione "Nuovo Materiale"
+        let opzioneNuovoMateriale = document.createElement('option');
+        opzioneNuovoMateriale.value = 'Nuovo Materiale';
+        opzioneNuovoMateriale.textContent = 'Nuovo Materiale';
+        dropdownMateriale.appendChild(opzioneNuovoMateriale);
+
+        let dropdownTipologia = document.createElement('select');
+        dropdownTipologia.id = 'tipologia2';
+        dropdownTipologia.disabled = true; // Disabilita fino alla selezione di un materiale
+        dropdownTipologia.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
+        containerElemento.appendChild(dropdownMateriale);
+        containerElemento.appendChild(dropdownTipologia);
+        // Event listener per la selezione di un materiale
+        dropdownMateriale.addEventListener('change', function() {
+            const selectedOption = this.value;
+
+            if (selectedOption === 'Nuovo Materiale') {
+                // Mostra input box per nuovo materiale
+                const inputNuovoMateriale = document.createElement('input');
+                inputNuovoMateriale.placeholder = 'Nuovo Materiale';
+                inputNuovoMateriale.id = 'inputNuovoMateriale';
+                inputNuovoMateriale.style.cssText = 'width: 200px; height: 27px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
+                dropdownTipologia = document.getElementById('tipologia2');
+                containerElemento.insertBefore(inputNuovoMateriale, dropdownTipologia);
+
+                // Popola la dropdown di tipologia con tutti i valori di tipologia
             
-            Object.keys(datiPesiMateriali).forEach(materiale => {
-                let opzione = document.createElement('option');
-                opzione.value = materiale;
-                opzione.textContent = materiale;
-                dropdownMateriale.appendChild(opzione);
-                dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; font-size: 16px;';
-                dropdownMateriale.id = 'DropMateriale';
-                containerElemento.appendChild(dropdownMateriale);
-                
-                // Logica per gestire il cambio di materiale e l'aggiornamento della dropdown dei colori
-                dropdownMateriale.addEventListener('change', function() {
-                    const materialeSelezionato = this.value;
-                    const materialeEffettivo = materialeSelezionato === 'Alluminio' ? 'Verniciato' : materialeSelezionato;
-                    const coloriDisponibili = opzioniColoreData[materialeEffettivo] || [];
-                    aggiornaDropdownColore(dropdownColore, coloriDisponibili);
+                dropdownTipologia.innerHTML = ''; // Pulisce le opzioni esistenti
+
+                // Estrai tutte le tipologie dai dati e rimuovi i duplicati
+                const tutteTipologie = [];
+                Object.values(datiPesiMateriali).forEach(materiale => {
+                    materiale.forEach(item => {
+                        tutteTipologie.push(...item.tipologia);
+                    });
                 });
-            });
-        }     
+                const tipologieUniche = [...new Set(tutteTipologie)];
+
+                // Aggiungi le tipologie uniche alla dropdown
+                tipologieUniche.forEach(tipologia => {
+                    const opzione = document.createElement('option');
+                    opzione.value = tipologia;
+                    opzione.textContent = tipologia;
+                    dropdownTipologia.appendChild(opzione);
+                });
+
+                // Aggiungi l'opzione "Nuova Tipologia" in coda
+                const opzioneNuovaTipologia = document.createElement('option');
+                opzioneNuovaTipologia.value = 'Nuova Tipologia';
+                opzioneNuovaTipologia.textContent = 'Nuova Tipologia';
+                dropdownTipologia.appendChild(opzioneNuovaTipologia);
+                
+                // Abilita la dropdown di tipologia se era disabilitata
+                dropdownTipologia.disabled = false;
+
+            } else {
+                // Nascondi l'input box per nuovo materiale se esiste
+                const inputEsistente = document.getElementById('inputNuovoMateriale');
+                if (inputEsistente) {
+                    inputEsistente.remove();
+                }
+                // Aggiorna la dropdown di tipologia in base al materiale selezionato
+                aggiornaTipologiaAdmin(selectedOption, datiPesiMateriali);
+            }
+           
+        });   
         
 
-        let dropdownTipologia;
-        if (isModifica || isEliminazione) {
-            dropdownMateriale = document.createElement('select');
-            dropdownMateriale.id = 'dropdownMateriale';
-            dropdownMateriale.style.cssText = 'width: 200px; height: 40px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
-            let opzioneVuota = document.createElement('option');
-            opzioneVuota.value = "";
-            opzioneVuota.textContent = "Seleziona un materiale...";
-            dropdownMateriale.appendChild(opzioneVuota);
-            containerElemento.appendChild(dropdownMateriale);
-            console.log("creato dropbox")
+        dropdownTipologia.addEventListener('change', function() {
+            const selectedOption = this.value;
+
+        if (selectedOption === 'Nuova Tipologia') {
+            // Mostra input box per nuovo materiale
+            const inputNuovoMateriale = document.createElement('input');
+            inputNuovoMateriale.placeholder = 'Nuova Tipologia';
+            inputNuovoMateriale.id = 'inputNuovaTipologia';
+            inputNuovoMateriale.style.cssText = 'width: 200px; height: 27px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
+            inputPeso2 = document.getElementById('inputPeso');
+            containerElemento.insertBefore(inputNuovoMateriale, inputPeso2);
         }
+           
+        });
 
         let materialeVecchioSelezionato = null
        
@@ -453,34 +602,37 @@
             });
         }
         /// Se in modalità di eliminazione, non creare l'input box per il nuovo colore
-        let inputTipologia;
-        if (!isEliminazione) {
-
-
-            let inputMateriale = document.createElement('input');
-            console.log("entro else materiale")
-            inputMateriale.type = 'text';
-            inputMateriale.placeholder = 'Nuovo Materiale';
-            inputMateriale.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
-            inputMateriale.id = 'inputMateriale';
-            containerElemento.appendChild(inputMateriale);
-           
-            inputTipologia = document.createElement('input');
-            inputTipologia.type = 'text';
-            inputTipologia.placeholder = isModifica ? 'Modifica Tipologia' : 'Nuova Tipologia';
-            inputTipologia.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
-            containerElemento.appendChild(inputTipologia);
+        
+    
             inputPeso = document.createElement('input');
             inputPeso.type = 'text';
+            inputPeso.id = 'inputPeso';
             inputPeso.placeholder = isModifica ? 'Modifica Peso al mq' : 'Peso al mq';
-            inputPeso.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
+            inputPeso.style.cssText = 'width: 200px; height: 27px; padding: 5px 10px; margin-left: 10px; font-size: 16px;';
             containerElemento.appendChild(inputPeso);
-            inputSpessore = document.createElement('input');
-            inputSpessore.type = 'text';
-            inputSpessore.placeholder = isModifica ? 'Modifica Spessore' : 'Spessore';
-            inputSpessore.style.cssText = 'width: 200px; height: 28px; padding: 5px 10px; font-size: 16px;';
-            containerElemento.appendChild(inputSpessore);
-        }
+           
+           // Spessori predefiniti per il nuovo materiale
+            let spessori = ["6/10", "8/10", "10/10", "12/10", "15/10", "20/10", "25/10", "30/10","40/10","50/10","60/10","70/10","80/10","90/10","100/10"];
+            spessori.forEach(spessore => {
+                let checkboxContainer = document.createElement('div');
+                checkboxContainer.classList.add('checkboxSpessore');
+
+                let checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `spessore-${spessore}`;
+                checkbox.value = spessore;
+
+                let label = document.createElement('label');
+                label.htmlFor = `spessore-${spessore}`;
+                label.textContent = `Spessore: ${spessore}`;
+
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(label);
+
+                containerElemento.appendChild(checkboxContainer);
+            });
+            
+     //   }
 
         let pulsanteAzione = document.createElement('button');
         pulsanteAzione.textContent = isEliminazione ? 'Elimina Colore' : (isModifica ? 'Salva Modifiche' : 'Salva Tipologia');
@@ -1367,7 +1519,7 @@
         
         } else if (materiale === 'PVC') {
             resetColoreDropdown();  // Resetta il colore dopo il cambio di materiale
-            opzioniSpessore = ['12/10'];
+            opzioniSpessore = ['10/10'];
             opzioniColore = opzioniColoreData[materiale];
             aggiornaDropdown(coloreDropdown, opzioniColore);
             coloreDropdown.disabled = false;
@@ -3017,6 +3169,7 @@
         });
     }
 
+    
     function aggiornaTipologia(materiale) {
         var opzioniTipologia = [];
         // Verifica se il materiale selezionato esiste nei dati caricati
