@@ -111,6 +111,14 @@ def load_mats_from_storage(bucket_name='sitolamiere.appspot.com', filename='mate
     json_data = json.loads(blob.download_as_string())
     return json_data
 
+def load_exception_from_storage(bucket_name='sitolamiere.appspot.com', filename='eccezioni.json'):
+    storage_client = init_storage_client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(filename)
+    json_data = json.loads(blob.download_as_string())
+    return json_data
+
+
 def upload_image_to_gcs(bucket_name, image_content, image_filename):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
@@ -427,6 +435,16 @@ def carica_pesi_materiali():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/carica_eccezioni', methods=['GET'])
+def carica_eccezioni():
+    try:
+        # Carica tutti i dati dei materiali dal storage
+        dati_exc = load_exception_from_storage()  # Assumi che questa funzione carichi i dati da Google Cloud Storage
+        print("dati eccezioni")
+        print(dati_exc)
+        return jsonify(dati_exc)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/save_mats', methods=['POST'])

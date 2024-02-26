@@ -2,7 +2,7 @@
     "Alluminio": [
         {
             "peso": 2.834,
-            "spessore": [                
+            "spessore": [
                 "6/10",
                 "8/10",
                 "10/10",
@@ -12,8 +12,7 @@
                 "25/10",
                 "30/10"
             ],
-            "tipologia":
-            [                
+            "tipologia": [
                 "Grezzo",
                 "Verniciato",
                 "Mandorlato"
@@ -33,8 +32,7 @@
                 "25/10",
                 "30/10"
             ],
-            "tipologia":
-            [                
+            "tipologia": [
                 "Verniciato"
             ]
         }
@@ -52,15 +50,14 @@
                 "25/10",
                 "30/10"
             ],
-            "tipologia":
-            [                
+            "tipologia": [
                 "Zincata",
-                "Zincata Bugnata",
-                "Zincata Striata",
+                "Zincata-Bugnata",
+                "Zincata-Striata",
                 "SPO",
                 "Nera",
-                "Nera Bugnata",
-                "Nera Striata"
+                "Nera-Bugnata",
+                "Nera-Striata"
             ]
         }
     ],
@@ -77,12 +74,35 @@
                 "25/10",
                 "30/10"
             ],
-            "tipologia":
-            [                
+            "tipologia": [
                 "Satinato",
                 "Lucido",
                 "S.B",
                 "Grezzo"
+            ]
+        }
+    ],
+    "Truciolato": [
+        {
+            "peso": "1",
+            "spessore": [
+                "50/10"
+            ],
+            "tipologia": [
+                "Verniciato"
+            ]
+        }
+    ],
+    "Ferraglia": [
+        {
+            "peso": "12",
+            "spessore": [
+                "80/10",
+                "90/10",
+                "100/10"
+            ],
+            "tipologia": [
+                "Rugginato"
             ]
         }
     ]

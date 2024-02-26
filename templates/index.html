@@ -196,6 +196,7 @@
     var profiloSelezionato = null;
     var opzioniColoreData;
     var datiPesiMateriali;
+    let eccezioniPeso = {};
    
 
 
@@ -749,6 +750,14 @@
     }
 
     function inviaDatiAlBackend() {
+
+        let inputNuovaTipologiaCheck = document.getElementById('inputNuovaTipologia') ? document.getElementById('inputNuovaTipologia').value : null;
+
+        // Verifica se inputNuovaTipologia contiene spazi
+        if (inputNuovaTipologiaCheck && /\s/.test(inputNuovaTipologiaCheck)) {
+            alert("La nuova tipologia non deve contenere spazi. Usa il trattino - ");
+            return; // Interrompe la funzione per non procedere all'invio dei dati
+        }
         let materialeSelezionato = document.getElementById('dropdownMateriale').value;
         let tipologiaSelezionata = document.getElementById('tipologia2').value;
         let inputNuovoMateriale = document.getElementById('inputNuovoMateriale') ? document.getElementById('inputNuovoMateriale').value : null;
@@ -1025,6 +1034,7 @@
 
         // Variabile globale per memorizzare i dati
         caricaDatiPesiMateriali();
+        caricaEccezioniPeso();
 
         fetch('/data/profili')
         .then(response => response.json())
@@ -2900,7 +2910,10 @@
 
         carrello.forEach(function(elemento) {
             var materialeFittizio = "MaterialeUnico";
-            var chiaveCombinazione = `${elemento.materiale}-${elemento.spessore}`; // Chiave basata su materiale e spessore
+            const includeEccezione = haEccezionePeso(elemento.materiale, elemento.tipologia);
+            console.log("eccezzione: "+includeEccezione)
+            // Crea la chiave di combinazione considerando l'eccezione se presente
+            var chiaveCombinazione = `${elemento.materiale}-${includeEccezione ? elemento.tipologia : ''}-${elemento.spessore}`;
             var chiaveProfiloMisurazione = `${materialeFittizio}-${elemento.profilo}-${JSON.stringify(elemento.datiMisurazioni)}-${elemento.materiale}-${elemento.tipologia}-${elemento.spessore}-${elemento.colore || ''}`;
 
             if (elemento.profilo === "libero") {
@@ -2915,7 +2928,7 @@
                 pesiTotaliPerCombinazione[chiaveCombinazione] = 0;
             }
             
-            pesiTotaliPerCombinazione[chiaveCombinazione] += calcolaPesoTeorico(elemento.materiale, elemento.spessore);
+            pesiTotaliPerCombinazione[chiaveCombinazione] += calcolaPesoTeorico(elemento.materiale, elemento.spessore,elemento.tipologia);
   
 
             if (!materialeGruppi[materialeFittizio]) {
@@ -3143,7 +3156,7 @@
                     // All'interno della funzione che genera il footer
                     finestraStampa.document.write('<div class="footer">');
                         Object.keys(combinazioniUniche).forEach(function(chiaveCombinazione) {
-                     
+                            
                             var parti = chiaveCombinazione.split(' ');
                         
                             var spessore, materiale, tipologia, colore;
@@ -3159,7 +3172,8 @@
                         
           
                             // Resto del codice...
-                            var pesoPerMetroQuadro = calcolaPesoTeorico(materiale, spessore);
+                            console.log("3154 - materiale: "+materiale)
+                            var pesoPerMetroQuadro = calcolaPesoTeorico(materiale, spessore,tipologia);
                
                             var sommaMisurazioni = combinazioniUniche[chiaveCombinazione].somma; // Somma delle misurazioni in cm²
              
@@ -3258,7 +3272,22 @@
         }
     }
 
-    
+    async function caricaEccezioniPeso() {
+        try {
+            const response = await fetch('/carica_eccezioni');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            eccezioniPeso = await response.json();
+            console.log('Eccezioni peso caricati', eccezioniPeso);
+        } catch (error) {
+            console.error('Errore nel caricamento delle eccezioni del peso:', error);
+        }
+    }
+
+    function haEccezionePeso(materiale, tipologia) {
+        return eccezioniPeso[materiale] && eccezioniPeso[materiale][tipologia];
+    }
     function popolaMenuMateriali(datiMateriali) {
         const menuMateriali = document.getElementById('materiale');
         // Pulisce le opzioni esistenti, mantenendo l'opzione predefinita
@@ -3321,7 +3350,18 @@
         dropdown.disabled = false;
     }
 
-    function calcolaPesoTeorico(materiale, spessore) {
+    function calcolaPesoTeorico(materiale, spessore,tipologia) {
+
+        const pesoEccezione = eccezioniPeso[materiale]?.[tipologia];
+        let spessoreInMillimetri = parseInt(spessore.split("/")[0]) / 10;
+        console.log("calcolaPesoTeorico - materiale: "+materiale)
+        console.log("calcolaPesoTeorico - tipologia: "+tipologia)
+        console.log(eccezioniPeso)
+        if (pesoEccezione) {
+            console.log("peso eccezione: "+pesoEccezione)
+            return pesoEccezione * spessoreInMillimetri;
+        }
+
         if (!datiPesiMateriali || !datiPesiMateriali[materiale]) {
             console.error('Dati pesi materiali non disponibili o materiale non trovato');
             return null;
@@ -3333,7 +3373,7 @@
             return null;
         }
     
-        let spessoreInMillimetri = parseInt(spessore.split("/")[0]) / 10;
+      
         //print("nuovo calcolo peso teorico: "+datiMateriale.peso * spessoreInMillimetri)
         return datiMateriale.peso * spessoreInMillimetri; // peso in kg per cm²
     }
