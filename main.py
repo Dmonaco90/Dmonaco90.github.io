@@ -119,6 +119,28 @@ def upload_image_to_gcs(bucket_name, image_content, image_filename):
     blob.make_public()
     return blob.public_url
 
+def aggiungi_colore_a_materiale(data, materiale, colori):
+    if materiale == 'Alluminio':
+        materiale = 'Verniciato'
+    
+    if materiale not in data:
+        data[materiale] = []
+
+    for colore in colori:
+        if colore not in data[materiale]:
+            data[materiale].append(colore)
+
+def save_materiale_con_colori():
+    bucket_name = 'sitolamiere.appspot.com'
+    filename = 'colori.json'
+    data = load_color_from_storage(bucket_name=bucket_name, filename=filename)
+    request_data = request.get_json()
+    materiale = request_data.get('materiale')
+    colori = request_data.get('colori')  # Assumi che 'colori' sia una lista di colori
+
+    aggiungi_colore_a_materiale(data, materiale, colori)
+    save_color_to_storage(data)
+    return jsonify({'message': f'Materiale {materiale} e colori aggiunti con successo'})
 
 @app.route('/')
 def homepage():
@@ -268,34 +290,14 @@ def save_profile():
 @app.route('/save_color', methods=['POST'])
 def save_color():
     bucket_name = 'sitolamiere.appspot.com'
-    filename = 'colori.json'  # Nome del file JSON da modificare
-
-    # Carica i dati esistenti da Google Cloud Storage
+    filename = 'colori.json'
     data = load_color_from_storage(bucket_name=bucket_name, filename=filename)
-   
-    print(data)  # Stampa i dati per debugging
-
-    # Supponendo che la richiesta POST invii i dati in JSON nel corpo della richiesta
     request_data = request.get_json()
     materiale = request_data.get('materiale')
-    nuovo_colore = request_data.get('colore')
-    
-    # Trasforma "Alluminio" in "Verniciato" se necessario
-    if materiale == 'Alluminio':
-        materiale = 'Verniciato'
+    nuovo_colore = [request_data.get('colore')]  # Metti il colore in una lista per uniformità
 
-    # Aggiungi il nuovo colore alla categoria corretta
-    if materiale in data:
-        if nuovo_colore not in data[materiale]:
-            data[materiale].append(nuovo_colore)
-        else:
-            return jsonify({'error': 'Colore già esistente'}), 400
-    else:
-        return jsonify({'error': 'Materiale non valido'}), 400
-
-    # Salva i dati modificati su Google Cloud Storage
+    aggiungi_colore_a_materiale(data, materiale, nuovo_colore)
     save_color_to_storage(data)
-
     return jsonify({'message': 'Colore aggiunto con successo'})
 
 
@@ -428,32 +430,42 @@ def carica_pesi_materiali():
 
 
 @app.route('/save_mats', methods=['POST'])
+@app.route('/save_mats', methods=['POST'])
+@app.route('/save_mats', methods=['POST'])
 def save_mats():
     # Carica i dati esistenti da Google Cloud Storage
     data = load_mats_from_storage()
    
-    print(data)  # Stampa i dati per debugging
-
-    # Supponendo che la richiesta POST invii i dati in JSON nel corpo della richiesta
+    # Ottiene i dati dalla richiesta POST
     request_data = request.get_json()
     materiale = request_data.get('materiale')
     tipologia = request_data.get('tipologia')
     peso = request_data.get('peso')
-    spessore = request_data.get('spessore')
-    # Aggiungi il nuovo colore alla categoria corretta
+    spessori = request_data.get('spessori')
+    colori = request_data.get('colori')
+
+    # Prepara i dati del nuovo materiale
+    nuovo_materiale_data = {
+        "peso": peso,
+        "spessore": spessori,
+        "tipologia": [tipologia]  # Assicurati che tipologia sia una lista
+    }
+
+    # Aggiungi il nuovo materiale al JSON
     if materiale not in data:
-            data[materiale] = [{
-            "peso": peso,
-            "spessore": [spessore],  # Supponendo che tu voglia aggiungere anche gli spessori in seguito
-            "tipologia": [tipologia]
-        }]
+        # Se il materiale non esiste, aggiungi un nuovo array con un oggetto
+        data[materiale] = [nuovo_materiale_data]
     else:
-        return jsonify({'error': 'Materiale già esistente'}), 400
+        # Se il materiale esiste già, potresti voler aggiungere nuove tipologie, spessori o aggiornare il peso
+        # Qui puoi decidere la logica specifica, ad esempio aggiungere nuove tipologie o spessori
+        return jsonify({'error': 'Materiale già esistente. Considerare l\'aggiunta di nuove tipologie o spessori tramite un\'altra funzione.'}), 400
     
     # Salva i dati modificati su Google Cloud Storage
     save_mats_to_storage(data)
 
-    return jsonify({'message': 'Colore aggiunto con successo'})
+    return jsonify({'message': 'Materiale aggiunto con successo'})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
