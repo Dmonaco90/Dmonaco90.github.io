@@ -147,6 +147,10 @@
                             <option value="" disabled selected hidden>Colore</option>
                         </select>
                     </div>
+
+                    <div class="dropdown-menus">
+                        <input type="text" id="scalaturaLibero" style="display: none; height: 30px;"placeholder ="Scalatura Piega">
+                    </div>
                 </div>
             </div>
             
@@ -199,6 +203,25 @@
     let eccezioniPeso = {};
    
 
+    function isMobileDevice() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Controlli per sistemi operativi mobili comuni
+        if (/windows phone/i.test(userAgent)) {
+            return true;
+        }
+
+        if (/android/i.test(userAgent)) {
+            return true;
+        }
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return true;
+        }
+
+        // Se nessuno dei controlli precedenti è vero, si presume che sia un desktop
+        return false;
+    }
 
     function aggiornaBadgeCarrello() {
         var conteggio = carrello.length;
@@ -215,8 +238,10 @@
     
         if (profiloSelezionato === 'libero') {
             initializeCanvas();
+            document.getElementById('scalaturaLibero').style.display = 'block'; 
+        }else  {
+            document.getElementById('scalaturaLibero').style.display = 'none'; 
         }
-    
         if (profiloSelezionato === 'Scatola') {
             var elemento = document.getElementById('altezza');
             elemento.value = '1';
@@ -485,7 +510,7 @@
         }
     });
 }
-
+    
     function mostraOpzioniAggiuntaMateriale(isModifica = false, isEliminazione = false) {
         creaContainerColori();
         const containerElemento = document.getElementById('containerColori');
@@ -1535,25 +1560,7 @@
     });
     
 
-    function isMobileDevice() {
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
     
-        // Controlli per sistemi operativi mobili comuni
-        if (/windows phone/i.test(userAgent)) {
-            return true;
-        }
-    
-        if (/android/i.test(userAgent)) {
-            return true;
-        }
-    
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            return true;
-        }
-    
-        // Se nessuno dei controlli precedenti è vero, si presume che sia un desktop
-        return false;
-    }
     
 
     
@@ -2595,11 +2602,28 @@
 
             if (profiloSelezionato == 'libero') {
                 var elemento = document.getElementById('drawingCanvasParent');
+                var scalaturaLiberoCheck = document.getElementById('scalaturaLibero');
                 
             } else {
                 var elemento = document.querySelector('.image-container.' + profiloSelezionato);
             }
             
+
+            if (profiloSelezionato === "libero" && !scalaturaLiberoCheck.value) {
+                // Aggiungi direttamente la classe al campo e all'array di errori senza usare forEach se è un solo elemento
+                scalaturaLiberoCheck.classList.add('campoMancante');
+                errori.push(scalaturaLiberoCheck.getAttribute('id'));
+                
+                // Mostra l'alert una sola volta
+                alert("Campo Scalatura Piega obbligatorio");
+            
+                // Se necessario, evidenzia anche il genitore del campo
+                scalaturaLiberoCheck.parentNode.classList.add('campoMancante');
+                
+                return
+            }
+           
+
             domtoimage.toPng(elemento, { cacheBust: true })
                 .then(function (dataUrl) {
                     var immagineDataUrl = dataUrl;
@@ -2812,6 +2836,12 @@
         console.log("scalatureData profilo:"+scalatureData[profilo])
         console.log("profilo:"+profilo)
         console.log("profilo:"+spessore)
+        let scalaturaLiberoVal = document.getElementById('scalaturaLibero').value
+        if (scalaturaLiberoVal) {
+            console.log("calcolaVarScalatura Libero: "+parseInt(scalaturaLiberoVal) || 0)
+            return parseInt(scalaturaLiberoVal) || 0;
+           
+        }
         if (scalatureData[profilo]) {
             return parseInt(scalatureData[profilo][spessore]) || 0;
             console.log("calcolaVarScalatura: "+parseInt(scalatureData[profilo][spessore]) || 0)
@@ -3117,10 +3147,10 @@
                                 
                                     ultimoRiferimento = elemento.riferimento;
 
-                                if (elemento.profilo === "libero" ) {
-                                    finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + '</p>');
+                                //if (elemento.profilo === "libero" ) {
+                                  //  finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + '</p>');
                             
-                                }
+                                //}
 
                                 finestraStampa.document.write('<p style="margin: 0%;">N.'+elemento.pezzi+' ' + elemento.altezza + ' x ' + sommaMisurazioni + '</p>');
                             
